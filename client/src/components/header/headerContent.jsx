@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { use } from 'react'
 import './headerContent.css';
+import {useNavigate} from 'react-router-dom';
 
 function HeaderContent() {
+  const navigate=useNavigate();
+
+  const handleLogin=()=>{
+    navigate('/login');
+  }
+  const handleSignup=()=>{
+    navigate('/signup');
+  }
   return (
     <div className='header'>
         <div className='header-lang'>
@@ -14,8 +23,8 @@ function HeaderContent() {
       
 
       <div className='header-button'>
-        <button>Login</button>
-        <button>Sign Up</button>
+        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleSignup}>Sign Up</button>
       </div>
       
     </div>
