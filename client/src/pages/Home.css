@@ -1,0 +1,65 @@
+.hero {
+  background-color: #FAE594;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 5vw;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1 1 300px;
+  min-width: 250px;
+}
+
+.hero-heading1 {
+  font-family: 'Poppins', sans-serif;
+  color: #0A5446;
+  white-space: nowrap;
+  font-size: 2.5rem;
+}
+
+.hero-desc {
+  margin-top: 24px;
+  font-size: 1.3rem;
+  color: #333;
+  max-width: 500px;
+}
+
+.shop-by-category {
+  padding: 40px 5vw;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+    padding: 40px 3vw;
+  }
+  .hero-heading1 {
+    font-size: 2rem;
+    white-space: normal;
+  }
+  .hero-img img {
+    width: 220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 24px 2vw;
+  }
+  .hero-heading1 {
+    font-size: 1.3rem;
+  }
+  .hero-desc {
+    font-size: 1rem;
+  }
+  .shop-by-category h1 {
+    font-size: 1.3rem;
+  }
+}

@@ -1,12 +1,27 @@
-import React from 'react'
-import './heroContent.css';
+import React from "react";
+import "./heroContent.css";
+import logo from "../../assets/homePage/logo.png";
+import { NavLink } from "react-router-dom";
 
 function heroContent() {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <div className="top-hero-header">
+        <img src={logo} className="hero-logo" alt="Logo" />
+        <nav className="hero-nav">
+          <NavLink to="/" end>
+            HOME
+          </NavLink>
+          <NavLink to="/marketplace">MARKETPLACE</NavLink>
+          <NavLink to="/about">ABOUT US</NavLink>
+          <NavLink to="/contact">CONTACT</NavLink>
+        </nav>
+        <div className="hero-search">
+          <input type="text" placeholder="Search for products" />
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default heroContent
+export default heroContent;
