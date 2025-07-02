@@ -1,0 +1,185 @@
+.signup-container {
+ display: flex;
+  height: auto;
+  min-height: 100vh;
+}
+
+.signup-left,
+.signup-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  height: auto;
+}
+
+.signup-left {
+  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.signup-welcome {
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 40px 0 10px 0;
+  text-align: center;
+}
+
+.signup-form {
+  background: #fff;
+  border-radius: 20px;
+  border: 2px solid #ccc;
+  padding: 40px 32px;
+  width: 350px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.signup-form h2 {
+  margin-bottom: 0;
+  color: #888;
+  font-weight: 500;
+  text-align: center;
+}
+
+.signup-form p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #888;
+  font-size: 15px;
+}
+
+.login-link {
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.signup-form label {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.signup-btn {
+  width: 100%;
+  padding: 12px 0;
+  background: #c6e86b;
+  color: #111;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.signup-right {
+  background: #c6e86b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-logo {
+  max-width: 350px;
+  width: 80%;
+  height: auto;
+}
+
+.signup-brand {
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin: 30px 0 0 0;
+  text-align: center;
+}
+
+.signup-brand span {
+  color: #388e3c;
+}
+
+.signup-tagline {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  text-align: center;
+  color: #222;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .signup-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  .signup-left, .signup-right {
+    width: 100%;
+    min-height: 50vh;
+    justify-content: flex-start;
+  }
+  .signup-right {
+    padding: 32px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .signup-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  .signup-left, .signup-right {
+    width: 100%;
+    min-height: unset;
+    padding: 0;
+  }
+  .signup-form {
+    width: 95%;
+    padding: 24px 8px;
+    min-width: unset;
+  }
+  .signup-welcome {
+    font-size: 2rem;
+    margin: 24px 0 8px 0;
+  }
+  .signup-brand {
+    font-size: 1.5rem;
+    margin: 20px 0 0 0;
+  }
+  .signup-logo {
+    max-width: 200px;
+    width: 70%;
+  }
+}
+
+@media (max-width: 400px) {
+  .signup-form {
+    padding: 12px 2px;
+    font-size: 14px;
+  }
+  .signup-form input,
+  .signup-btn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+}
