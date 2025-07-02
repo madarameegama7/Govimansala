@@ -7,6 +7,8 @@ import AboutUs from './pages/AboutUs'
 import Marketplace from './pages/Marketplace'
 import Home from './pages/Home'
 import '../index.css';
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
       <Route path="/contact" element={<Contact/>} />
       <Route path="/marketplace" element={<Marketplace/>} />
       <Route path="/about" element={<AboutUs/>} />
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/signup" element={<SignUp/>}/>
 
     </Routes>
     </BrowserRouter>
