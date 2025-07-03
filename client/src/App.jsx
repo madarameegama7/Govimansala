@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import '../index.css';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path="/about" element={<AboutUs/>} />
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
+      <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
     </Routes>
 
      <Footer/>
