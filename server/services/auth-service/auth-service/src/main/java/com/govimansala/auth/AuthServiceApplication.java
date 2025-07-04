@@ -1,4 +1,4 @@
-package com.govimansala.auth_service;
+package com.govimansala.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
