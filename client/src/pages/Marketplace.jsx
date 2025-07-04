@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Marketplace.css'
 // Import vegetable images
 import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
@@ -20,6 +21,7 @@ import nonOrganicIcon from '../assets/Marketplace/non-organic.jpg'
 
 function Marketplace() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const navigate = useNavigate()
 
   const scrollLeft = (containerId) => {
     const container = document.getElementById(containerId)
@@ -100,7 +102,9 @@ function Marketplace() {
           {/* Vegetables Section */}
           <div className="section">
             <div className="section-header">
-              <h2>Vegetables</h2>
+              <h2 className="clickable-heading" onClick={() => navigate('/vegetables')}>
+                Vegetables
+              </h2>
               <div className="scroll-controls">
                 <button 
                   className="scroll-btn scroll-left"
