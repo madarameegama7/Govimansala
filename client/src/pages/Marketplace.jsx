@@ -129,7 +129,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Fresh organic carrots, perfect for salads and cooking.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -145,7 +144,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Fresh organic brinjal, perfect for curries.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -161,7 +159,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Organic potatoes, great for mashing or roasting.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -177,7 +174,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Fresh red onions, essential for cooking.</p>
                 <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -193,7 +189,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -208,7 +203,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -224,7 +218,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -240,7 +233,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -280,7 +272,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Crisp organic apples, perfect for snacking.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -296,7 +287,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Sweet bananas, rich in potassium.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -312,7 +302,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Juicy organic oranges, high in vitamin C.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -328,7 +317,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Sweet watermelon, perfect for desserts.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -344,7 +332,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Organic guava, great for snacking.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -360,7 +347,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Tropical Papaya, sweet and tangy.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -376,7 +362,6 @@ function Marketplace() {
                     <img src={organicIcon} alt="Organic" className="organic-icon" />
                   </h3>
                   <span className="product-type organic">Organic</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Fresh organic avacado, packed with antioxidants.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
@@ -392,7 +377,6 @@ function Marketplace() {
                     <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
                   </h3>
                   <span className="product-type conventional">Conventional</span>
-                  <div className="product-price">LKR 100/kg</div>
                   <p className="product-description">Sweet tropical mangoes, rich in vitamins.</p>
                   <button className="add-to-cart-btn">View More Details</button>
                 </div>
