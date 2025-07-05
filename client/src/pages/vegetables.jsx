@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './vegetables.css'
 // Import vegetable images
 import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
@@ -14,12 +15,18 @@ function Vegetables() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
+  const navigate = useNavigate()
 
   // Helper function to check if vegetable should be shown based on filter
   const shouldShowVegetable = (type, name) => {
     const matchesFilter = selectedFilter === 'all' || selectedFilter === type
     const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase())
     return matchesFilter && matchesSearch
+  }
+
+  // Function to handle navigation to more details page
+  const handleNavigateToDetails = (vegetableData) => {
+    navigate('/moreDetails', { state: { vegetable: vegetableData } })
   }
 
   return (
@@ -106,7 +113,16 @@ function Vegetables() {
             <div className="vegetables-products-grid">
               {/* Fresh Carrots - Organic */}
               {shouldShowVegetable('organic', 'Fresh Carrots') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Fresh Carrots',
+                    type: 'organic',
+                    image: carrotImg,
+                    description: 'Fresh organic carrots, perfect for salads and cooking.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={carrotImg} alt="Fresh Carrots" />
                   </div>
@@ -117,14 +133,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Fresh organic carrots, perfect for salads and cooking.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Fresh Carrots',
+                          type: 'organic',
+                          image: carrotImg,
+                          description: 'Fresh organic carrots, perfect for salads and cooking.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Fresh Brinjal - Organic */}
               {shouldShowVegetable('organic', 'Fresh Brinjal') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Fresh Brinjal',
+                    type: 'organic',
+                    image: brinjal,
+                    description: 'Fresh organic brinjal, perfect for curries.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={brinjal} alt="Fresh Brinjal" />
                   </div>
@@ -135,14 +174,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Fresh organic brinjal, perfect for curries.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Fresh Brinjal',
+                          type: 'organic',
+                          image: brinjal,
+                          description: 'Fresh organic brinjal, perfect for curries.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Organic Potatoes - Organic */}
               {shouldShowVegetable('organic', 'Organic Potatoes') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Organic Potatoes',
+                    type: 'organic',
+                    image: potatoes,
+                    description: 'Organic potatoes, great for mashing or roasting.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={potatoes} alt="Organic Potatoes" />
                   </div>
@@ -153,14 +215,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Organic potatoes, great for mashing or roasting.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Organic Potatoes',
+                          type: 'organic',
+                          image: potatoes,
+                          description: 'Organic potatoes, great for mashing or roasting.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Red Onions - Conventional */}
               {shouldShowVegetable('conventional', 'Red Onions') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Red Onions',
+                    type: 'conventional',
+                    image: redOnion,
+                    description: 'Fresh red onions, essential for cooking.',
+                    icon: nonOrganicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={redOnion} alt="Red Onions" />
                   </div>
@@ -171,14 +256,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type conventional">Conventional</span>
                     <p className="vegetables-product-description">Fresh red onions, essential for cooking.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Red Onions',
+                          type: 'conventional',
+                          image: redOnion,
+                          description: 'Fresh red onions, essential for cooking.',
+                          icon: nonOrganicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Tomatoes - Conventional */}
               {shouldShowVegetable('conventional', 'Tomatoes') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Tomatoes',
+                    type: 'conventional',
+                    image: tomatoes,
+                    description: 'Ripe tomatoes, perfect for sauces and salads.',
+                    icon: nonOrganicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={tomatoes} alt="Tomatoes" />
                   </div>
@@ -189,14 +297,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type conventional">Conventional</span>
                     <p className="vegetables-product-description">Ripe tomatoes, perfect for sauces and salads.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Tomatoes',
+                          type: 'conventional',
+                          image: tomatoes,
+                          description: 'Ripe tomatoes, perfect for sauces and salads.',
+                          icon: nonOrganicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Organic Carrots - Organic */}
               {shouldShowVegetable('organic', 'Organic Carrots') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Organic Carrots',
+                    type: 'organic',
+                    image: carrotImg,
+                    description: 'Premium organic carrots, sweet and crunchy.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={carrotImg} alt="Organic Carrots" />
                   </div>
@@ -207,14 +338,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Premium organic carrots, sweet and crunchy.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Organic Carrots',
+                          type: 'organic',
+                          image: carrotImg,
+                          description: 'Premium organic carrots, sweet and crunchy.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Fresh Potatoes - Conventional */}
               {shouldShowVegetable('conventional', 'Fresh Potatoes') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Fresh Potatoes',
+                    type: 'conventional',
+                    image: potatoes,
+                    description: 'Fresh potatoes, perfect for any meal.',
+                    icon: nonOrganicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={potatoes} alt="Fresh Potatoes" />
                   </div>
@@ -225,14 +379,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type conventional">Conventional</span>
                     <p className="vegetables-product-description">Fresh potatoes, perfect for any meal.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Fresh Potatoes',
+                          type: 'conventional',
+                          image: potatoes,
+                          description: 'Fresh potatoes, perfect for any meal.',
+                          icon: nonOrganicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Organic Brinjal - Organic */}
               {shouldShowVegetable('organic', 'Organic Brinjal') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Organic Brinjal',
+                    type: 'organic',
+                    image: brinjal,
+                    description: 'Premium organic brinjal, naturally grown.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={brinjal} alt="Organic Brinjal" />
                   </div>
@@ -243,14 +420,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Premium organic brinjal, naturally grown.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Organic Brinjal',
+                          type: 'organic',
+                          image: brinjal,
+                          description: 'Premium organic brinjal, naturally grown.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Fresh Red Onions - Conventional */}
               {shouldShowVegetable('conventional', 'Fresh Red Onions') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Fresh Red Onions',
+                    type: 'conventional',
+                    image: redOnion,
+                    description: 'Fresh red onions, adds flavor to any dish.',
+                    icon: nonOrganicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={redOnion} alt="Fresh Red Onions" />
                   </div>
@@ -261,14 +461,37 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type conventional">Conventional</span>
                     <p className="vegetables-product-description">Fresh red onions, adds flavor to any dish.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Fresh Red Onions',
+                          type: 'conventional',
+                          image: redOnion,
+                          description: 'Fresh red onions, adds flavor to any dish.',
+                          icon: nonOrganicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}
 
               {/* Cherry Tomatoes - Organic */}
               {shouldShowVegetable('organic', 'Cherry Tomatoes') && (
-                <div className="vegetables-product-card">
+                <div 
+                  className="vegetables-product-card clickable" 
+                  onClick={() => handleNavigateToDetails({
+                    name: 'Cherry Tomatoes',
+                    type: 'organic',
+                    image: tomatoes,
+                    description: 'Sweet cherry tomatoes, perfect for snacking.',
+                    icon: organicIcon
+                  })}
+                >
                   <div className="vegetables-product-image">
                     <img src={tomatoes} alt="Cherry Tomatoes" />
                   </div>
@@ -279,7 +502,21 @@ function Vegetables() {
                     </h3>
                     <span className="vegetables-product-type organic">Organic</span>
                     <p className="vegetables-product-description">Sweet cherry tomatoes, perfect for snacking.</p>
-                    <button className="vegetables-add-to-cart-btn">View More Details</button>
+                    <button 
+                      className="vegetables-add-to-cart-btn"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleNavigateToDetails({
+                          name: 'Cherry Tomatoes',
+                          type: 'organic',
+                          image: tomatoes,
+                          description: 'Sweet cherry tomatoes, perfect for snacking.',
+                          icon: organicIcon
+                        })
+                      }}
+                    >
+                      View More Details
+                    </button>
                   </div>
                 </div>
               )}

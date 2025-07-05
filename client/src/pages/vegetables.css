@@ -346,6 +346,47 @@
   background-color: #0e6b57;
 }
 
+/* Clickable product cards */
+.vegetables-product-card.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vegetables-product-card.clickable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.vegetables-product-card.clickable:active {
+  transform: translateY(-2px);
+}
+
+.vegetables-product-card.clickable .vegetables-product-image img {
+  transition: transform 0.3s ease;
+}
+
+.vegetables-product-card.clickable:hover .vegetables-product-image img {
+  transform: scale(1.05);
+}
+
+/* Enhanced button styles for clickable cards */
+.vegetables-product-card.clickable .vegetables-add-to-cart-btn {
+  transition: all 0.3s ease;
+}
+
+.vegetables-product-card.clickable:hover .vegetables-add-to-cart-btn {
+  background: #1f7a5c;
+  transform: translateY(-1px);
+}
+
+/* Prevent text selection on clickable cards */
+.vegetables-product-card.clickable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 /* Mobile Responsive Design */
 @media (max-width: 1200px) {
   .marketplace-container {
