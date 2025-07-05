@@ -13,7 +13,8 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import PrivateRoute from './components/privateRoute';
+import Farmer from './pages/Farmer/Farmer';
 function App() {
 
   return (
@@ -30,6 +31,14 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+       <Route
+          path="/farmer"
+          element={
+            <PrivateRoute allowedRoles={['FARMER']}>
+              <Farmer />
+            </PrivateRoute>
+          }
+        />
     </Routes>
 
      <Footer/>
