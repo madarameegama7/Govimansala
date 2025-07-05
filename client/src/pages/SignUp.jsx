@@ -1,5 +1,5 @@
 import React , {useState} from "react";
-import "./SignUp.css";
+import "../pages/styles/SignUp.css";
 import { useLocation } from "react-router-dom";
 import { signupApi } from "../services/authenticate";
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import './AboutUs.css';
+import '../pages/styles/AboutUs.css';
 import logoImg from '../assets/homePage/logo.png'; 
 
 function AboutUs() {

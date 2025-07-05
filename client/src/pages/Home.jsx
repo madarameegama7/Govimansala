@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.css";
+import "../pages/styles/Home.css";
 import heroImage from "../assets/homePage/hero-image1.png";
 import fruitsImage from "../assets/homePage/fruits.jpg";
 import vegetablesImage from "../assets/homePage/vegetables.jpg";
