@@ -15,7 +15,10 @@ import SignUp from './pages/SignUp'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import PrivateRoute from './components/privateRoute';
-import Farmer from './pages/Farmer/Farmer';
+import Buyer from './pages/Buyer/Buyer';
+import Admin from './pages/Admin/Admin';
+import Vendor from './pages/Vendor/Vendor';
+import Driver from './pages/Driver/Driver';
 function App() {
 
   return (
@@ -33,11 +36,36 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
-       <Route
-          path="/farmer"
+    
+        <Route
+          path="/buyer"
           element={
-            <PrivateRoute allowedRoles={['FARMER']}>
-              <Farmer />
+            <PrivateRoute allowedRoles={['BUYER']}>
+              <Buyer />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vendor"
+          element={
+            <PrivateRoute allowedRoles={['VENDOR']}>
+              <Vendor />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute allowedRoles={['ADMIN']}>
+              <Admin />
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/driver"
+          element={
+            <PrivateRoute allowedRoles={['DRIVER']}>
+              <Driver />
             </PrivateRoute>
           }
         />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './Marketplace.css'
+import '../pages/styles/Marketplace.css'
 // Import vegetable images
 import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
 import brinjal from '../assets/Marketplace/Vegetables/Brinjal.jpg'
