@@ -114,6 +114,47 @@
   font-weight: 400;
 }
 
+/* Search Input Styles */
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0A5446;
+  box-shadow: 0 0 0 3px rgba(10, 84, 70, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* No Results Message */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-results h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.no-results p {
+  color: #666;
+  font-size: 1rem;
+}
+
 /* Main Content for Vegetables */
 .vegetables-main-content {
   flex: 1;
