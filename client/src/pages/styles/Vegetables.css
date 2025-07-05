@@ -1,3 +1,4 @@
+/* Vegetables page styles - based on Marketplace.css */
 
 .marketplace {
   font-family: 'Poppins', sans-serif;
@@ -15,11 +16,11 @@
   gap: 30px;
   position: relative;
   width: 100%;
-  max-width: 100vw; /* Ensure no overflow */
+  max-width: 100vw;
   box-sizing: border-box;
 }
 
-/* Sidebar Toggle Button - positioned below logo */
+/* Sidebar Toggle Button */
 .sidebar-toggle-below-logo {
   position: absolute;
   top: 10px;
@@ -113,24 +114,65 @@
   font-weight: 400;
 }
 
-/* Main Content Styles */
-.main-content {
+/* Search Input Styles */
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0A5446;
+  box-shadow: 0 0 0 3px rgba(10, 84, 70, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* No Results Message */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-results h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.no-results p {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Main Content for Vegetables */
+.vegetables-main-content {
   flex: 1;
   transition: all 0.3s ease;
   min-width: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
-.main-content.sidebar-closed {
+.vegetables-main-content.sidebar-closed {
   margin-left: 0;
 }
 
-.main-content.sidebar-open {
+.vegetables-main-content.sidebar-open {
   margin-left: 0;
 }
 
-/* Header Styles */
-.marketplace-header {
+/* Header Styles for Vegetables */
+.vegetables-header {
   background: url('/pageNameBackground.png');
   background-size: cover;
   background-position: center;
@@ -140,28 +182,28 @@
   border-radius: 12px;
   margin-bottom: 40px;
   text-align: center;
-  margin-top: 0; /* Remove extra margin */
+  margin-top: 0;
 }
 
-.marketplace-header h1 {
+.vegetables-header h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-.marketplace-header p {
+.vegetables-header p {
   font-size: 1.2rem;
   opacity: 0.9;
   margin: 0;
 }
 
-/* Section Styles */
-.section {
+/* Section Styles for Vegetables */
+.vegetables-section {
   margin-bottom: 50px;
   position: relative;
 }
 
-.section-header {
+.vegetables-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -170,90 +212,41 @@
   gap: 20px;
 }
 
-.section-header h2 {
+.vegetables-section-header h2 {
   font-size: 2rem;
   font-weight: 600;
   color: #0A5446;
   margin: 0;
 }
 
-/* Scroll Controls */
-.scroll-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.scroll-btn {
-  background: #0A5446;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(10, 84, 70, 0.3);
-}
-
-.scroll-btn:hover {
-  background: #0e6b57;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(10, 84, 70, 0.4);
-}
-
-.scroll-btn:active {
-  transform: scale(0.95);
-}
-
-/* Products Scroll Container */
-.products-scroll {
-  display: flex;
+/* Products Grid Container - 5 per row */
+.vegetables-products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-  overflow-x: auto;
-  padding: 10px 0;
-  scroll-behavior: smooth;
-  max-width: 100%; /* Ensure no overflow */
+  max-width: 100%;
+  overflow: visible;
 }
 
-.products-scroll::-webkit-scrollbar {
-  height: 8px;
-}
-
-.products-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.products-scroll::-webkit-scrollbar-thumb {
-  background: #0A5446;
-  border-radius: 10px;
-}
-
-.products-scroll::-webkit-scrollbar-thumb:hover {
-  background: #0e6b57;
-}
-
-/* Product Card Styles */
-.product-card {
-  flex: 0 0 280px;
+/* Product Card Styles for Vegetables */
+.vegetables-product-card {
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.product-card:hover {
+.vegetables-product-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.product-image {
+.vegetables-product-image {
   width: 100%;
   height: 200px;
   background: linear-gradient(45deg, #f0f8f5, #e8f5e8);
@@ -264,22 +257,25 @@
   position: relative;
 }
 
-.product-image img {
+.vegetables-product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.product-image:hover img {
+.vegetables-product-image:hover img {
   transform: scale(1.05);
 }
 
-.product-info {
+.vegetables-product-info {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.product-name {
+.vegetables-product-name {
   font-size: 1.2rem;
   font-weight: 600;
   color: #333;
@@ -289,14 +285,14 @@
   gap: 8px;
 }
 
-.product-name .organic-icon {
+.vegetables-product-name .vegetables-organic-icon {
   width: 50px;
   height: 50px;
   object-fit: contain;
   margin-left: auto;
 }
 
-.product-type {
+.vegetables-product-type {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 20px;
@@ -305,7 +301,7 @@
   margin-bottom: 12px;
 }
 
-.product-type.organic {
+.vegetables-product-type.organic {
   background-color: #d4edda;
   color: #155724;
   display: flex;
@@ -313,32 +309,26 @@
   gap: 6px;
 }
 
-.organic-icon {
+.vegetables-organic-icon {
   width: 50px;
   height: 50px;
   object-fit: contain;
 }
 
-.product-type.inorganic {
+.vegetables-product-type.conventional {
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.product-price {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #0A5446;
-  margin-bottom: 12px;
-}
-
-.product-description {
+.vegetables-product-description {
   color: #666;
   font-size: 0.9rem;
   line-height: 1.4;
   margin-bottom: 15px;
+  flex-grow: 1;
 }
 
-.add-to-cart-btn {
+.vegetables-add-to-cart-btn {
   width: 100%;
   background-color: #0A5446;
   color: white;
@@ -349,9 +339,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-top: auto;
 }
 
-.add-to-cart-btn:hover {
+.vegetables-add-to-cart-btn:hover {
   background-color: #0e6b57;
 }
 
@@ -375,13 +366,17 @@
     transform: translateX(-100%);
   }
   
-  .main-content {
+  .vegetables-main-content {
     width: 100%;
     margin-left: 0;
   }
   
-  .marketplace-header {
+  .vegetables-header {
     margin-top: 60px;
+  }
+  
+  .vegetables-products-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -391,7 +386,7 @@
     gap: 0;
   }
   
-  .sidebar-toggle {
+  .sidebar-toggle-below-logo {
     top: 15px;
     left: 15px;
     padding: 8px;
@@ -403,44 +398,31 @@
     width: 280px;
   }
   
-  .marketplace-header {
+  .vegetables-header {
     padding: 30px 20px;
     margin-top: 50px;
   }
   
-  .marketplace-header h1 {
+  .vegetables-header h1 {
     font-size: 2rem;
   }
   
-  .marketplace-header p {
+  .vegetables-header p {
     font-size: 1rem;
   }
   
-  .section-header {
+  .vegetables-section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
   
-  .section-header h2 {
+  .vegetables-section-header h2 {
     font-size: 1.5rem;
   }
   
-  .scroll-controls {
-    align-self: flex-end;
-  }
-  
-  .scroll-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 1rem;
-  }
-  
-  .product-card {
-    flex: 0 0 250px;
-  }
-  
-  .products-scroll {
+  .vegetables-products-grid {
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
 }
@@ -454,7 +436,7 @@
     padding: 10px;
   }
   
-  .sidebar-toggle {
+  .sidebar-toggle-below-logo {
     top: 10px;
     left: 10px;
     padding: 6px;
@@ -466,53 +448,36 @@
     padding: 15px;
   }
   
-  .marketplace-header {
+  .vegetables-header {
     padding: 20px 15px;
     margin-top: 45px;
   }
   
-  .marketplace-header h1 {
+  .vegetables-header h1 {
     font-size: 1.8rem;
   }
   
-  .section-header {
+  .vegetables-section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
   
-  .section-header h2 {
+  .vegetables-section-header h2 {
     font-size: 1.3rem;
   }
   
-  .scroll-controls {
-    align-self: flex-end;
+  .vegetables-products-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
   
-  .scroll-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
-  }
-  
-  .product-card {
-    flex: 0 0 220px;
-  }
-  
-  .product-image {
+  .vegetables-product-image {
     height: 150px;
   }
   
-  .emoji-placeholder {
-    font-size: 3rem;
-  }
-  
-  .product-info {
+  .vegetables-product-info {
     padding: 15px;
-  }
-  
-  .products-scroll {
-    gap: 12px;
   }
 }
 

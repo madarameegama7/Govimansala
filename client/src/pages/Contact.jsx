@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Headphones, Globe, Send, Facebook, Instagram, Linkedin } from 'lucide-react';
-import './Contact.css';
+import '../pages/styles/Contact.css';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
