@@ -1,7 +1,13 @@
-import React from 'react';
-import './Login.css'; // Create this CSS file for styling
+import React, { use, useState } from 'react';
+import './Login.css';
+import { loginApi } from '../services/authenticate';
 
 function Login() {
+  const [email,setEmail]=useState('');
+  const [password,setPassword]=useState('');
+  const [error,setError]=useState('');
+
+  
   return (
     <div className="login-container">
       <div className="login-left">
