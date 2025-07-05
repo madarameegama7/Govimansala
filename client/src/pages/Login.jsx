@@ -19,7 +19,14 @@ function Login() {
 
       if(role==='FARMER'){
         navigate('/farmer');
-      }else{
+      }else if(role==='BUYER'){
+        navigate('/buyer');
+      }else if(role === 'VENDOR'){
+        navigate('/vendor')
+      }else if(role === 'ADMIN'){
+        navigate('/admin')
+      }
+      else{
         navigate('/');
       }
       console.log('Success');
