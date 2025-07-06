@@ -1,73 +1,114 @@
 import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import './MoreDetails.css'
+import { useLocation} from 'react-router-dom'
+import './styles/MoreDetails.css'
 
 function MoreDetails() {
   const location = useLocation()
-  const navigate = useNavigate()
   const vegetable = location.state?.vegetable
-  const [showFarmers, setShowFarmers] = useState(false)
+  const [showSellers, setShowSellers] = useState(false)
+  const [quantities, setQuantities] = useState({})
 
-  // Sample farmers data - in real app this would come from an API
-  const availableFarmers = [
+  const handleQuantityChange = (sellerId, newQuantity, maxQuantity) => {
+    if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+      setQuantities(prev => ({
+        ...prev,
+        [sellerId]: newQuantity
+      }))
+    }
+  }
+
+  const getQuantity = (sellerId) => {
+    return quantities[sellerId] || 1
+  }
+
+  const handleShowFarmers = () => {
+    setShowSellers(!showSellers)
+  }
+
+  // Available sellers data
+  const availableSellers = [
     {
       id: 1,
-      name: "Green Valley Farm",
-      location: "Colombo District",
-      distance: "12 km away",
-      price: "Rs. 150/kg",
-      quantity: "50 kg available",
-      rating: 4.8,
-      contact: "+94 77 123 4567",
-      description: "Certified organic farm with 15+ years experience in sustainable farming.",
-      image: "/api/placeholder/100/100"
+      name: "Green Valley Farms",
+      harvestDate: "15th June 2025",
+      price: "Rs.250/Kg",
+      location: "Nuwara Eliya",
+      availability: "Yes",
+      availableQuantity: "100 Kg",
+      offer: "15%",
+      quality: "Premium"
     },
     {
       id: 2,
-      name: "Sunrise Agricultural Center",
-      location: "Gampaha District", 
-      distance: "18 km away",
-      price: "Rs. 140/kg",
-      quantity: "75 kg available",
-      rating: 4.6,
-      contact: "+94 71 987 6543",
-      description: "Family-owned farm specializing in fresh, high-quality produce.",
-      image: "/api/placeholder/100/100"
+      name: "Saman Bandara's Farm",
+      harvestDate: "10th June 2025",
+      price: "Rs.210/Kg",
+      location: "Nuwara Eliya",
+      availability: "Yes",
+      availableQuantity: "100 Kg",
+      offer: "20%",
+      quality: "Grade A"
     },
     {
       id: 3,
-      name: "Fresh Fields Cooperative",
-      location: "Kalutara District",
-      distance: "25 km away", 
-      price: "Rs. 135/kg",
-      quantity: "100 kg available",
-      rating: 4.7,
-      contact: "+94 75 456 7890",
-      description: "Cooperative of local farmers committed to providing fresh vegetables.",
-      image: "/api/placeholder/100/100"
-    },
-    {
-      id: 4,
-      name: "Organic Harvest Farm",
-      location: "Kandy District",
-      distance: "45 km away",
-      price: "Rs. 160/kg", 
-      quantity: "30 kg available",
-      rating: 4.9,
-      contact: "+94 81 234 5678",
-      description: "Premium organic farm with international certifications.",
-      image: "/api/placeholder/100/100"
+      name: "Fresh Roots Co.",
+      harvestDate: "18th June 2025",
+      price: "Rs.280/Kg",
+      location: "Nuwara Eliya",
+      availability: "Yes",
+      availableQuantity: "100 Kg",
+      offer: "25%",
+      quality: "Organic"
     }
   ]
 
-  const handleShowFarmers = () => {
-    setShowFarmers(true)
-  }
+ 
+  const getVegetableDetails = (name) => {
+    const vegetableName = name.toLowerCase()
+    
+    if (vegetableName.includes('carrot')) {
+      return {
+      
+        plantingSeason: 'February-April, August-October',
+        harvestSeason: 'April-June, October-December',
+        suitableAreas: ['Nuwara Eliya', 'Badulla', 'Kandy', 'Matale', 'Bandarawela'],
+      
+      }
+    } else if (vegetableName.includes('brinjal') || vegetableName.includes('eggplant')) {
+      return {
+        
+        plantingSeason: 'March-May, September-November',
+        harvestSeason: 'June-August, December-February',
+        suitableAreas: ['Anuradhapura', 'Polonnaruwa', 'Kurunegala', 'Puttalam', 'Hambantota'],
+       
+      }
+    } else if (vegetableName.includes('potato')) {
+      return {
+ 
+        plantingSeason: 'January-March, August-September',
+        harvestSeason: 'April-June, November-December',
+        suitableAreas: ['Nuwara Eliya', 'Badulla', 'Welimada', 'Bandarawela', 'Haputale'],
+     
+      }
+    } else if (vegetableName.includes('onion')) {
+      return {
+   
+        plantingSeason: 'October-December, February-March',
+        harvestSeason: 'February-April, June-July',
+        suitableAreas: ['Jaffna', 'Puttalam', 'Anuradhapura', 'Hambantota', 'Mannar'],
+       
+      }
+    } else if (vegetableName.includes('tomato')) {
+      return {
 
-  const handleSeeMore = (farmer) => {
-    // Navigate to farmer details page or show more info
-    console.log('See more for farmer:', farmer.name)
-    // You can add navigation to farmer details page here
+        plantingSeason: 'March-May, September-November',
+        harvestSeason: 'June-August, December-February',
+        suitableAreas: ['Nuwara Eliya', 'Matale', 'Kandy', 'Ratnapura', 'Kegalle'],
+   
+      }
+    }
+    
+ 
   }
 
   if (!vegetable) {
@@ -76,23 +117,18 @@ function MoreDetails() {
         <div className="more-details-container">
           <h1>Product Not Found</h1>
           <p>No product information available.</p>
-          <button onClick={() => navigate('/vegetables')} className="back-btn">
-            Back to Vegetables
-          </button>
         </div>
       </div>
     )
   }
 
+  const details = getVegetableDetails(vegetable.name)
+
   return (
     <div className="more-details">
       <div className="more-details-container">
-        {/* Back Button */}
-        <button onClick={() => navigate('/vegetables')} className="back-btn">
-          ← Back to Vegetables
-        </button>
-
-        {/* Product Details */}
+        
+      
         <div className="product-details">
           <div className="product-image-section">
             <img src={vegetable.image} alt={vegetable.name} className="product-main-image" />
@@ -106,20 +142,18 @@ function MoreDetails() {
 
           <div className="product-info-section">
             <h1 className="product-title">{vegetable.name}</h1>
-            
-            <div className="product-meta">
-              <span className={`product-type-tag ${vegetable.type}`}>
-                {vegetable.type === 'organic' ? 'Organic' : 'Conventional'}
-              </span>
-            </div>
 
             <div className="product-description-section">
-              <h3>Description</h3>
+              <h3>About This Vegetable</h3>
               <p className="product-description">{vegetable.description}</p>
+              <div className="farming-summary">
+                <p><strong>Planting Season:</strong> {details.plantingSeason}</p>
+                <p><strong>Harvest Season:</strong> {details.harvestSeason}</p>
+              </div>
             </div>
 
             <div className="product-features">
-              <h3>Features</h3>
+              <h3>Key Features</h3>
               <ul>
                 {vegetable.type === 'organic' ? (
                   <>
@@ -144,117 +178,98 @@ function MoreDetails() {
                 className="show-farmers-btn primary" 
                 onClick={handleShowFarmers}
               >
-                Show Available Farmers
+                {showSellers ? 'Hide' : 'Show'} Available Sellers
               </button>
             </div>
           </div>
         </div>
 
-        {/* Additional Information */}
-        <div className="additional-info">
-          <div className="info-section">
-            <h3>Nutritional Benefits</h3>
-            <p>
-              {vegetable.name.toLowerCase().includes('carrot') && 
-                "Rich in beta-carotene, fiber, and antioxidants. Great for eye health and immune system support."
-              }
-              {vegetable.name.toLowerCase().includes('brinjal') && 
-                "High in fiber, potassium, and antioxidants. Supports heart health and digestion."
-              }
-              {vegetable.name.toLowerCase().includes('potato') && 
-                "Good source of potassium, vitamin C, and fiber. Provides sustained energy."
-              }
-              {vegetable.name.toLowerCase().includes('onion') && 
-                "Contains quercetin and sulfur compounds. Supports immune system and heart health."
-              }
-              {vegetable.name.toLowerCase().includes('tomato') && 
-                "Rich in lycopene, vitamin C, and folate. Supports skin health and heart function."
-              }
-            </p>
-          </div>
-
-          <div className="info-section">
-            <h3>Storage Tips</h3>
-            <p>
-              Store in a cool, dry place away from direct sunlight. 
-              {vegetable.type === 'organic' ? 
-                ' Organic produce may have a shorter shelf life, so consume within a few days for best quality.' :
-                ' Can be stored for longer periods when kept in proper conditions.'
-              }
-            </p>
-          </div>
-        </div>
-
-        {/* Available Farmers Section */}
-        {showFarmers && (
-          <div className="farmers-section">
-            <h2 className="farmers-title">Available Farmers</h2>
-            <p className="farmers-subtitle">
-              Connect directly with local farmers for fresh {vegetable.name.toLowerCase()}
-            </p>
+        {showSellers && (
+          <div className="sellers-section">
+            <div className="sellers-header">
+              <div className="sellers-title-section">
+                <h2>Available Sellers</h2>
+                <p>Compare offers from multiple sellers</p>
+              </div>
+            </div>
             
-            <div className="farmers-grid">
-              {availableFarmers.map(farmer => (
-                <div key={farmer.id} className="farmer-card">
-                  <div className="farmer-header">
-                    <div className="farmer-image">
-                      <img src={farmer.image} alt={farmer.name} />
+            <div className="sellers-list">
+              {availableSellers.map((seller) => (
+                <div key={seller.id} className="seller-card">
+                  <div className="seller-avatar">
+                    <div className="avatar-circle">
+                      <span>{seller.name.charAt(0)}</span>
                     </div>
-                    <div className="farmer-basic-info">
-                      <h3 className="farmer-name">{farmer.name}</h3>
-                      <div className="farmer-rating">
-                        <span className="rating-stars">
-                          {'★'.repeat(Math.floor(farmer.rating))}
-                          {farmer.rating % 1 !== 0 && '☆'}
-                        </span>
-                        <span className="rating-number">({farmer.rating})</span>
+                  </div>
+                  
+                  <div className="seller-info">
+                    <h3 className="seller-name">{seller.name}</h3>
+                    <div className="seller-details">
+                      <div className="detail-row">
+                        <span className="label">Harvest Date</span>
+                        <span className="value">{seller.harvestDate}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="label">Price</span>
+                        <span className="value">{seller.price}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="label">Location</span>
+                        <span className="value">{seller.location}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className="label">Availability</span>
+                        <span className="value available">{seller.availability}</span>
+                      </div>
+                      <div className="detail-row">
+                        <span className='label'>Available Quantity</span>
+                        <span className="value">{seller.availableQuantity}</span>
+                        </div>
+                    </div>
+                  </div>
+                
+
+                  <div className="seller-actions">
+                    <div className="quantity-selector">
+                      <label className="quantity-label">Quantity (kg)</label>
+                      <div className="quantity-controls">
+                        <button 
+                          className="quantity-btn minus"
+                          onClick={() => handleQuantityChange(seller.id, getQuantity(seller.id) - 1, parseInt(seller.availableQuantity))}
+                          disabled={getQuantity(seller.id) <= 1}
+                        >
+                          -
+                        </button>
+                        <input 
+                          type="number" 
+                          value={getQuantity(seller.id)}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value) || 1;
+                            const maxQty = parseInt(seller.availableQuantity);
+                            handleQuantityChange(seller.id, value, maxQty);
+                          }}
+                          className="quantity-input"
+                          min="1"
+                          max={parseInt(seller.availableQuantity)}
+                        />
+                        <button 
+                          className="quantity-btn plus"
+                          onClick={() => handleQuantityChange(seller.id, getQuantity(seller.id) + 1, parseInt(seller.availableQuantity))}
+                          disabled={getQuantity(seller.id) >= parseInt(seller.availableQuantity)}
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="farmer-details">
-                    <div className="detail-row">
-                      <span className="detail-label">📍 Location:</span>
-                      <span className="detail-value">{farmer.location}</span>
-                    </div>
-                    <div className="detail-row">
-                      <span className="detail-label">📏 Distance:</span>
-                      <span className="detail-value">{farmer.distance}</span>
-                    </div>
-                    <div className="detail-row">
-                      <span className="detail-label">💰 Price:</span>
-                      <span className="detail-value price">{farmer.price}</span>
-                    </div>
-                    <div className="detail-row">
-                      <span className="detail-label">📦 Available:</span>
-                      <span className="detail-value">{farmer.quantity}</span>
-                    </div>
-                    <div className="detail-row">
-                      <span className="detail-label">📞 Contact:</span>
-                      <span className="detail-value">{farmer.contact}</span>
-                    </div>
-                  </div>
-
-                  <div className="farmer-description">
-                    <p>{farmer.description}</p>
-                  </div>
-
-                  <div className="farmer-actions">
-                    <button 
-                      className="see-more-btn"
-                      onClick={() => handleSeeMore(farmer)}
-                    >
-                      See More Details
-                    </button>
-                    <button className="contact-farmer-btn">
-                      Contact Farmer
-                    </button>
+                    <button className="add-to-cart-btn">Add to Cart</button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         )}
+
+        
       </div>
     </div>
   )
