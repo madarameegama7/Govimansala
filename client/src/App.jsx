@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HeaderContent from './components/header/headerContent'
 import HeroContent from './components/hero/heroContent'
@@ -9,6 +9,7 @@ import Marketplace from './pages/Marketplace'
 import Vegetables from './pages/vegetables'
 import MoreDetails from './pages/MoreDetails'
 import Home from './pages/Home'
+import DefaultHome from './pages/DefaultHome'
 import '../index.css';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
@@ -27,7 +28,8 @@ function App() {
      <HeroContent/>
 
     <Routes>
-      <Route path="/" element={<Home/>}/>
+      <Route path="/" element={<DefaultHome/>}/>
+      <Route path="/home" element={<Home/>}/>
       <Route path="/contact" element={<Contact/>} />
       <Route path="/marketplace" element={<Marketplace/>} />
       <Route path="/vegetables" element={<Vegetables/>} />
