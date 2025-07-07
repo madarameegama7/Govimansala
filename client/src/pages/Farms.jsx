@@ -1,5 +1,6 @@
 import React from 'react'
 import '../pages/styles/Farms.css';
+import { NavLink } from 'react-router-dom';
 
 function Farms() {
   return (
@@ -19,7 +20,7 @@ function Farms() {
         </div>
         
         <div className="farm-card">
-            <a href="/farm/green-valley" className="card-content">
+            <NavLink to="/FarmPage" className="card-content">
             <div className="left-section">
                 <img src="/profile-icon.png" alt="Farm" className="farm-image" />
                 <h3 className="farm-name">Green Valley Farms</h3>
@@ -28,7 +29,7 @@ function Farms() {
                 <img src="/location-icon.png" alt="Location" className="location-icon" />
                 <p className="location">Nuwara Eliya</p>
             </div>
-            </a>
+            </NavLink>
         </div>
 
         <div className="farm-card">
