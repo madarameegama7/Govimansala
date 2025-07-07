@@ -1,0 +1,128 @@
+.farms-page {
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
+.farms-hero {
+  background: url('../public/pageNameBackground.png') no-repeat center;
+  background-size: cover;
+  text-align: center;
+  padding: 60px 20px;
+  color: #0A5446;
+  position: relative;
+  height: 50px;
+}
+
+.farms-hero h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.farms-hero p {
+  margin-top: 5px;
+  color: #444;
+  font-size: 1rem;
+}
+
+.search-bar-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: right;
+  margin: 20px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 8px 16px;
+  background-color: #0A5446;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-button:hover {
+  background-color: #064036;
+}
+
+.farm-card {
+  padding: 10px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.card-content:hover {
+  border: 2px solid #064c00;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.farm-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.farm-name {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0;
+  color: #0a5446;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+  white-space: nowrap;
+}

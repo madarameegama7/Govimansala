@@ -10,11 +10,13 @@
   padding: 60px 20px;
   color: #0A5446;
   position: relative;
+  height: 50px; /* Adjusted for better visibility */
 }
 
 .about-hero h1 {
   font-size: 2.5rem;
   font-weight: bold;
+  margin: 0;
 }
 
 .about-hero p {
