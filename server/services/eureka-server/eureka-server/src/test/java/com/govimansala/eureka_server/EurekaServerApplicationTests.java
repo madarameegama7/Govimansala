@@ -1,10 +1,10 @@
-package com.govimansala.auth_service;
+package com.govimansala.eureka_server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthServiceApplicationTests {
+class EurekaServerApplicationTests {
 
 	@Test
 	void contextLoads() {

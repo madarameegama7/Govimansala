@@ -1,0 +1,1290 @@
+.more-details {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.more-details-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.back-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #218838;
+}
+
+.product-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 0 40px 40px;
+}
+
+.product-image-section {
+  position: relative;
+}
+
+.product-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-type-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.type-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.type-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.type-label.organic {
+  color: #28a745;
+}
+
+.type-label.conventional {
+  color: #6c757d;
+}
+
+.product-info-section {
+  padding: 20px 0;
+}
+
+.product-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.product-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.season-tag {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.origin-info {
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-left: 4px solid #0a5446;
+  border-radius: 4px;
+}
+
+.product-title {
+  font-size: 2rem;
+}
+
+.product-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.add-to-cart-btn, .buy-now-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.add-to-cart-btn.primary {
+  background: #28a745;
+  color: white;
+}
+
+.add-to-cart-btn.primary:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+.buy-now-btn.secondary {
+  background: transparent;
+  color: #28a745;
+  border: 2px solid #28a745;
+}
+
+.buy-now-btn.secondary:hover {
+  background: #28a745;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.product-description-section {
+  margin-bottom: 30px;
+}
+
+.product-description-section h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.product-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #5a6c7d;
+}
+
+.product-features {
+  margin-bottom: 30px;
+}
+
+.product-features h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.product-features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.product-features li {
+  padding: 8px 0;
+  position: relative;
+  padding-left: 20px;
+  color: #5a6c7d;
+}
+
+.product-features li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.additional-info {
+  background: #f8f9fa;
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.info-section {
+  margin-bottom: 30px;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-section h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.info-section p {
+  color: #5a6c7d;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Show Farmers Button */
+.show-farmers-btn {
+  width: 100%;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #28a745;
+  color: white;
+}
+
+.show-farmers-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Farmers Section */
+.farmers-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.farmers-title {
+  text-align: center;
+  color: #2d5016;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.farmers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+.farmer-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.farmer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.farmer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.farmer-name {
+  color: #2d5016;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.farmer-rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating-stars {
+  background: #ffd700;
+  color: #333;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.farmer-info {
+  margin-bottom: 1rem;
+}
+
+.farmer-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #555;
+  min-width: 120px;
+}
+
+.detail-value {
+  color: #333;
+  text-align: right;
+  flex: 1;
+}
+
+.farmer-description {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #4a7c59;
+}
+
+.farmer-description p {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.farmer-certifications {
+  margin-bottom: 1.5rem;
+}
+
+.farmer-certifications strong {
+  color: #2d5016;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.certification-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.certification-tag {
+  background: #4a7c59;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.farmer-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contact-farmer-btn,
+.view-products-btn {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.contact-farmer-btn {
+  background: #4a7c59;
+  color: white;
+}
+
+.contact-farmer-btn:hover {
+  background: #2d5016;
+  transform: translateY(-1px);
+}
+
+.view-products-btn {
+  background: transparent;
+  color: #4a7c59;
+  border: 2px solid #4a7c59;
+}
+
+.view-products-btn:hover {
+  background: #4a7c59;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Enhanced Product Meta Styles */
+.product-meta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.season-tag {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.origin-info {
+  color: #6c757d;
+  font-style: italic;
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-left: 4px solid #0a5446;
+  border-radius: 4px;
+}
+
+/* Enhanced Detailed Info Grid */
+.detailed-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  padding: 30px 40px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.info-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #0a5446, #0e6b57);
+  color: white;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+/* Nutrition Card Styles */
+.nutrition-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nutrition-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #495057;
+}
+
+.nutrition-list li:last-child {
+  border-bottom: none;
+}
+
+.nutrition-list li::before {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+/* Varieties Card Styles */
+.varieties-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.variety-tag {
+  background: linear-gradient(135deg, #fae594, #f8e6a0);
+  color: #0a5446;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.variety-tag:hover {
+  background: linear-gradient(135deg, #0a5446, #0e6b57);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Cooking Tips Card Styles */
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tips-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: flex-start;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.tips-list li:last-child {
+  border-bottom: none;
+}
+
+.tips-list li::before {
+  content: '👨‍🍳';
+  margin-right: 12px;
+  margin-top: 2px;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+/* Fun Facts Card Styles */
+.facts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.facts-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: flex-start;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.facts-list li:last-child {
+  border-bottom: none;
+}
+
+.facts-list li::before {
+  content: '💡';
+  margin-right: 12px;
+  margin-top: 2px;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+/* Storage Card Styles */
+.storage-info p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #495057;
+}
+
+.storage-tips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.tip-badge {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Health Benefits Card Styles */
+.benefits-content p {
+  line-height: 1.7;
+  color: #495057;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #28a745;
+  margin: 0;
+}
+
+/* Enhanced Product Features */
+.product-features ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* Enhanced Button Styles */
+.show-farmers-btn {
+  background: linear-gradient(135deg, #0a5446, #0e6b57);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(10, 84, 70, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.show-farmers-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(10, 84, 70, 0.4);
+}
+
+.show-farmers-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.show-farmers-btn:hover::before {
+  left: 100%;
+}
+
+/* Agricultural Information Styles */
+.farming-summary {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border-left: 4px solid #0A5446;
+}
+
+.farming-summary p {
+  margin: 8px 0;
+  color: #495057;
+  font-weight: 500;
+}
+
+/* Growing Areas Styles */
+.areas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.area-tag {
+  background: linear-gradient(135deg, #0A5446, #0e6b57);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.area-tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(10, 84, 70, 0.3);
+}
+
+/* Timeline Styles */
+.timeline-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #0A5446;
+}
+
+.timeline-label {
+  font-weight: 600;
+  color: #495057;
+}
+
+.timeline-value {
+  color: #0A5446;
+  font-weight: 500;
+}
+
+/* Climate Details Styles */
+.climate-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.climate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+}
+
+.climate-label {
+  font-weight: 600;
+  color: #495057;
+}
+
+.climate-value {
+  color: #0A5446;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* Calendar Display Styles */
+.calendar-display {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.season-block {
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.season-block.planting {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+.season-block.harvest {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  color: white;
+}
+
+.season-block:hover {
+  transform: translateY(-2px);
+}
+
+.season-block h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.season-block p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.duration-info {
+  background: #e9ecef;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  color: #495057;
+  font-weight: 600;
+}
+
+/* Enhanced Card Color Variations for Agricultural Theme */
+.info-card.growing-areas .card-header {
+  background: linear-gradient(135deg, #0A5446, #0e6b57);
+}
+
+.info-card.growing-period .card-header {
+  background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.info-card.climate .card-header {
+  background: linear-gradient(135deg, #17a2b8, #20c997);
+}
+
+.info-card.farming-calendar .card-header {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+}
+
+/* Responsive Design for Agricultural Layout */
+@media (max-width: 768px) {
+  .timeline-item {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .climate-item {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+  
+  .climate-value {
+    text-align: center;
+  }
+  
+  .areas-grid {
+    justify-content: center;
+  }
+  
+  .area-tag {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-title {
+    font-size: 1.5rem;
+  }
+
+  .product-main-image {
+    height: 250px;
+  }
+
+  .farmer-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .farmer-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .card-header {
+    padding: 15px;
+  }
+
+  .card-content {
+    padding: 15px;
+  }
+
+  .show-farmers-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
+
+/* Special Card Color Variations */
+.info-card.nutrition .card-header {
+  background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.info-card.varieties .card-header {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+}
+
+.info-card.cooking .card-header {
+  background: linear-gradient(135deg, #dc3545, #e83e8c);
+}
+
+.info-card.fun-facts .card-header {
+  background: linear-gradient(135deg, #6f42c1, #6610f2);
+}
+
+.info-card.storage .card-header {
+  background: linear-gradient(135deg, #17a2b8, #20c997);
+}
+
+.info-card.health-benefits .card-header {
+  background: linear-gradient(135deg, #198754, #20c997);
+}
+
+/* Sellers Section Styles */
+.sellers-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sellers-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.product-image-small {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.product-image-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sellers-title-section h2 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sellers-title-section p {
+  margin: 0 0 0.25rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.sellers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.seller-card {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.seller-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.seller-avatar {
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.seller-info {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.seller-name {
+  margin: 0 0 0.75rem 0;
+  color: #2d5016;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.seller-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.detail-row .label {
+  color: #666;
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.detail-row .value {
+  color: #333;
+  font-weight: 600;
+}
+
+.detail-row .value.available {
+  color: #28a745;
+}
+
+.seller-offer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+  min-width: 80px;
+}
+
+.offer-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #4a7c59;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+  min-width: 70px;
+}
+
+.offer-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.offer-percent {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.quality-badge {
+  background: #e9ecef;
+  color: #495057;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 70px;
+}
+
+.seller-actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.quantity-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  overflow: hidden;
+}
+
+.quantity-btn {
+  background: #f8f9fa;
+  border: none;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #666;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: #e9ecef;
+}
+
+.quantity-btn.minus {
+  border-right: 1px solid #ddd;
+}
+
+.quantity-btn.plus {
+  border-left: 1px solid #ddd;
+}
+
+.quantity-input {
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 35px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  background: white;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.add-to-cart-btn {
+  background: #F4721E;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.add-to-cart-btn:hover {
+  background: #e0631a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(244, 114, 30, 0.3);
+}
+
+/* Responsive Design for Sellers Section */
+@media (max-width: 768px) {
+  .sellers-header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .seller-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .seller-info {
+    margin-right: 0;
+    width: 100%;
+  }
+  
+  .detail-row {
+    justify-content: space-between;
+  }
+  
+  .seller-offer {
+    flex-direction: row;
+    align-items: center;
+    margin-right: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .seller-actions {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .quantity-selector {
+    width: 100%;
+  }
+  
+  .add-to-cart-btn {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .seller-card {
+    padding: 0.75rem;
+  }
+  
+  .avatar-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .seller-name {
+    font-size: 1rem;
+  }
+  
+  .detail-row {
+    font-size: 0.8rem;
+  }
+}
+
+/* Disabled Quantity Button Styles */
+.quantity-btn:disabled {
+  background: #f1f3f4;
+  color: #9aa0a6;
+  cursor: not-allowed;
+}
+
+.quantity-btn:disabled:hover {
+  background: #f1f3f4;
+}
+
+.quantity-info {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.25rem;
+  text-align: center;
+}
