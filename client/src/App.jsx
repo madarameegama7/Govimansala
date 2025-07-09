@@ -9,7 +9,6 @@ import Marketplace from './pages/Marketplace'
 import Vegetables from './pages/vegetables'
 import MoreDetails from './pages/MoreDetails'
 import Home from './pages/Home'
-import DefaultHome from './pages/DefaultHome'
 import '../index.css';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
