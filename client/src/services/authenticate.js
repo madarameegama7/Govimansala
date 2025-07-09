@@ -6,7 +6,7 @@ const saveToken=(token)=>{
 
 export const loginApi = async (email, password) => {
     const response = await axios.post(
-        "http://localhost:8081/api/auth/login",
+        "http://localhost:8080/api/auth/login",
         { email, password }, 
         { headers: { "Content-Type": "application/json" } }
     );
@@ -19,7 +19,7 @@ export const loginApi = async (email, password) => {
 
 export const signupApi=async(signupData)=>{
     const response=await axios.post(
-        "http://localhost:8081/api/auth/register",
+        "http://localhost:8080/api/auth/register",
         signupData,
         {headers:{"Content-Type":"application/json"}}
     );
