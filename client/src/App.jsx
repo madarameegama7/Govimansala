@@ -19,6 +19,8 @@ import Buyer from './pages/Buyer/Buyer';
 import Admin from './pages/Admin/Admin';
 import Vendor from './pages/Vendor/Vendor';
 import Driver from './pages/Driver/Driver';
+import Farms from './pages/Farms';
+import FarmPage from './pages/FarmPage';
 function App() {
 
   return (
@@ -37,6 +39,8 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+      <Route path="/farms" element={<Farms/>}/>
+      <Route path="/FarmPage" element={<FarmPage/>}/>
     
         <Route
           path="/buyer"

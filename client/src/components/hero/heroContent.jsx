@@ -7,18 +7,19 @@ function heroContent() {
   return (
     <>
       <div className="top-hero-header">
+        <div className="logo">
         <img src={logo} className="hero-logo" alt="Logo" />
+        </div>
         <nav className="hero-nav">
-          <NavLink to="/" end>
-            HOME
-          </NavLink>
+          <NavLink to="/" end>HOME</NavLink>
           <NavLink to="/marketplace">MARKETPLACE</NavLink>
+          <NavLink to="/farms">FARMS</NavLink>
           <NavLink to="/about">ABOUT US</NavLink>
           <NavLink to="/contact">CONTACT</NavLink>
         </nav>
-        <div className="hero-search">
+        {/* <div className="hero-search">
           <input type="text" placeholder="Search for products" />
-        </div>
+        </div> */}
       </div>
     </>
   );
