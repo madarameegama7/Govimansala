@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../pages/styles/Vegetables.css'
+import SimpleSearchBar from '../components/search/SearchBar'
 // Import vegetable images
 import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
 import brinjal from '../assets/Marketplace/Vegetables/Brinjal.jpg'
@@ -16,6 +17,16 @@ function Vegetables() {
   const [selectedFilter, setSelectedFilter] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
+
+  // All vegetable names for search suggestions
+  const allVegetableNames = [
+    'Carrots', 'Brinjal', 'Potatoes', 'Red Onions', 'Tomatoes',
+    'Organic', 'Conventional', 'Fresh'
+  ]
+
+  const handleSearch = (term) => {
+    setSearchTerm(term)
+  }
 
   // Helper function to check if vegetable should be shown based on filter
   const shouldShowVegetable = (type, name) => {
@@ -46,14 +57,7 @@ function Vegetables() {
           
           {/* Search Section */}
           <div className="filter-section">
-            <h4>Search</h4>
-            <input
-              type="text"
-              placeholder="Search vegetables..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
+           
           </div>
           
           {/* Vegetables Filter Section */}
@@ -98,6 +102,15 @@ function Vegetables() {
 
         {/* Main Content */}
         <div className={`vegetables-main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+          {/* Search Bar */}
+          <div className="vegetables-search-container">
+            <SimpleSearchBar 
+              placeholder="Search vegetables..."
+              onSearch={handleSearch}
+              data={allVegetableNames}
+            />
+          </div>
+
           {/* Header */}
           <div className="vegetables-header">
             <h1>Fresh Vegetables</h1>

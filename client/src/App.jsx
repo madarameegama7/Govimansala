@@ -7,6 +7,7 @@ import Contact from './pages/Contact'
 import AboutUs from './pages/AboutUs'
 import Marketplace from './pages/Marketplace'
 import Vegetables from './pages/vegetables'
+import Fruits from './pages/fruits'
 import MoreDetails from './pages/MoreDetails'
 import Home from './pages/Home'
 import NewHome from './pages/DefaultHomePage'
@@ -26,23 +27,96 @@ function App() {
 
   return (
     <BrowserRouter>
-     <HeaderContent/>
-     <HeroContent/>
-
     <Routes>
-      <Route path="/" element={<NewHome/>}/>
-      <Route path="/home" element={<Home/>}/>
-      <Route path="/defaultHome" element={<NewHome/>}/>
-      <Route path="/contact" element={<Contact/>} />
-      <Route path="/marketplace" element={<Marketplace/>} />
-      <Route path="/vegetables" element={<Vegetables/>} />
-      <Route path="/moreDetails" element={<MoreDetails/>} />
-      <Route path="/about" element={<AboutUs/>} />
+      <Route path="/" element={
+        <>
+          <HeaderContent/>
+          <HeroContent/>
+          <NewHome/>
+          <Footer/>
+        </>
+      }/>
+      <Route path="/home" element={
+        <>
+          <HeaderContent/>
+          <HeroContent/>
+          <Home/>
+          <Footer/>
+        </>
+      }/>
+      <Route path="/defaultHome" element={
+        <>
+          <HeaderContent/>
+          <HeroContent/>
+          <NewHome/>
+          <Footer/>
+        </>
+      }/>
+      <Route path="/contact" element={
+        <>
+          <HeaderContent/>
+          <Contact/>
+          <Footer/>
+        </>
+      } />
+      <Route path="/marketplace" element={
+        <>
+          <HeaderContent/>
+          <Marketplace/>
+          <Footer/>
+        </>
+      } />
+      <Route path="/vegetables" element={
+        <>
+          <HeaderContent/>
+          <Vegetables/>
+          <Footer/>
+        </>
+      } />
+      <Route path="/fruits" element={
+        <>
+          <HeaderContent/>
+          <Fruits/>
+          <Footer/>
+        </>
+      } />
+      <Route path="/moreDetails" element={
+        <>
+          <HeaderContent/>
+          <MoreDetails/>
+          <Footer/>
+        </>
+      } />
+      <Route path="/about" element={
+        <>
+          <HeaderContent/>
+          <AboutUs/>
+          <Footer/>
+        </>
+      } />
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
-      <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
-      <Route path="/farms" element={<Farms/>}/>
-      <Route path="/FarmPage" element={<FarmPage/>}/>
+      <Route path="/privacy-policy" element={
+        <>
+          <HeaderContent/>
+          <PrivacyPolicy/>
+          <Footer/>
+        </>
+      }/>
+      <Route path="/farms" element={
+        <>
+          <HeaderContent/>
+          <Farms/>
+          <Footer/>
+        </>
+      }/>
+      <Route path="/FarmPage" element={
+        <>
+          <HeaderContent/>
+          <FarmPage/>
+          <Footer/>
+        </>
+      }/>
     
         <Route
           path="/buyer"
@@ -78,13 +152,7 @@ function App() {
         />
     </Routes>
 
-     <Footer/>
-
     </BrowserRouter>
-    
-   
-  
-    
   )
 }
 
