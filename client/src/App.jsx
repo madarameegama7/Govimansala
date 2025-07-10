@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HeaderContent from './components/header/headerContent'
 import HeroContent from './components/hero/heroContent'
@@ -9,6 +9,7 @@ import Marketplace from './pages/Marketplace'
 import Vegetables from './pages/vegetables'
 import MoreDetails from './pages/MoreDetails'
 import Home from './pages/Home'
+import NewHome from './pages/DefaultHomePage'
 import '../index.css';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
@@ -19,6 +20,8 @@ import Buyer from './pages/Buyer/Buyer';
 import Admin from './pages/Admin/Admin';
 import Vendor from './pages/Vendor/Vendor';
 import Driver from './pages/Driver/Driver';
+import Farms from './pages/Farms';
+import FarmPage from './pages/FarmPage';
 function App() {
 
   return (
@@ -27,7 +30,9 @@ function App() {
      <HeroContent/>
 
     <Routes>
-      <Route path="/" element={<Home/>}/>
+      <Route path="/" element={<NewHome/>}/>
+      <Route path="/home" element={<Home/>}/>
+      <Route path="/defaultHome" element={<NewHome/>}/>
       <Route path="/contact" element={<Contact/>} />
       <Route path="/marketplace" element={<Marketplace/>} />
       <Route path="/vegetables" element={<Vegetables/>} />
@@ -36,6 +41,8 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<SignUp/>}/>
       <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+      <Route path="/farms" element={<Farms/>}/>
+      <Route path="/FarmPage" element={<FarmPage/>}/>
     
         <Route
           path="/buyer"
