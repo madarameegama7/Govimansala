@@ -9,6 +9,7 @@ import Marketplace from './pages/Marketplace'
 import Vegetables from './pages/vegetables'
 import MoreDetails from './pages/MoreDetails'
 import Home from './pages/Home'
+import NewHome from './pages/DefaultHomePage'
 import '../index.css';
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
@@ -29,8 +30,9 @@ function App() {
      <HeroContent/>
 
     <Routes>
-      <Route path="/" element={<DefaultHome/>}/>
+      <Route path="/" element={<NewHome/>}/>
       <Route path="/home" element={<Home/>}/>
+      <Route path="/defaultHome" element={<NewHome/>}/>
       <Route path="/contact" element={<Contact/>} />
       <Route path="/marketplace" element={<Marketplace/>} />
       <Route path="/vegetables" element={<Vegetables/>} />
