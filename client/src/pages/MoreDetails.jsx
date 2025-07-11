@@ -5,6 +5,8 @@ import './styles/MoreDetails.css'
 function MoreDetails() {
   const location = useLocation()
   const vegetable = location.state?.vegetable
+  const fruit = location.state?.fruit
+  const product = vegetable || fruit
   const [showSellers, setShowSellers] = useState(false)
   const [quantities, setQuantities] = useState({})
 
@@ -25,8 +27,8 @@ function MoreDetails() {
     setShowSellers(!showSellers)
   }
 
-  // Available sellers data
-  const availableSellers = [
+  // Use farmers data from the product if available, otherwise use default sellers
+  const availableSellers = product?.farmers || [
     {
       id: 1,
       name: "Green Valley Farms",
@@ -62,56 +64,99 @@ function MoreDetails() {
     }
   ]
 
- 
-  const getVegetableDetails = (name) => {
-    const vegetableName = name.toLowerCase()
+  
+  const getProductDetails = (name, isVegetable = true) => {
+    const productName = name.toLowerCase()
     
-    if (vegetableName.includes('carrot')) {
-      return {
-      
-        plantingSeason: 'February-April, August-October',
-        harvestSeason: 'April-June, October-December',
-        suitableAreas: ['Nuwara Eliya', 'Badulla', 'Kandy', 'Matale', 'Bandarawela'],
-      
+    if (isVegetable) {
+      // Vegetable details
+      if (productName.includes('carrot')) {
+        return {
+          plantingSeason: 'February-April, August-October',
+          harvestSeason: 'April-June, October-December',
+          suitableAreas: ['Nuwara Eliya', 'Badulla', 'Kandy', 'Matale', 'Bandarawela'],
+        }
+      } else if (productName.includes('brinjal') || productName.includes('eggplant')) {
+        return {
+          plantingSeason: 'March-May, September-November',
+          harvestSeason: 'June-August, December-February',
+          suitableAreas: ['Anuradhapura', 'Polonnaruwa', 'Kurunegala', 'Puttalam', 'Hambantota'],
+        }
+      } else if (productName.includes('potato')) {
+        return {
+          plantingSeason: 'January-March, August-September',
+          harvestSeason: 'April-June, November-December',
+          suitableAreas: ['Nuwara Eliya', 'Badulla', 'Welimada', 'Bandarawela', 'Haputale'],
+        }
+      } else if (productName.includes('onion')) {
+        return {
+          plantingSeason: 'October-December, February-March',
+          harvestSeason: 'February-April, June-July',
+          suitableAreas: ['Jaffna', 'Puttalam', 'Anuradhapura', 'Hambantota', 'Mannar'],
+        }
+      } else if (productName.includes('tomato')) {
+        return {
+          plantingSeason: 'March-May, September-November',
+          harvestSeason: 'June-August, December-February',
+          suitableAreas: ['Nuwara Eliya', 'Matale', 'Kandy', 'Ratnapura', 'Kegalle'],
+        }
       }
-    } else if (vegetableName.includes('brinjal') || vegetableName.includes('eggplant')) {
-      return {
-        
-        plantingSeason: 'March-May, September-November',
-        harvestSeason: 'June-August, December-February',
-        suitableAreas: ['Anuradhapura', 'Polonnaruwa', 'Kurunegala', 'Puttalam', 'Hambantota'],
-       
-      }
-    } else if (vegetableName.includes('potato')) {
-      return {
- 
-        plantingSeason: 'January-March, August-September',
-        harvestSeason: 'April-June, November-December',
-        suitableAreas: ['Nuwara Eliya', 'Badulla', 'Welimada', 'Bandarawela', 'Haputale'],
-     
-      }
-    } else if (vegetableName.includes('onion')) {
-      return {
-   
-        plantingSeason: 'October-December, February-March',
-        harvestSeason: 'February-April, June-July',
-        suitableAreas: ['Jaffna', 'Puttalam', 'Anuradhapura', 'Hambantota', 'Mannar'],
-       
-      }
-    } else if (vegetableName.includes('tomato')) {
-      return {
-
-        plantingSeason: 'March-May, September-November',
-        harvestSeason: 'June-August, December-February',
-        suitableAreas: ['Nuwara Eliya', 'Matale', 'Kandy', 'Ratnapura', 'Kegalle'],
-   
+    } else {
+      // Fruit details
+      if (productName.includes('avocado')) {
+        return {
+          plantingSeason: 'March-May, September-October',
+          harvestSeason: 'July-September, January-March',
+          suitableAreas: ['Kandy', 'Matale', 'Nuwara Eliya', 'Badulla', 'Kegalle'],
+        }
+      } else if (productName.includes('banana')) {
+        return {
+          plantingSeason: 'Year-round',
+          harvestSeason: 'Year-round (12-15 months after planting)',
+          suitableAreas: ['Hambantota', 'Kurunegala', 'Kegalle', 'Gampaha', 'Kalutara'],
+        }
+      } else if (productName.includes('guava')) {
+        return {
+          plantingSeason: 'March-May, September-November',
+          harvestSeason: 'June-August, December-February',
+          suitableAreas: ['Anuradhapura', 'Polonnaruwa', 'Kurunegala', 'Puttalam', 'Hambantota'],
+        }
+      } else if (productName.includes('mango')) {
+        return {
+          plantingSeason: 'May-June',
+          harvestSeason: 'April-July',
+          suitableAreas: ['Kurunegala', 'Puttalam', 'Anuradhapura', 'Hambantota', 'Jaffna'],
+        }
+      } else if (productName.includes('papaya')) {
+        return {
+          plantingSeason: 'Year-round',
+          harvestSeason: 'Year-round (8-12 months after planting)',
+          suitableAreas: ['Matara', 'Galle', 'Hambantota', 'Kurunegala', 'Puttalam'],
+        }
+      } else if (productName.includes('watermelon')) {
+        return {
+          plantingSeason: 'March-May, September-November',
+          harvestSeason: 'June-August, December-February',
+          suitableAreas: ['Ampara', 'Monaragala', 'Hambantota', 'Anuradhapura', 'Polonnaruwa'],
+        }
+      } else if (productName.includes('pineapple')) {
+        return {
+          plantingSeason: 'March-May, September-October',
+          harvestSeason: 'April-June, October-December (18-24 months)',
+          suitableAreas: ['Gampaha', 'Kalutara', 'Ratnapura', 'Kegalle', 'Kurunegala'],
+        }
       }
     }
     
- 
+    // Default values if no specific details found
+    return {
+      plantingSeason: 'Year-round',
+      harvestSeason: 'Seasonal',
+      suitableAreas: ['Various regions across Sri Lanka'],
+    }
   }
 
-  if (!vegetable) {
+  if (!product) {
     return (
       <div className="more-details">
         <div className="more-details-container">
@@ -122,7 +167,8 @@ function MoreDetails() {
     )
   }
 
-  const details = getVegetableDetails(vegetable.name)
+  const isVegetable = !!vegetable
+  const details = getProductDetails(product.name, isVegetable)
 
   return (
     <div className="more-details">
@@ -131,21 +177,21 @@ function MoreDetails() {
       
         <div className="product-details">
           <div className="product-image-section">
-            <img src={vegetable.image} alt={vegetable.name} className="product-main-image" />
+            <img src={product.image} alt={product.name} className="product-main-image" />
             <div className="product-type-badge">
-              <img src={vegetable.icon} alt={vegetable.type} className="type-icon" />
-              <span className={`type-label ${vegetable.type}`}>
-                {vegetable.type === 'organic' ? 'Organic' : 'Conventional'}
+              <img src={product.icon} alt={product.type} className="type-icon" />
+              <span className={`type-label ${product.type}`}>
+                {product.type === 'organic' ? 'Organic' : 'Conventional'}
               </span>
             </div>
           </div>
 
           <div className="product-info-section">
-            <h1 className="product-title">{vegetable.name}</h1>
+            <h1 className="product-title">{product.name}</h1>
 
             <div className="product-description-section">
-              <h3>About This Vegetable</h3>
-              <p className="product-description">{vegetable.description}</p>
+              <h3>About This {isVegetable ? 'Vegetable' : 'Fruit'}</h3>
+              <p className="product-description">{product.description}</p>
               <div className="farming-summary">
                 <p><strong>Planting Season:</strong> {details.plantingSeason}</p>
                 <p><strong>Harvest Season:</strong> {details.harvestSeason}</p>
@@ -155,7 +201,7 @@ function MoreDetails() {
             <div className="product-features">
               <h3>Key Features</h3>
               <ul>
-                {vegetable.type === 'organic' ? (
+                {product.type === 'organic' ? (
                   <>
                     <li>Certified organic farming</li>
                     <li>No synthetic pesticides or fertilizers</li>

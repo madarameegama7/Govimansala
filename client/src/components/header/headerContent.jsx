@@ -32,7 +32,6 @@ function HeaderContent() {
         ) : (
           <>
             <button onClick={handleLogin}>Login</button>
-            <button onClick={handleSignup}>Sign Up</button>
           </>
         )}
       </div>

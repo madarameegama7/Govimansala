@@ -1,0 +1,127 @@
+/* Default Search Button */
+.search-btn-default {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.search-btn-default:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.search-btn-default .search-icon {
+  font-size: 1.1rem;
+}
+
+/* Header Search Trigger */
+.search-trigger-header {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.search-trigger-header:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.search-trigger-header .search-icon {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+.search-placeholder {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.search-shortcut {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Floating Search Button */
+.search-floating-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5);
+}
+
+.search-floating-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .search-trigger-header {
+    min-width: 150px;
+    padding: 6px 10px;
+  }
+  
+  .search-placeholder {
+    font-size: 0.85rem;
+  }
+  
+  .search-shortcut {
+    display: none;
+  }
+  
+  .search-floating-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-trigger-header {
+    min-width: 120px;
+  }
+  
+  .search-btn-default {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

@@ -197,6 +197,14 @@
   margin: 0;
 }
 
+/* Search Container for Vegetables */
+.vegetables-search-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  padding: 0 10px;
+}
+
 /* Section Styles for Vegetables */
 .vegetables-section {
   margin-bottom: 50px;
