@@ -4,6 +4,7 @@ import com.govimansala.auth.dto.AuthRequest;
 import com.govimansala.auth.dto.AuthResponse;
 import com.govimansala.auth.dto.RegisterRequest;
 import com.govimansala.auth.model.User;
+import com.govimansala.auth.model.Role;
 import com.govimansala.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,14 +18,19 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request, String clientSource) {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setPhone(request.getPhone());
         user.setAddress(request.getAddress());
-        user.setRole(request.getRole());
+        if ("mobile".equalsIgnoreCase(clientSource)) {
+            user.setRole(Role.FARMER);
+        } else {
+            user.setRole(request.getRole());
+        }
+
         userRepository.save(user);
         String token = jwtService.generateToken(user.getUserId());
         return new AuthResponse(token, user.getRole().name());
