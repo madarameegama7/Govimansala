@@ -22,7 +22,7 @@ function Login() {
       }else if(role==='BUYER'){
         navigate('/buyer');
       }else if(role === 'VENDOR'){
-        navigate('/vendor')
+        navigate('/vendor/home')
       }else if(role === 'ADMIN'){
         navigate('/admin')
       }
