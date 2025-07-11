@@ -55,6 +55,7 @@ function App() {
       <Route path="/contact" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <Contact/>
           <Footer/>
         </>
@@ -62,6 +63,7 @@ function App() {
       <Route path="/marketplace" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <Marketplace/>
           <Footer/>
         </>
@@ -69,6 +71,7 @@ function App() {
       <Route path="/vegetables" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <Vegetables/>
           <Footer/>
         </>
@@ -76,6 +79,7 @@ function App() {
       <Route path="/fruits" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <Fruits/>
           <Footer/>
         </>
@@ -83,6 +87,7 @@ function App() {
       <Route path="/moreDetails" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <MoreDetails/>
           <Footer/>
         </>
@@ -90,6 +95,7 @@ function App() {
       <Route path="/about" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <AboutUs/>
           <Footer/>
         </>
@@ -99,6 +105,7 @@ function App() {
       <Route path="/privacy-policy" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <PrivacyPolicy/>
           <Footer/>
         </>
@@ -106,6 +113,7 @@ function App() {
       <Route path="/farms" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <Farms/>
           <Footer/>
         </>
@@ -113,6 +121,7 @@ function App() {
       <Route path="/FarmPage" element={
         <>
           <HeaderContent/>
+          <HeroContent/>
           <FarmPage/>
           <Footer/>
         </>
