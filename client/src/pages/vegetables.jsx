@@ -57,7 +57,14 @@ function Vegetables() {
           
           {/* Search Section */}
           <div className="filter-section">
-           
+            <h4>Search</h4>
+            <input
+              type="text"
+              placeholder="Search vegetables..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
           </div>
           
           {/* Vegetables Filter Section */}
@@ -100,9 +107,9 @@ function Vegetables() {
         
         </div>
 
-        {/* Main Content */}
+      
         <div className={`vegetables-main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          {/* Search Bar */}
+       
           <div className="vegetables-search-container">
             <SimpleSearchBar 
               placeholder="Search vegetables..."
@@ -111,20 +118,20 @@ function Vegetables() {
             />
           </div>
 
-          {/* Header */}
+         
           <div className="vegetables-header">
             <h1>Fresh Vegetables</h1>
             <p>Discover fresh, quality vegetables from local farmers</p>
           </div>
 
-          {/* Vegetables Section */}
+       
           <div className="vegetables-section">
             <div className="vegetables-section-header">
               <h2>Available Vegetables</h2>
             </div>
             
             <div className="vegetables-products-grid">
-              {/* Fresh Carrots - Organic */}
+             
               {shouldShowVegetable('organic', 'Fresh Carrots') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -165,7 +172,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Fresh Brinjal - Organic */}
+              
               {shouldShowVegetable('organic', 'Fresh Brinjal') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -206,7 +213,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Organic Potatoes - Organic */}
+            
               {shouldShowVegetable('organic', 'Organic Potatoes') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -247,7 +254,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Red Onions - Conventional */}
+              
               {shouldShowVegetable('conventional', 'Red Onions') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -288,7 +295,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Tomatoes - Conventional */}
+           
               {shouldShowVegetable('conventional', 'Tomatoes') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -329,7 +336,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Organic Carrots - Organic */}
+           
               {shouldShowVegetable('organic', 'Organic Carrots') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -370,7 +377,6 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Fresh Potatoes - Conventional */}
               {shouldShowVegetable('conventional', 'Fresh Potatoes') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -411,7 +417,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Organic Brinjal - Organic */}
+           
               {shouldShowVegetable('organic', 'Organic Brinjal') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -452,7 +458,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Fresh Red Onions - Conventional */}
+        
               {shouldShowVegetable('conventional', 'Fresh Red Onions') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -493,7 +499,7 @@ function Vegetables() {
                 </div>
               )}
 
-              {/* Cherry Tomatoes - Organic */}
+       
               {shouldShowVegetable('organic', 'Cherry Tomatoes') && (
                 <div 
                   className="vegetables-product-card clickable" 

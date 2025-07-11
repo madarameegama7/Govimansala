@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../pages/styles/Vegetables.css'
 import SimpleSearchBar from '../components/search/SearchBar'
-// Import fruit images
 import avocadoImg from '../assets/Marketplace/Fruits/avacado.jpg'
 import bananaImg from '../assets/Marketplace/Fruits/banana.jpg'
 import guavaImg from '../assets/Marketplace/Fruits/guava.jpg'
@@ -10,7 +9,6 @@ import mangoImg from '../assets/Marketplace/Fruits/mango.jpeg'
 import papayaImg from '../assets/Marketplace/Fruits/papaya.jpeg'
 import watermelonImg from '../assets/Marketplace/Fruits/watermelon.jpg'
 import pineappleImg from '../assets/Marketplace/Fruits/pineapple.jpeg'
-// Import organic and non-organic icons
 import organicIcon from '../assets/Marketplace/organic.png'
 import nonOrganicIcon from '../assets/Marketplace/non-organic.jpg'
 
@@ -20,7 +18,7 @@ function Fruits() {
   const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
 
-  // All fruit names for search suggestions
+
   const allFruitNames = [
     'Avocado', 'Bananas', 'Guava', 'Mango', 'Papaya', 'Watermelon', 'Pineapple',
     'Organic', 'Conventional', 'Fresh'
@@ -30,21 +28,18 @@ function Fruits() {
     setSearchTerm(term)
   }
 
-  // Helper function to check if fruit should be shown based on filter
   const shouldShowFruit = (type, name) => {
     const matchesFilter = selectedFilter === 'all' || selectedFilter === type
     const matchesSearch = name.toLowerCase().includes(searchTerm.toLowerCase())
     return matchesFilter && matchesSearch
   }
 
-  // Function to handle navigation to more details page
   const handleNavigateToDetails = (fruitData) => {
     navigate('/moreDetails', { state: { fruit: fruitData } })
   }
 
   return (
     <div className="marketplace">
-      {/* Sidebar Toggle Button - positioned below logo */}
       <button 
         className="sidebar-toggle-below-logo"
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -53,12 +48,12 @@ function Fruits() {
       </button>
       
       <div className="marketplace-container">
-        {/* Sidebar */}
+ 
         <div className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
           <h3>Filter Products</h3>
          
           
-          {/* Fruits Filter Section */}
+        
           <div className="filter-section">
             <h4>Type Filter</h4>
             <div className="type-filters">
@@ -96,9 +91,9 @@ function Fruits() {
           </div>
         </div>
 
-        {/* Main Content */}
+   
         <div className={`vegetables-main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          {/* Search Bar */}
+     
           <div className="vegetables-search-container">
             <SimpleSearchBar 
               placeholder="Search fruits..."
@@ -107,20 +102,20 @@ function Fruits() {
             />
           </div>
 
-          {/* Header */}
+      
           <div className="vegetables-header">
             <h1>Fresh Fruits</h1>
             <p>Discover fresh, quality fruits from local farmers</p>
           </div>
 
-          {/* Fruits Section */}
+     
           <div className="vegetables-section">
             <div className="vegetables-section-header">
               <h2>Available Fruits</h2>
             </div>
             
             <div className="vegetables-products-grid">
-              {/* Organic Avocado - Organic */}
+        
               {shouldShowFruit('organic', 'Organic Avocado') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -171,7 +166,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Fresh Bananas - Conventional */}
               {shouldShowFruit('conventional', 'Fresh Bananas') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -222,7 +216,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Organic Guava - Organic */}
               {shouldShowFruit('organic', 'Organic Guava') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -273,7 +266,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Fresh Mango - Conventional */}
               {shouldShowFruit('conventional', 'Fresh Mango') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -324,7 +316,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Organic Papaya - Organic */}
               {shouldShowFruit('organic', 'Organic Papaya') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -375,7 +366,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Fresh Watermelon - Conventional */}
               {shouldShowFruit('conventional', 'Fresh Watermelon') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -426,7 +416,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Fresh Pineapple - Conventional */}
               {shouldShowFruit('conventional', 'Fresh Pineapple') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -477,7 +466,6 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Organic Mango - Organic */}
               {shouldShowFruit('organic', 'Organic Mango') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -528,7 +516,7 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Fresh Papaya - Conventional */}
+              
               {shouldShowFruit('conventional', 'Fresh Papaya') && (
                 <div 
                   className="vegetables-product-card clickable" 
@@ -579,7 +567,7 @@ function Fruits() {
                 </div>
               )}
 
-              {/* Organic Bananas - Organic */}
+             
               {shouldShowFruit('organic', 'Organic Bananas') && (
                 <div 
                   className="vegetables-product-card clickable" 
