@@ -1,8 +1,16 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HeaderContent from "./components/header/headerContent";
-import HeroContent from "./components/hero/heroContent";
-import Footer from "./components/footer/footer";
+import "../index.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
+// Components
+import PrivateRoute from "./components/privateRoute";
+
+// Layouts
+import PublicLayout from "./layouts/PublicLayout";
+import VendorLayout from "./layouts/VendorLayout";
+
+// Pages
 import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Marketplace from "./pages/Marketplace";
@@ -11,218 +19,86 @@ import Fruits from "./pages/fruits";
 import MoreDetails from "./pages/MoreDetails";
 import Home from "./pages/Home";
 import NewHome from "./pages/DefaultHomePage";
-import "../index.css";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import PrivateRoute from "./components/privateRoute";
 import Buyer from "./pages/Buyer/Buyer";
 import Admin from "./pages/Admin/Admin";
 import Vendor from "./pages/Vendor/Vendor";
 import Driver from "./pages/Driver/Driver";
 import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
+import VendorOrder from "./pages/Vendor/VendorOrder";
+import VendorMarket from "./pages/Vendor/VendorMarketPlace";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <NewHome />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/home"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Home />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/defaultHome"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <NewHome />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Contact />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/marketplace"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Marketplace />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/vegetables"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Vegetables />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/fruits"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Fruits />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/moreDetails"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <MoreDetails />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <AboutUs />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Login />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <SignUp />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/privacy-policy"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <PrivacyPolicy />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/farms"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <Farms />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/FarmPage"
-          element={
-            <>
-              <HeaderContent />
-              <HeroContent />
-              <FarmPage />
-              <Footer />
-            </>
-          }
-        />
+        {/* PUBLIC ROUTES */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<NewHome />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/defaultHome" element={<NewHome />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/vegetables" element={<Vegetables />} />
+          <Route path="/fruits" element={<Fruits />} />
+          <Route path="/moreDetails" element={<MoreDetails />} />
+          <Route path="/farms" element={<Farms />} />
+          <Route path="/FarmPage" element={<FarmPage />} />
+        </Route>
 
+        {/* VENDOR ROUTES */}
+        <Route
+          element={
+            <PrivateRoute allowedRoles={["VENDOR"]}>
+              <VendorLayout />
+            </PrivateRoute>
+          }
+        >
+          <Route path="/vendor" element={<Vendor />} />
+          <Route path="/vendor/home" element={<NewHome />} />
+          <Route path="/vendor/marketplace" element={<VendorMarket />} />
+          <Route path="/vendor/order" element={<VendorOrder />} />
+          <Route path="/vendor/about" element={<AboutUs />} />
+          <Route path="/vendor/contact" element={<Contact />} />
+          {/* Add more vendor-only routes here */}
+        </Route>
+
+        {/* BUYER ROUTE */}
         <Route
           path="/buyer"
           element={
             <PrivateRoute allowedRoles={["BUYER"]}>
-              <HeaderContent />
-              <HeroContent />
+              <PublicLayout />
               <Buyer />
-              <Footer />
             </PrivateRoute>
           }
         />
-        <Route
-          path="/vendor"
-          element={
-            <PrivateRoute allowedRoles={["VENDOR"]}>
-              <HeaderContent />
-              <HeroContent />
-              <Vendor />
-              <Footer />
-            </PrivateRoute>
-          }
-        />
+
+        {/* ADMIN ROUTE */}
         <Route
           path="/admin"
           element={
             <PrivateRoute allowedRoles={["ADMIN"]}>
-              <HeaderContent />
-              <HeroContent />
+              <PublicLayout />
               <Admin />
-              <Footer />
             </PrivateRoute>
           }
         />
+
+        {/* DRIVER ROUTE */}
         <Route
           path="/driver"
           element={
             <PrivateRoute allowedRoles={["DRIVER"]}>
-              <HeaderContent />
-              <HeroContent />
+              <PublicLayout />
               <Driver />
-              <Footer />
             </PrivateRoute>
           }
         />
