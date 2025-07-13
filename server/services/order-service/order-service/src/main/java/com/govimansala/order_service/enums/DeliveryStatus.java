@@ -1,8 +1,10 @@
-package com.govimansala.order_service.enum;
+package com.govimansala.order_service.enums;
 
 public enum DeliveryStatus {
     PENDING,
     IN_TRANSIT,
     DELIVERED,
-    FAILED
+    FAILED,
+    RIDER_ASSIGNED,
+    RIDER_PICKED
 }
