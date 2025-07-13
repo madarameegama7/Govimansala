@@ -3,12 +3,13 @@ package com.govimansala.order_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
-@Table(name = "buyer_cart")
+@Table(name = "carts")
 @Getter
 @Setter
-public class BuyerCart {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
@@ -16,5 +17,5 @@ public class BuyerCart {
     private int userId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<BuyerCartItem> items = new ArrayList<>();
+    private List<CartItem> items;
 }
