@@ -1,5 +1,6 @@
 package com.govimansala.order_service.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -17,5 +18,6 @@ public class Cart {
     private int userId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<CartItem> items;
 }
