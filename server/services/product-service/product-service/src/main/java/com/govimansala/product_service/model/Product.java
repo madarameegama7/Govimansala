@@ -9,15 +9,31 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product{
+
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productId;
-    private int userId;
+    @Column(name = "product_id")
+    private Integer  productId;
+
+    @Column(name = "user_id")
+    private Integer  userId;
+
+    @Column(name = "name")
     private String productName;
+
+    @Column(name = "category")
     private String productCategory;
-    private double productPrice;
-    private int productQuantity;
+
+    @Column(name = "price")
+    private Double productPrice;
+
+    @Column(name = "stock_quantity")
+    private Integer  productQuantity;
+
+    @Column(name = "description")
     private String productDescription;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 }

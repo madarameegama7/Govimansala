@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../pages/styles/Marketplace.css'
+import SimpleSearchBar from '../components/search/SearchBar'
 // Import vegetable images
 import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
 import brinjal from '../assets/Marketplace/Vegetables/Brinjal.jpg'
@@ -23,16 +24,32 @@ function Marketplace() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [selectedVegFilter, setSelectedVegFilter] = useState('all')
   const [selectedFruitFilter, setSelectedFruitFilter] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('')
   const navigate = useNavigate()
 
-  // Filter vegetables based on selected filter
-  const shouldShowVegetable = (type) => {
-    return selectedVegFilter === 'all' || selectedVegFilter === type
+  // All products for search suggestions
+  const allProductNames = [
+    'Carrots', 'Brinjal', 'Potatoes', 'Red Onions', 'Tomatoes',
+    'Avocado', 'Bananas', 'Guava', 'Mango', 'Papaya', 'Watermelon', 'Pineapple',
+    'Organic', 'Conventional', 'Fresh'
+  ]
+
+  // Filter vegetables based on selected filter and search term
+  const shouldShowVegetable = (type, name) => {
+    const matchesFilter = selectedVegFilter === 'all' || selectedVegFilter === type
+    const matchesSearch = searchTerm === '' || name.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesFilter && matchesSearch
   }
 
-  // Filter fruits based on selected filter
-  const shouldShowFruit = (type) => {
-    return selectedFruitFilter === 'all' || selectedFruitFilter === type
+  // Filter fruits based on selected filter and search term
+  const shouldShowFruit = (type, name) => {
+    const matchesFilter = selectedFruitFilter === 'all' || selectedFruitFilter === type
+    const matchesSearch = searchTerm === '' || name.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchesFilter && matchesSearch
+  }
+
+  const handleSearch = (term) => {
+    setSearchTerm(term)
   }
 
   const scrollLeft = (containerId) => {
@@ -141,6 +158,15 @@ function Marketplace() {
 
         {/* Main Content */}
         <div className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+          {/* Search Bar */}
+          <div className="marketplace-search-container">
+            <SimpleSearchBar 
+              placeholder="Search fruits, vegetables..."
+              onSearch={handleSearch}
+              data={allProductNames}
+            />
+          </div>
+
           {/* Header */}
           <div className="marketplace-header">
             <h1>Fresh Marketplace</h1>
@@ -171,7 +197,7 @@ function Marketplace() {
             
             <div className="products-scroll" id="vegetables-container">
               {/* Fresh Carrots - Organic */}
-              {shouldShowVegetable('organic') && (
+              {shouldShowVegetable('organic', 'Fresh Carrots') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={carrotImg} alt="Fresh Carrots" />
@@ -182,14 +208,14 @@ function Marketplace() {
                       <img src={organicIcon} alt="Organic" className="organic-icon" />
                     </h3>
                     <span className="product-type organic">Organic</span>
-                    <p className="product-description">Fresh organic carrots, perfect for salads and cooking.</p>
+                    <p className="product-description">Fresh organic carrots, perfect for salads.</p>
                     <button className="add-to-cart-btn">View More Details</button>
                   </div>
                 </div>
               )}
 
               {/* Fresh Brinjal - Organic */}
-              {shouldShowVegetable('organic') && (
+              {shouldShowVegetable('organic', 'Fresh Brinjal') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={brinjal} alt="Fresh Brinjal" />
@@ -207,7 +233,7 @@ function Marketplace() {
               )}
 
               {/* Organic Potatoes - Organic */}
-              {shouldShowVegetable('organic') && (
+              {shouldShowVegetable('organic', 'Organic Potatoes') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={potatoes} alt="Organic Potatoes" />
@@ -225,7 +251,7 @@ function Marketplace() {
               )}
 
               {/* Red Onions - Conventional */}
-              {shouldShowVegetable('conventional') && (
+              {shouldShowVegetable('conventional', 'Red Onions') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={redOnion} alt="Red Onions" />
@@ -243,7 +269,7 @@ function Marketplace() {
               )}
 
               {/* Tomatoes - Conventional (4 cards) */}
-              {shouldShowVegetable('conventional') && (
+              {shouldShowVegetable('conventional', 'Tomatoes') && (
                 <>
                   <div className="product-card">
                     <div className="product-image">
@@ -312,7 +338,9 @@ function Marketplace() {
           {/* Fruits Section */}
           <div className="section">
             <div className="section-header">
-              <h2>Fruits</h2>
+              <h2 className="clickable-heading" onClick={() => navigate('/fruits')}>
+                Fruits
+              </h2>
               <div className="scroll-controls">
                 <button 
                   className="scroll-btn scroll-left"
@@ -331,7 +359,7 @@ function Marketplace() {
             
             <div className="products-scroll" id="fruits-container">
               {/* Organic Apples - Organic */}
-              {shouldShowFruit('organic') && (
+              {shouldShowFruit('organic', 'Pineapple') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={pineappleImg} alt="Pineapple" />
@@ -349,7 +377,7 @@ function Marketplace() {
               )}
 
               {/* Fresh Bananas - Conventional */}
-              {shouldShowFruit('conventional') && (
+              {shouldShowFruit('conventional', 'Bananas') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={bananaImg} alt="Fresh Bananas" />
@@ -367,7 +395,7 @@ function Marketplace() {
               )}
 
               {/* Organic Oranges - Organic */}
-              {shouldShowFruit('organic') && (
+              {shouldShowFruit('organic', 'Avocado') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={avocadoImg} alt="Organic Oranges" />
@@ -385,7 +413,7 @@ function Marketplace() {
               )}
 
               {/* Watermelon - Conventional */}
-              {shouldShowFruit('conventional') && (
+              {shouldShowFruit('conventional', 'Watermelon') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={watermelonImg} alt="Watermelon" />
@@ -403,7 +431,7 @@ function Marketplace() {
               )}
 
               {/* Organic Guava - Organic */}
-              {shouldShowFruit('organic') && (
+              {shouldShowFruit('organic', 'Guava') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={guavaImg} alt="Organic Grapes" />
@@ -421,7 +449,7 @@ function Marketplace() {
               )}
 
               {/* Papaya - Conventional */}
-              {shouldShowFruit('conventional') && (
+              {shouldShowFruit('conventional', 'Papaya') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={papayaImg} alt="Pineapple" />
@@ -439,7 +467,7 @@ function Marketplace() {
               )}
 
               {/* Organic Avacado - Organic */}
-              {shouldShowFruit('organic') && (
+              {shouldShowFruit('organic', 'Avocado') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={avocadoImg} alt="Organic Blueberries" />
@@ -457,7 +485,7 @@ function Marketplace() {
               )}
 
               {/* Mangoes - Conventional */}
-              {shouldShowFruit('conventional') && (
+              {shouldShowFruit('conventional', 'Mango') && (
                 <div className="product-card">
                   <div className="product-image">
                     <img src={mangoImg} alt="Mangoes" />

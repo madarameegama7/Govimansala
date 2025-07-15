@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ProductService{
     private final ProductRepository productRepository;
 
-    public Product addProdct(Product product){
+    public Product addProduct(Product product){
 
         return productRepository.save(product);
 
@@ -30,7 +30,34 @@ public class ProductService{
         return productRepository.findByUserId(userId);
     }
     public void deleteProduct(int id){
-        productRepository.deleteByt
+
+        productRepository.deleteById(id);
+    }
+    public Product updateProduct(int id, Product updatedProduct){
+        Product existing = productRepository.findById(id).orElseThrow();
+
+        if (updatedProduct.getProductName() != null) {
+            existing.setProductName(updatedProduct.getProductName());
+        }
+
+        if (updatedProduct.getProductCategory() != null) {
+            existing.setProductCategory(updatedProduct.getProductCategory());
+        }
+
+        if (updatedProduct.getProductPrice() != null) {
+            existing.setProductPrice(updatedProduct.getProductPrice());
+        }
+
+        if (updatedProduct.getProductQuantity() != null) {
+            existing.setProductQuantity(updatedProduct.getProductQuantity());
+        }
+
+        if (updatedProduct.getProductDescription() != null) {
+            existing.setProductDescription(updatedProduct.getProductDescription());
+        }
+
+        return productRepository.save(existing);
+
     }
 
 
