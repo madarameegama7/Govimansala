@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Components
 import PrivateRoute from "./components/privateRoute";
+import { DriverLocationProvider } from "./contexts/DriverLocationContext";
 
 // Layouts
 import PublicLayout from "./layouts/PublicLayout";
@@ -25,7 +26,9 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Buyer from "./pages/Buyer/Buyer";
 import Admin from "./pages/Admin/Admin";
 import Vendor from "./pages/Vendor/Vendor";
-import Driver from "./pages/Driver/Driver";
+import Driver from "./pages/Driver/DriverHome";
+import OrderDashboard from "./pages/Driver/OrderDashboard";
+import NavigationPage from "./pages/Driver/NavigationPage";
 import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
@@ -40,6 +43,16 @@ function App() {
           <Route path="/" element={<NewHome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/defaultHome" element={<NewHome />} />
+          <Route path="/driver-home" element={
+            <DriverLocationProvider>
+              <Driver />
+            </DriverLocationProvider>
+          } />
+          <Route path="/orderdashboard" element={
+            <DriverLocationProvider>
+              <OrderDashboard />
+            </DriverLocationProvider>
+          } />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
@@ -99,6 +112,42 @@ function App() {
             <PrivateRoute allowedRoles={["DRIVER"]}>
               <PublicLayout />
               <Driver />
+            </PrivateRoute>
+          }
+        />
+        
+        {/* DRIVER HOME ROUTE */}
+        <Route
+          path="/driver-home"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            </PrivateRoute>
+          }
+        />
+        
+        {/* ORDER DASHBOARD ROUTE */}
+        <Route
+          path="/order-dashboard"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <OrderDashboard />
+              </DriverLocationProvider>
+            </PrivateRoute>
+          }
+        />
+        
+        {/* NAVIGATION PAGE ROUTE */}
+        <Route
+          path="/driver-navigation"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <NavigationPage />
+              </DriverLocationProvider>
             </PrivateRoute>
           }
         />
