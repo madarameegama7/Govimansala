@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "../index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Components
@@ -30,6 +29,11 @@ import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
 import VendorMarket from "./pages/Vendor/VendorMarketPlace";
+import BuyerAnalytics from "./pages/analytics";
+import Orders from "./pages/orders";
+import EditProfile from "./pages/editProfile"; 
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -51,6 +55,11 @@ function App() {
           <Route path="/moreDetails" element={<MoreDetails />} />
           <Route path="/farms" element={<Farms />} />
           <Route path="/FarmPage" element={<FarmPage />} />
+          <Route path="/BuyerAnalytics" element={<BuyerAnalytics />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/EditProfile" element={<EditProfile />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         {/* VENDOR ROUTES */}

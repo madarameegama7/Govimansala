@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +37,3 @@ public class Product {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 }
-

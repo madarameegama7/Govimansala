@@ -14,10 +14,12 @@ public class ProductService{
     private final ProductRepository productRepository;
 
     public Product addProduct(Product product){
+
         return productRepository.save(product);
 
     }
     public List<Product> getAllProducts(){
+
         return productRepository.findAll();
     }
 
@@ -28,6 +30,7 @@ public class ProductService{
         return productRepository.findByUserId(userId);
     }
     public void deleteProduct(int id){
+
         productRepository.deleteById(id);
     }
     public Product updateProduct(int id, Product updatedProduct){
@@ -54,6 +57,7 @@ public class ProductService{
         }
 
         return productRepository.save(existing);
+
     }
 
 

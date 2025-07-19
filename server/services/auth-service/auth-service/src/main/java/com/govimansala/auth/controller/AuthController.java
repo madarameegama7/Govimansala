@@ -16,6 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
+
     public ResponseEntity<AuthResponse> register(
             @RequestBody RegisterRequest request,
             @RequestHeader(value = "X-Client-Source", required = false) String clientSource) {
@@ -26,10 +27,12 @@ public class AuthController {
 
         AuthResponse response = authService.register(request, clientSource);
         return ResponseEntity.ok(response);
+
     }
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) {
+
         return authService.authenticate(request);
     }
 }
