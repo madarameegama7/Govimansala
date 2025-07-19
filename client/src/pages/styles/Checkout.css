@@ -1,0 +1,395 @@
+.checkout-page {
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+
+.checkout-hero {
+  background: url('../public/pageNameBackground.png') no-repeat center;
+  background-size: cover;
+  text-align: center;
+  padding: 60px 20px;
+  color: #0A5446;
+  position: relative;
+  height: 50px; /* Adjusted for better visibility */
+}
+
+.checkout-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Header Styles */
+.checkout-header {
+  background: linear-gradient(135deg, #f4e4a6 0%, #e6d77a 100%);
+  padding: 20px 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.breadcrumb .separator {
+  margin: 0 8px;
+}
+
+.breadcrumb .current {
+  color: #333;
+  font-weight: 500;
+}
+
+.checkout-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.header-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  opacity: 0.8;
+}
+
+.vegetable-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.vegetable-icon.tomato {
+  background: radial-gradient(circle at 30% 30%, #ff6b6b, #d63031);
+}
+
+.vegetable-icon.pepper {
+  background: radial-gradient(circle at 30% 30%, #00b894, #00a085);
+}
+
+.vegetable-icon.leafy {
+  background: radial-gradient(circle at 30% 30%, #55a3ff, #2d3436);
+}
+
+/* Main Content */
+.checkout-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px 8px 0 0;
+  margin-top: -5px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Styles */
+.section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.subsection {
+  margin-bottom: 20px;
+}
+
+.subsection-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Address Options */
+.address-option {
+  margin-bottom: 15px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark {
+  background: #333;
+  border-color: #333;
+  color: white;
+}
+
+.checkbox-label {
+  font-weight: 500;
+}
+
+/* Default Address Display */
+.default-address {
+  background: #f0f8e8;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 1px solid #e8f5e8;
+}
+
+.address-header {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.address-details {
+  color: #666;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.address-phone {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Different Address Form */
+.different-address-form {
+  margin-top: 15px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.form-group input::placeholder {
+  color: #999;
+}
+
+/* Payment Method */
+.payment-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+}
+
+.payment-select {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f0f8e8;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  appearance: none;
+  cursor: pointer;
+}
+
+.payment-select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+}
+
+.payment-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Order Summary */
+.order-summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  color: #333;
+}
+
+.summary-row.total {
+  border-top: 1px solid #dee2e6;
+  margin-top: 10px;
+  padding-top: 15px;
+  font-weight: 600;
+}
+
+.summary-value {
+  font-weight: 500;
+}
+
+.total-amount {
+  color: #28a745;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Pay Button */
+.pay-button {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px 24px;
+  background: #b8d4a8;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.pay-button:hover {
+  background: #a8c498;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pay-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .checkout-container {
+    margin: 0;
+  }
+  
+  .checkout-header {
+    padding: 15px 20px;
+  }
+  
+  .checkout-title {
+    font-size: 24px;
+  }
+  
+  .header-decoration {
+    width: 150px;
+  }
+  
+  .vegetable-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .checkout-content {
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+  }
+  
+  .default-address {
+    padding: 15px;
+  }
+  
+  .different-address-form {
+    padding: 15px;
+  }
+  
+  .order-summary {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-header {
+    padding: 15px;
+  }
+  
+  .checkout-content {
+    padding: 15px;
+  }
+  
+  .header-decoration {
+    display: none;
+  }
+  
+  .pay-button {
+    max-width: 100%;
+  }
+}
