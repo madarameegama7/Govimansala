@@ -1,5 +1,5 @@
 import React from 'react';
-import '../pages/styles/analytics.css';
+import './BuyerAnalytics.css';
 
 const BuyerAnalytics = () => {
   // Sample data for the chart
