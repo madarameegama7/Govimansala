@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Minus, Plus, User } from 'lucide-react';
-import '../pages/styles/cart.css';
+import './Cart.css';
 import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([
@@ -122,11 +123,11 @@ const Cart = () => {
               <span className="summary-value total-amount">Rs.{totalAmount.toFixed(2)}</span>
             </div>
             
-            <Link to="/checkout">
-            <button className="checkout-btn">
+            <NavLink to="/buyer/checkout">
+             <button className="checkout-btn">
               Proceed to Checkout
             </button>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
