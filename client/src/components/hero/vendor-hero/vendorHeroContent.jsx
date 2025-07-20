@@ -22,8 +22,8 @@ function VendorHeroContent() {
             MARKETPLACE
           </NavLink>
           <NavLink to="/vendor/order">MY ORDERS</NavLink>
+          <NavLink to="/vendor/analytics">ANALYTICS</NavLink>
           <NavLink to="/vendor/about">ABOUT US</NavLink>
-          <NavLink to="/vendor/contact">CONTACT</NavLink>
         </nav>
       </div>
     </>

@@ -31,6 +31,7 @@ import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
 import VendorMarket from "./pages/Vendor/VendorMarketPlace";
 import BuyerAnalytics from "./pages/Buyer/Analytics";
+import VendorAnalytics from "./pages/Vendor/VendorAnalytics";
 import Orders from "./pages/Buyer/Orders";
 import EditProfile from "./pages/Buyer/EditProfile";
 import Cart from "./pages/Buyer/Cart";
@@ -72,6 +73,7 @@ function App() {
           <Route path="/vendor/order" element={<VendorOrder />} />
           <Route path="/vendor/about" element={<AboutUs />} />
           <Route path="/vendor/contact" element={<Contact />} />
+          <Route path="/vendor/analytics" element={<VendorAnalytics />} />
           {/* Add more vendor-only routes here */}
         </Route>
 
