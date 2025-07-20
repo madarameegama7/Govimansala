@@ -15,4 +15,15 @@ public class CartService {
     public Cart addItemToCart(Cart cart) {
         return cartRepository.save(cart);
     }
+    //Checkout from cart,
+    /*getOrder,
+    getCartByCartId,
+    getOrderByUserId,
+    getAllOrderbyRestaurantId,
+    getAllOrdersForAdmin,
+    getOrderTotal,
+    updateCartByCartId,
+    deleteOrder,
+
+     */
 }
