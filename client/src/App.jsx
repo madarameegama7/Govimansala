@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "../index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Components
@@ -10,6 +9,7 @@ import { DriverLocationProvider } from "./contexts/DriverLocationContext";
 // Layouts
 import PublicLayout from "./layouts/PublicLayout";
 import VendorLayout from "./layouts/VendorLayout";
+import BuyerLayout from "./layouts/BuyerLayout";
 
 // Pages
 import Contact from "./pages/Contact";
@@ -34,6 +34,12 @@ import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
 import VendorMarket from "./pages/Vendor/VendorMarketPlace";
+import BuyerAnalytics from "./pages/Buyer/Analytics";
+import VendorAnalytics from "./pages/Vendor/VendorAnalytics";
+import Orders from "./pages/Buyer/Orders";
+import EditProfile from "./pages/Buyer/EditProfile";
+import Cart from "./pages/Buyer/Cart";
+import Checkout from "./pages/Buyer/Checkout";
 
 function App() {
   return (
@@ -59,11 +65,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/Marketplace" element={<Marketplace />} />
           <Route path="/vegetables" element={<Vegetables />} />
           <Route path="/fruits" element={<Fruits />} />
           <Route path="/moreDetails" element={<MoreDetails />} />
-          <Route path="/farms" element={<Farms />} />
+          <Route path="/Farms" element={<Farms />} />
           <Route path="/FarmPage" element={<FarmPage />} />
         </Route>
 
@@ -81,6 +87,7 @@ function App() {
           <Route path="/vendor/order" element={<VendorOrder />} />
           <Route path="/vendor/about" element={<AboutUs />} />
           <Route path="/vendor/contact" element={<Contact />} />
+          <Route path="/vendor/analytics" element={<VendorAnalytics />} />
           {/* Add more vendor-only routes here */}
         </Route>
 
@@ -89,11 +96,20 @@ function App() {
           path="/buyer"
           element={
             <PrivateRoute allowedRoles={["BUYER"]}>
-              <PublicLayout />
-              <Buyer />
+              <BuyerLayout />
             </PrivateRoute>
           }
-        />
+        >
+          <Route path="Home" element={<NewHome />} />
+          <Route path="Marketplace" element={<Marketplace />} />
+          <Route path="Farms" element={<Farms />} />
+          <Route path="FarmPage" element={<FarmPage />} />
+          <Route path="BuyerAnalytics" element={<BuyerAnalytics />} />
+          <Route path="Orders" element={<Orders />} />
+          <Route path="EditProfile" element={<EditProfile />} />
+          <Route path="Cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+        </Route>
 
         {/* ADMIN ROUTE */}
         <Route

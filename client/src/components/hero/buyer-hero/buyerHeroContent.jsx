@@ -1,9 +1,9 @@
 import React from "react";
-import "./vendorHeroContent.css";
-import logo from "../../../assets/homePage/logo.png";
+import "./buyerHeroContent.css";
+import logo from "./logo.png";
 import { NavLink, useLocation } from "react-router-dom";
 
-function VendorHeroContent() {
+function HeroContent() {
   const location = useLocation();
   const isMarketplaceSection = ['/marketplace', '/vegetables', '/fruits'].includes(location.pathname);
 
@@ -14,20 +14,21 @@ function VendorHeroContent() {
         <img src={logo} className="hero-logo" alt="Logo" />
         </div>
         <nav className="hero-nav">
-          <NavLink to="/vendor/home" end>HOME</NavLink>
+          <NavLink to="/buyer/Home" end>HOME</NavLink>
           <NavLink 
-            to="/vendor/marketplace" 
+            to="/buyer/Marketplace" 
             className={({ isActive }) => isActive || isMarketplaceSection ? 'active' : ''}
           >
             MARKETPLACE
           </NavLink>
-          <NavLink to="/vendor/order">MY ORDERS</NavLink>
-          <NavLink to="/vendor/analytics">ANALYTICS</NavLink>
-          <NavLink to="/vendor/about">ABOUT US</NavLink>
+          <NavLink to="/buyer/Farms">FARMS</NavLink>
+          <NavLink to="/buyer/Orders">ORDERS</NavLink>
+          <NavLink to="/buyer/BuyerAnalytics">ANALYTICS</NavLink>
+          <NavLink to="/buyer/Cart">CART</NavLink>
         </nav>
       </div>
     </>
   );
 }
 
-export default VendorHeroContent;
+export default HeroContent;
