@@ -20,7 +20,7 @@ function Login() {
       if(role==='FARMER'){
         navigate('/farmer');
       }else if(role==='BUYER'){
-        navigate('/buyer');
+        navigate('/buyer/Home');
       }else if(role === 'VENDOR'){
         navigate('/vendor/home')
       }else if(role === 'ADMIN'){
