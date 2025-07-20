@@ -13,130 +13,244 @@ const OrderDashboard = () => {
   // Sample data with multi-location orders
   const [orders, setOrders] = useState([
     {
-      id: 1,
-      orderNumber: 'ORD-2024-001',
-      customerName: 'Kamal Perera',
-      customerPhone: '+94 71 234 5678',
-      customerAvatar: 'KP',
-      status: 'pending',
+      id: 'ORD001',
+      orderNumber: 'GOV-2024-001',
+      customerName: 'Kamatha Restaurant',
+      customerPhone: '+94 77 456 7890',
+      customerAvatar: 'KR',
+      status: 'assigned',
       priority: 'high',
-      deliveryTime: '2:30 PM',
+      deliveryTime: '2:00 PM',
+      pickupTime: '2024-07-19 09:00',
+      deliveryTimeSlot: '2024-07-19 14:00',
+      totalWeight: '200kg',
+      totalDistance: '45km',
+      estimatedTime: '4.5 hours',
       locations: [
         {
           type: 'pickup',
-          name: 'Green Valley Farm',
-          address: '123 Farm Road, Kandy',
+          name: 'Karunarathna Farm',
+          address: '123 Farm Road, Matale',
+          contactPhone: '+94 77 123 4567',
+          coordinates: { lat: 7.4675, lng: 80.6234 },
+          items: 'Tomatoes 80kg',
+          distance: 0
+        },
+        {
+          type: 'pickup', 
+          name: 'Green Farm',
+          address: '456 Valley Road, Badulla',
+          contactPhone: '+94 77 234 5678',
           coordinates: { lat: 7.2906, lng: 80.6337 },
-          distance: 0 // Starting point
+          items: 'Tomatoes 70kg',
+          distance: 15
         },
         {
           type: 'pickup',
-          name: 'Organic Paradise',
-          address: '456 Hill Street, Peradeniya',
-          coordinates: { lat: 7.2541, lng: 80.5976 },
-          distance: 8.5 // km from first pickup
+          name: 'Ape Kamatha Farm',
+          address: '789 Market Street, KAndy',
+          contactPhone: '+94 77 345 6789', 
+          coordinates: { lat: 6.9497, lng: 80.7891 },
+          items: 'Tomatoes 50kg',
+          distance: 25
         },
         {
           type: 'delivery',
-          name: 'Kamal Perera',
-          address: '789 Temple Street, Colombo 03',
+          name: 'Kamatha Restaurant',
+          address: '321 Restaurant Lane, Colombo',
+          contactPhone: '+94 77 456 7890',
           coordinates: { lat: 6.9271, lng: 79.8612 },
-          distance: 115 // km from last pickup
+          items: 'All Tomatoes 200kg',
+          distance: 95
         }
       ],
       products: [
-        { name: 'Organic Carrots', quantity: '2 kg', price: 450, location: 'Green Valley Farm' },
-        { name: 'Fresh Tomatoes', quantity: '1 kg', price: 280, location: 'Green Valley Farm' },
-        { name: 'Lettuce', quantity: '1 head', price: 180, location: 'Organic Paradise' }
+        { name: 'Tomatoes', quantity: '80 kg', price: 4800, location: 'Karunarathna Farm' },
+        { name: 'Tomatoes', quantity: '70 kg', price: 4200, location: 'Green Farm' },
+        { name: 'Tomatoes', quantity: '50 kg', price: 3000, location: 'Ape Kamatha Farm' }
       ],
-      subtotal: 910,
-      deliveryFee: 250,
-      totalWithDelivery: 1160,
-      totalDistance: 123.5,
-      estimatedTime: '3h 15min',
-      specialInstructions: 'Please call before delivery. Handle vegetables carefully.'
+      subtotal: 12000,
+      deliveryFee: 450,
+      totalWithDelivery: 12450,
+      specialInstructions: 'Handle vegetables carefully. Restaurant delivery - use rear entrance.'
     },
     {
-      id: 2,
-      orderNumber: 'ORD-2024-002',
-      customerName: 'Nimal Silva',
-      customerPhone: '+94 77 987 6543',
-      customerAvatar: 'NS',
-      status: 'approved',
+      id: 'ORD002',
+      orderNumber: 'GOV-2024-002',
+      customerName: 'City Supermarket',
+      customerPhone: '+94 77 666 5678',
+      customerAvatar: 'CS',
+      status: 'pending',
       priority: 'medium',
-      deliveryTime: '3:00 PM',
+      deliveryTime: '3:30 PM',
+      pickupTime: '2024-07-19 10:30',
+      deliveryTimeSlot: '2024-07-19 15:30',
+      totalWeight: '150kg',
+      totalDistance: '35km',
+      estimatedTime: '3.5 hours',
       locations: [
         {
           type: 'pickup',
-          name: 'Sunshine Vegetables',
-          address: '789 Market Street, Galle',
-          coordinates: { lat: 6.0329, lng: 80.2168 },
+          name: 'Vegetable Market Kandy',
+          address: '555 Market Road, Kandy',
+          contactPhone: '+94 77 555 1234',
+          coordinates: { lat: 7.2906, lng: 80.6337 },
+          items: 'Mixed Vegetables 150kg',
           distance: 0
         },
         {
           type: 'delivery',
-          name: 'Nimal Silva',
-          address: '321 Beach Road, Mount Lavinia',
-          coordinates: { lat: 6.8378, lng: 79.8639 },
+          name: 'City Supermarket',
+          address: '777 City Center, Colombo',
+          contactPhone: '+94 77 666 5678',
+          coordinates: { lat: 6.9271, lng: 79.8612 },
+          items: 'Mixed Vegetables 150kg',
+          distance: 120
+        }
+      ],
+      products: [
+        { name: 'Mixed Vegetables', quantity: '150 kg', price: 7500, location: 'Vegetable Market Kandy' }
+      ],
+      subtotal: 7500,
+      deliveryFee: 300,
+      totalWithDelivery: 7800,
+      specialInstructions: 'Deliver to loading dock at rear of supermarket.'
+    },
+    {
+      id: 'ORD003',
+      orderNumber: 'GOV-2024-003',
+      customerName: 'Hotel Paradise',
+      customerPhone: '+94 77 888 2222',
+      customerAvatar: 'HP',
+      status: 'in-progress',
+      priority: 'urgent',
+      deliveryTime: '12:00 PM',
+      pickupTime: '2024-07-19 08:00',
+      deliveryTimeSlot: '2024-07-19 12:00',
+      totalWeight: '100kg',
+      totalDistance: '25km',
+      estimatedTime: '2.5 hours',
+      locations: [
+        {
+          type: 'pickup',
+          name: 'Premium Organic Farm',
+          address: '999 Premium Road, Matale',
+          contactPhone: '+94 77 999 1111',
+          coordinates: { lat: 7.4675, lng: 80.6234 },
+          items: 'Premium Vegetables 100kg',
+          distance: 0
+        },
+        {
+          type: 'delivery',
+          name: 'Hotel Paradise',
+          address: '123 Paradise Street, Kandy',
+          contactPhone: '+94 77 888 2222',
+          coordinates: { lat: 7.2906, lng: 80.6337 },
+          items: 'Premium Vegetables 100kg',
+          distance: 45
+        }
+      ],
+      products: [
+        { name: 'Premium Vegetables', quantity: '100 kg', price: 8500, location: 'Premium Organic Farm' }
+      ],
+      subtotal: 8500,
+      deliveryFee: 200,
+      totalWithDelivery: 8700,
+      specialInstructions: 'Premium quality required. Contact chef upon arrival.'
+    },
+    {
+      id: 'ORD004',
+      orderNumber: 'GOV-2024-004',
+      customerName: 'Green Groceries',
+      customerPhone: '+94 77 999 0000',
+      customerAvatar: 'GG',
+      status: 'assigned',
+      priority: 'medium',
+      deliveryTime: '6:00 PM',
+      pickupTime: '2024-07-19 14:00',
+      deliveryTimeSlot: '2024-07-19 18:00',
+      totalWeight: '80kg',
+      totalDistance: '30km',
+      estimatedTime: '2 hours',
+      locations: [
+        {
+          type: 'pickup',
+          name: 'Fresh Valley Farm',
+          address: '456 Valley Street, Kandy',
+          contactPhone: '+94 77 777 8888',
+          coordinates: { lat: 7.2906, lng: 80.6337 },
+          items: 'Fresh Vegetables 80kg',
+          distance: 0
+        },
+        {
+          type: 'delivery',
+          name: 'Green Groceries',
+          address: '888 Market Street, Galle',
+          contactPhone: '+94 77 999 0000',
+          coordinates: { lat: 6.0535, lng: 80.2210 },
+          items: 'Fresh Vegetables 80kg',
           distance: 125
         }
       ],
       products: [
-        { name: 'Banana', quantity: '2 dozen', price: 600, location: 'Sunshine Vegetables' },
-        { name: 'Pineapple', quantity: '1 piece', price: 450, location: 'Sunshine Vegetables' }
+        { name: 'Fresh Vegetables', quantity: '80 kg', price: 4000, location: 'Fresh Valley Farm' }
       ],
-      subtotal: 1050,
-      deliveryFee: 180,
-      totalWithDelivery: 1230,
-      totalDistance: 125,
-      estimatedTime: '2h 30min',
-      specialInstructions: null
+      subtotal: 4000,
+      deliveryFee: 250,
+      totalWithDelivery: 4250,
+      specialInstructions: 'Check vegetables for freshness before delivery.'
     },
     {
-      id: 3,
-      orderNumber: 'ORD-2024-003',
-      customerName: 'Priya Fernando',
-      customerPhone: '+94 76 555 4321',
-      customerAvatar: 'PF',
-      status: 'completed',
+      id: 'ORD005',
+      orderNumber: 'GOV-2024-005',
+      customerName: 'Royal Hotel',
+      customerPhone: '+94 77 333 4444',
+      customerAvatar: 'RH',
+      status: 'pending',
       priority: 'low',
-      deliveryTime: '1:45 PM',
+      deliveryTime: '8:00 PM',
+      pickupTime: '2024-07-19 16:00',
+      deliveryTimeSlot: '2024-07-19 20:00',
+      totalWeight: '120kg',
+      totalDistance: '50km',
+      estimatedTime: '3 hours',
       locations: [
         {
           type: 'pickup',
-          name: 'Fresh Market',
-          address: '555 Main Street, Negombo',
-          coordinates: { lat: 7.2084, lng: 79.8380 },
+          name: 'Highland Organic',
+          address: '123 Highland Road, Nuwara Eliya',
+          contactPhone: '+94 77 111 2222',
+          coordinates: { lat: 6.9497, lng: 80.7891 },
+          items: 'Organic Vegetables 120kg',
           distance: 0
         },
         {
           type: 'delivery',
-          name: 'Priya Fernando',
-          address: '777 Lake View, Colombo 07',
-          coordinates: { lat: 6.9147, lng: 79.8803 },
-          distance: 38
+          name: 'Royal Hotel',
+          address: '555 Royal Avenue, Colombo',
+          contactPhone: '+94 77 333 4444',
+          coordinates: { lat: 6.9271, lng: 79.8612 },
+          items: 'Organic Vegetables 120kg',
+          distance: 180
         }
       ],
       products: [
-        { name: 'Spinach', quantity: '250g', price: 150, location: 'Fresh Market' },
-        { name: 'Broccoli', quantity: '500g', price: 320, location: 'Fresh Market' }
+        { name: 'Organic Vegetables', quantity: '120 kg', price: 9600, location: 'Highland Organic' }
       ],
-      subtotal: 470,
-      deliveryFee: 120,
-      totalWithDelivery: 590,
-      totalDistance: 38,
-      estimatedTime: '1h 15min',
-      specialInstructions: 'Leave at front door if not home'
+      subtotal: 9600,
+      deliveryFee: 400,
+      totalWithDelivery: 10000,
+      specialInstructions: 'Organic certification required. Handle with care.'
     }
   ]);
 
   const [stats] = useState({
-    totalOrders: 12,
+    totalOrders: 15,
     activeOrders: 3,
-    completedToday: 8,
-    totalEarnings: 15420,
-    avgDeliveryTime: '28 min',
-    customerRating: 4.8
+    completedToday: 7,
+    totalEarnings: 18500,
+    avgDeliveryTime: '3.2 hours',
+    customerRating: 4.9
   });
 
   // Calculate optimized route based on distance
@@ -189,9 +303,9 @@ const OrderDashboard = () => {
         }
       });
       
-      // Update order status to active
+      // Update order status to active/in-progress
       setOrders(orders.map(o => 
-        o.id === orderId ? { ...o, status: 'active' } : o
+        o.id === orderId ? { ...o, status: 'in-progress' } : o
       ));
     }
   };
@@ -212,8 +326,10 @@ const OrderDashboard = () => {
   const getStatusColor = (status) => {
     switch(status) {
       case 'pending': return '#ff6b35';
+      case 'assigned': return '#0A5446';
       case 'approved': return '#0A5446';
-      case 'active': return '#0A5446';
+      case 'in-progress': return '#2563eb';
+      case 'active': return '#2563eb';
       case 'completed': return '#6c757d';
       default: return '#6c757d';
     }
@@ -253,7 +369,9 @@ const OrderDashboard = () => {
             >
               <option value="all">All Orders</option>
               <option value="pending">Pending</option>
+              <option value="assigned">Assigned</option>
               <option value="approved">Approved</option>
+              <option value="in-progress">In Progress</option>
               <option value="active">Active</option>
               <option value="completed">Completed</option>
             </select>
@@ -353,7 +471,7 @@ const OrderDashboard = () => {
                     </div>
                   </div>
                   <div className="distance-info">
-                    <div className="distance">{order.totalDistance} km</div>
+                    <div className="distance">{order.totalDistance}</div>
                     <div className="time-estimate">{order.estimatedTime}</div>
                   </div>
                 </div>
@@ -390,7 +508,7 @@ const OrderDashboard = () => {
                     </button>
                   )}
                   
-                  {order.status === 'approved' && (
+                  {(order.status === 'approved' || order.status === 'assigned') && (
                     <button 
                       className="action-btn primary"
                       onClick={(e) => {
@@ -403,7 +521,7 @@ const OrderDashboard = () => {
                     </button>
                   )}
                   
-                  {order.status === 'active' && (
+                  {(order.status === 'active' || order.status === 'in-progress') && (
                     <button 
                       className="action-btn secondary"
                       onClick={(e) => {
@@ -494,8 +612,16 @@ const OrderDashboard = () => {
                     <span className="value">{selectedOrder.status}</span>
                   </div>
                   <div className="info-item">
+                    <span className="label">Priority:</span>
+                    <span className="value">{selectedOrder.priority}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Total Weight:</span>
+                    <span className="value">{selectedOrder.totalWeight}</span>
+                  </div>
+                  <div className="info-item">
                     <span className="label">Total Distance:</span>
-                    <span className="value">{selectedOrder.totalDistance} km</span>
+                    <span className="value">{selectedOrder.totalDistance}</span>
                   </div>
                   <div className="info-item">
                     <span className="label">Estimated Time:</span>

@@ -27,8 +27,9 @@ import Buyer from "./pages/Buyer/Buyer";
 import Admin from "./pages/Admin/Admin";
 import Vendor from "./pages/Vendor/Vendor";
 import Driver from "./pages/Driver/DriverHome";
+import DriverProfile from "./pages/Driver/DriverProfile";
 import OrderDashboard from "./pages/Driver/OrderDashboard";
-import NavigationPage from "./pages/Driver/NavigationPage";
+import NavigationPage from "./pages/Driver/NavigationPageTest";
 import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
@@ -43,7 +44,7 @@ function App() {
           <Route path="/" element={<NewHome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/defaultHome" element={<NewHome />} />
-          <Route path="/driver-home" element={
+          <Route path="/driverhome" element={
             <DriverLocationProvider>
               <Driver />
             </DriverLocationProvider>
@@ -118,12 +119,22 @@ function App() {
         
         {/* DRIVER HOME ROUTE */}
         <Route
-          path="/driver-home"
+          path="/driverhome"
           element={
             <PrivateRoute allowedRoles={["DRIVER"]}>
               <DriverLocationProvider>
                 <Driver />
               </DriverLocationProvider>
+            </PrivateRoute>
+          }
+        />
+        
+        {/* DRIVER PROFILE ROUTE */}
+        <Route
+          path="/driver/profile"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverProfile />
             </PrivateRoute>
           }
         />
