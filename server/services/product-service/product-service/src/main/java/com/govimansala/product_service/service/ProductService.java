@@ -29,6 +29,9 @@ public class ProductService{
     public List<Product> getProductsByVendor(int userId){
         return productRepository.findByUserId(userId);
     }
+    public List<Product> getProductByCategory(String productCategory){
+        return productRepository.findByProductCategory(productCategory);
+    }
     public void deleteProduct(int id){
 
         productRepository.deleteById(id);
