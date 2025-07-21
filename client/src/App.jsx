@@ -4,10 +4,12 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Components
 import PrivateRoute from "./components/privateRoute";
+import { DriverLocationProvider } from "./contexts/DriverLocationContext";
 
 // Layouts
 import PublicLayout from "./layouts/PublicLayout";
 import VendorLayout from "./layouts/VendorLayout";
+import BuyerLayout from "./layouts/BuyerLayout";
 
 // Pages
 import Contact from "./pages/Contact";
@@ -24,16 +26,20 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Buyer from "./pages/Buyer/Buyer";
 import Admin from "./pages/Admin/Admin";
 import Vendor from "./pages/Vendor/Vendor";
-import Driver from "./pages/Driver/Driver";
+import Driver from "./pages/Driver/DriverHome";
+import DriverProfile from "./pages/Driver/DriverProfile";
+import OrderDashboard from "./pages/Driver/OrderDashboard";
+import NavigationPage from "./pages/Driver/NavigationPageTest";
 import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
 import VendorMarket from "./pages/Vendor/VendorMarketPlace";
-import BuyerAnalytics from "./pages/analytics";
-import Orders from "./pages/orders";
-import EditProfile from "./pages/editProfile"; 
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
+import BuyerAnalytics from "./pages/Buyer/Analytics";
+import VendorAnalytics from "./pages/Vendor/VendorAnalytics";
+import Orders from "./pages/Buyer/Orders";
+import EditProfile from "./pages/Buyer/EditProfile";
+import Cart from "./pages/Buyer/Cart";
+import Checkout from "./pages/Buyer/Checkout";
 
 function App() {
   return (
@@ -44,22 +50,27 @@ function App() {
           <Route path="/" element={<NewHome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/defaultHome" element={<NewHome />} />
+          <Route path="/driverhome" element={
+            <DriverLocationProvider>
+              <Driver />
+            </DriverLocationProvider>
+          } />
+          <Route path="/orderdashboard" element={
+            <DriverLocationProvider>
+              <OrderDashboard />
+            </DriverLocationProvider>
+          } />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/Marketplace" element={<Marketplace />} />
           <Route path="/vegetables" element={<Vegetables />} />
           <Route path="/fruits" element={<Fruits />} />
           <Route path="/moreDetails" element={<MoreDetails />} />
-          <Route path="/farms" element={<Farms />} />
+          <Route path="/Farms" element={<Farms />} />
           <Route path="/FarmPage" element={<FarmPage />} />
-          <Route path="/BuyerAnalytics" element={<BuyerAnalytics />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/EditProfile" element={<EditProfile />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         {/* VENDOR ROUTES */}
@@ -76,6 +87,7 @@ function App() {
           <Route path="/vendor/order" element={<VendorOrder />} />
           <Route path="/vendor/about" element={<AboutUs />} />
           <Route path="/vendor/contact" element={<Contact />} />
+          <Route path="/vendor/analytics" element={<VendorAnalytics />} />
           {/* Add more vendor-only routes here */}
         </Route>
 
@@ -84,11 +96,20 @@ function App() {
           path="/buyer"
           element={
             <PrivateRoute allowedRoles={["BUYER"]}>
-              <PublicLayout />
-              <Buyer />
+              <BuyerLayout />
             </PrivateRoute>
           }
-        />
+        >
+          <Route path="Home" element={<NewHome />} />
+          <Route path="Marketplace" element={<Marketplace />} />
+          <Route path="Farms" element={<Farms />} />
+          <Route path="FarmPage" element={<FarmPage />} />
+          <Route path="BuyerAnalytics" element={<BuyerAnalytics />} />
+          <Route path="Orders" element={<Orders />} />
+          <Route path="EditProfile" element={<EditProfile />} />
+          <Route path="Cart" element={<Cart />} />
+          <Route path="checkout" element={<Checkout />} />
+        </Route>
 
         {/* ADMIN ROUTE */}
         <Route
@@ -108,6 +129,52 @@ function App() {
             <PrivateRoute allowedRoles={["DRIVER"]}>
               <PublicLayout />
               <Driver />
+            </PrivateRoute>
+          }
+        />
+        
+        {/* DRIVER HOME ROUTE */}
+        <Route
+          path="/driverhome"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            </PrivateRoute>
+          }
+        />
+        
+        {/* DRIVER PROFILE ROUTE */}
+        <Route
+          path="/driver/profile"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverProfile />
+            </PrivateRoute>
+          }
+        />
+        
+        {/* ORDER DASHBOARD ROUTE */}
+        <Route
+          path="/order-dashboard"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <OrderDashboard />
+              </DriverLocationProvider>
+            </PrivateRoute>
+          }
+        />
+        
+        {/* NAVIGATION PAGE ROUTE */}
+        <Route
+          path="/driver-navigation"
+          element={
+            <PrivateRoute allowedRoles={["DRIVER"]}>
+              <DriverLocationProvider>
+                <NavigationPage />
+              </DriverLocationProvider>
             </PrivateRoute>
           }
         />

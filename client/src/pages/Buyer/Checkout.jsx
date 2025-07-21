@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
-import '../pages/styles/Checkout.css';
+import './Checkout.css';
 
 const Checkout = () => {
   const [useDefaultAddress, setUseDefaultAddress] = useState(true);

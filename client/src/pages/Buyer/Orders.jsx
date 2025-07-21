@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../pages/styles/orders.css';
+import './Orders.css';
 
 const Orders = () => {
   const [activeTab, setActiveTab] = useState('All');
