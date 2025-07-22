@@ -36,7 +36,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable int id) {
         return ResponseEntity.ok(productService.getProductById(id).orElseThrow());
     }
@@ -55,5 +55,10 @@ public class ProductController {
     @GetMapping("/vendor/{userId}")
     public ResponseEntity<List<Product>> getByVendor(@PathVariable int userId) {
         return ResponseEntity.ok(productService.getProductsByVendor(userId));
+    }
+
+    @GetMapping("/category/{productCategory}")
+    public ResponseEntity<List<Product>> getByCategory(@PathVariable String productCategory){
+        return ResponseEntity.ok(productService.getProductByCategory(productCategory));
     }
 }
