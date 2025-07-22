@@ -17,7 +17,7 @@ const NavigationPage = () => {
 
 
   const calculateDistance = (lat1, lng1, lat2, lng2) => {
-    const R = 6371; // Earth radius in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLng = (lng2 - lng1) * Math.PI / 180;
     const a = 
@@ -28,7 +28,6 @@ const NavigationPage = () => {
     return R * c;
   };
 
-  // Optimize route by distance from driver location
   const optimizeRoute = useCallback((locations) => {
     const pickups = locations.filter(loc => loc.type === 'pickup');
     const deliveries = locations.filter(loc => loc.type === 'delivery');
@@ -48,7 +47,6 @@ const NavigationPage = () => {
     return [...sortedPickups, ...deliveries];
   }, [driverLocation]);
 
-  // Main effect to initialize map
   useEffect(() => {
     const drawRoute = async (mapInstance, locations) => {
       try {
@@ -104,7 +102,6 @@ const NavigationPage = () => {
         return;
       }
 
-      // Clean up existing map
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
@@ -114,7 +111,6 @@ const NavigationPage = () => {
         const L = await import('leaflet');
         await import('leaflet/dist/leaflet.css');
         
-        // Fix marker icons
         delete L.Icon.Default.prototype._getIconUrl;
         L.Icon.Default.mergeOptions({
           iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -122,19 +118,16 @@ const NavigationPage = () => {
           shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
         });
 
-        // Setup map container
         mapRef.current.innerHTML = '';
         mapRef.current.style.height = '100%';
         mapRef.current.style.width = '100%';
         mapRef.current.style.minHeight = '400px';
         
-        // Calculate map center
         const allLocations = currentOrderData.locations;
         const allCoordinates = [driverLocation, ...allLocations.map(loc => loc.coordinates)];
         const centerLat = allCoordinates.reduce((sum, coord) => sum + coord.lat, 0) / allCoordinates.length;
         const centerLng = allCoordinates.reduce((sum, coord) => sum + coord.lng, 0) / allCoordinates.length;
 
-        // Initialize map
         const map = L.map(mapRef.current, {
           zoomControl: true,
           attributionControl: true,
@@ -144,7 +137,6 @@ const NavigationPage = () => {
           markerZoomAnimation: true
         }).setView([centerLat, centerLng], 12);
 
-        // Add English-only tiles
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
           attribution: '© OpenStreetMap contributors © CARTO',
           subdomains: 'abcd',
@@ -153,9 +145,7 @@ const NavigationPage = () => {
 
         mapInstanceRef.current = map;
 
-        // Add markers when map is ready
         map.whenReady(() => {
-          // Add driver marker
           const driverIcon = L.divIcon({
             className: 'driver-marker',
             html: '<div class="driver-marker-inner">🚛</div>',
@@ -167,10 +157,8 @@ const NavigationPage = () => {
             .addTo(map)
             .bindPopup('<div class="marker-popup"><h4>Your Location</h4><p>Starting point</p></div>');
 
-          // Get optimized locations
           const optimizedLocations = optimizeRoute(allLocations);
 
-          // Add location markers
           optimizedLocations.forEach((location, index) => {
             const isPickup = location.type === 'pickup';
             const bgGradient = isPickup ? 'linear-gradient(135deg, #0A5446 0%, #0d6654 100%)' : 'linear-gradient(135deg, #ff6b35 0%, #e55a2b 100%)';
@@ -208,11 +196,9 @@ const NavigationPage = () => {
               `);
           });
 
-          // Draw route
           const routeWithDriver = [{ coordinates: driverLocation }, ...optimizedLocations];
           drawRoute(map, routeWithDriver);
 
-          // Fit map bounds
           const allMarkers = [
             [driverLocation.lat, driverLocation.lng],
             ...optimizedLocations.map(location => [location.coordinates.lat, location.coordinates.lng])
@@ -231,7 +217,6 @@ const NavigationPage = () => {
           }, 500);
         });
 
-        // Force map resize
         setTimeout(() => {
           if (mapInstanceRef.current) {
             map.invalidateSize();
@@ -249,10 +234,8 @@ const NavigationPage = () => {
     }
   }, [currentOrderData, driverLocation, optimizeRoute]);
 
-  // Cleanup effect for map
   useEffect(() => {
     return () => {
-      // Cleanup map on component unmount
       if (mapInstanceRef.current) {
         console.log('Cleaning up map instance');
         mapInstanceRef.current.remove();
@@ -275,7 +258,6 @@ const NavigationPage = () => {
     );
   }
 
-  // Create optimized route for UI display
   const createOptimizedRoute = (locations) => {
     const pickups = locations.filter(loc => loc.type === 'pickup');
     const deliveries = locations.filter(loc => loc.type === 'delivery');
@@ -297,7 +279,6 @@ const NavigationPage = () => {
 
   const optimizedRoute = route || createOptimizedRoute(currentOrderData.locations);
 
-  // Get all locations with distances from driver location
   const locationsWithDistance = optimizedRoute.map(location => ({
     ...location,
     distanceFromDriver: calculateDistance(
@@ -310,13 +291,11 @@ const NavigationPage = () => {
     const destination = encodeURIComponent(location.address);
     const navigationUrl = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
     
-    // Open navigation in a new tab (in a real app, this would open the navigation app)
     window.open(navigationUrl, '_blank');
   };
 
   return (
     <div className="navigation-page">
-      {/* Header */}
       <div className="nav-header">
         <div className="nav-header-left">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -334,10 +313,8 @@ const NavigationPage = () => {
         </div>
       </div>
 
-      {/* Main Content - Map and Places */}
       <div className="nav-content">
         <div className="map-places-container">
-          {/* Map Section */}
           <div className="map-section">
             <div 
               id="map" 
@@ -359,8 +336,7 @@ const NavigationPage = () => {
                 </div>
               )}
             </div>
-          </div>          {/* Places List Section */}
-          <div className="places-section">
+          </div>          <div className="places-section">
             <div className="places-header">
               <h3>Delivery Locations</h3>
               <div className="order-info">

@@ -20,7 +20,7 @@
   z-index: 100;
 }
 
-/* Header */
+
 .nav-header {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   padding: 24px 32px;
@@ -226,7 +226,7 @@
   color: #28a745;
 }
 
-/* Main Content */
+
 .nav-content {
   flex: 1;
   display: flex;
@@ -244,7 +244,7 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Map Section */
+
 .map-section {
   flex: 2;
   position: relative;
@@ -265,7 +265,7 @@
   border-radius: 16px;
 }
 
-/* Map Loading State */
+
 .map-section .loading-container {
   position: absolute;
   top: 50%;
@@ -294,7 +294,7 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Places Section */
+
 .places-section {
   flex: 1;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);

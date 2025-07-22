@@ -10,7 +10,6 @@ const OrderDashboard = () => {
   const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [pendingOrderId, setPendingOrderId] = useState(null);
 
-  // Sample data with multi-location orders
   const [orders, setOrders] = useState([
     {
       id: 'ORD001',
@@ -253,15 +252,12 @@ const OrderDashboard = () => {
     customerRating: 4.9
   });
 
-  // Calculate optimized route based on distance
   const optimizeRoute = (locations) => {
     const pickups = locations.filter(loc => loc.type === 'pickup');
     const deliveries = locations.filter(loc => loc.type === 'delivery');
     
-    // Sort pickups by distance (nearest first)
     const sortedPickups = pickups.sort((a, b) => a.distance - b.distance);
     
-    // Return optimized route: pickups first, then deliveries
     return [...sortedPickups, ...deliveries];
   };
 
@@ -275,7 +271,6 @@ const OrderDashboard = () => {
   };
 
   const handleApproveRide = () => {
-    // Update order status
     setOrders(orders.map(order => 
       order.id === pendingOrderId ? { ...order, status: 'approved' } : order
     ));
@@ -294,7 +289,6 @@ const OrderDashboard = () => {
     if (order) {
       const optimizedRoute = optimizeRoute(order.locations);
       
-      // Navigate to the dedicated navigation page with order data
       navigate('/driver-navigation', {
         state: {
           orderId: orderId,
@@ -303,7 +297,6 @@ const OrderDashboard = () => {
         }
       });
       
-      // Update order status to active/in-progress
       setOrders(orders.map(o => 
         o.id === orderId ? { ...o, status: 'in-progress' } : o
       ));
@@ -337,7 +330,6 @@ const OrderDashboard = () => {
 
   return (
     <div className="simple-order-dashboard">
-      {/* Header */}
       <div className="dashboard-header">
         <div className="header-left">
           <button className="back-btn" onClick={() => navigate('/driver-home')}>
@@ -379,7 +371,7 @@ const OrderDashboard = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      
       <div className="stats-section">
         <div className="stats-grid">
           <div className="stat-card">
@@ -414,7 +406,7 @@ const OrderDashboard = () => {
         </div>
       </div>
 
-      {/* Orders */}
+      
       <div className="orders-main">
         <div className="section-header">
           <h2>Orders</h2>
@@ -547,7 +539,7 @@ const OrderDashboard = () => {
         )}
       </div>
 
-      {/* Approval Modal */}
+      
       {showApprovalModal && (
         <div className="approval-modal">
           <div className="modal-overlay" onClick={() => setShowApprovalModal(false)}></div>
@@ -580,7 +572,7 @@ const OrderDashboard = () => {
         </div>
       )}
 
-      {/* Order Details Modal */}
+      
       {selectedOrder && (
         <div className="order-details-modal">
           <div className="modal-overlay" onClick={() => setSelectedOrder(null)}></div>
