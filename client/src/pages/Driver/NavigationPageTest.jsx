@@ -8,20 +8,16 @@ const NavigationPage = () => {
   const location = useLocation();
   const { orderData, orderDetails } = location.state || {};
   
-  // Support both data formats - use orderData as primary, orderDetails as fallback
   const currentOrderData = orderData || orderDetails;
 
-  // Use driver location context
   const { driverLocation, locationLoading, locationError, refreshLocation } = useDriverLocation();
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const [error, setError] = useState(null);
   const [mapInitialized, setMapInitialized] = useState(false);
 
-  // Initialize map when component mounts and driver location is available
   useEffect(() => {
     const initializeSimpleMap = async () => {
-      // Exit early if map is already initialized or requirements not met
       if (mapInitialized || !currentOrderData || !driverLocation || !mapRef.current) {
         console.log('Skipping map initialization:', {
           mapInitialized,
@@ -32,7 +28,6 @@ const NavigationPage = () => {
         return;
       }
 
-      // If map instance already exists, don't create another one
       if (mapInstanceRef.current) {
         console.log('Map instance already exists, skipping...');
         return;
@@ -41,18 +36,14 @@ const NavigationPage = () => {
       try {
         console.log('Starting map initialization...');
         
-        // Mark as initializing to prevent concurrent initialization
         setMapInitialized(true);
         
-        // Dynamically import Leaflet
         const L = await import('leaflet');
         
-        // Import CSS
         await import('leaflet/dist/leaflet.css');
         
         console.log('Leaflet loaded successfully');
         
-        // Fix marker icons issue with Webpack
         delete L.Icon.Default.prototype._getIconUrl;
         L.Icon.Default.mergeOptions({
           iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -60,18 +51,15 @@ const NavigationPage = () => {
           shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
         });
 
-        // Clear any existing content in the map container
         if (mapRef.current && mapRef.current._leaflet_id === undefined) {
           mapRef.current.innerHTML = '';
           
-          // Set explicit height to ensure map displays
           mapRef.current.style.height = '100%';
           mapRef.current.style.width = '100%';
           mapRef.current.style.minHeight = '400px';
         
           console.log('Initializing map with driver location:', driverLocation);
           
-          // Initialize map with basic OpenStreetMap tiles
           const map = L.map(mapRef.current, {
             zoomControl: true,
             attributionControl: true
@@ -79,7 +67,6 @@ const NavigationPage = () => {
 
           console.log('Map instance created');
 
-          // Use CartoDB English tiles for better English language support
           const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap contributors © CARTO',
             maxZoom: 19,
@@ -89,9 +76,8 @@ const NavigationPage = () => {
           tileLayer.addTo(map);
           console.log('Tile layer added');
 
-          // Calculate distance function
           const calculateDistance = (lat1, lng1, lat2, lng2) => {
-            const R = 6371; // Radius of the Earth in kilometers
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLng = (lng2 - lng1) * Math.PI / 180;
             const a = 
@@ -99,10 +85,9 @@ const NavigationPage = () => {
               Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
               Math.sin(dLng / 2) * Math.sin(dLng / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c; // Distance in kilometers
+            return R * c;
           };
 
-          // Add driver location marker with custom style
           const driverIcon = L.divIcon({
             html: `
               <div style="
@@ -150,11 +135,9 @@ const NavigationPage = () => {
 
           console.log('Driver marker added');
 
-          // Add destination markers ordered by distance from driver location
           if (currentOrderData.locations) {
             console.log('Processing locations:', currentOrderData.locations);
             
-            // Calculate distances and sort locations
             const locationsWithDistance = currentOrderData.locations.map((location, index) => ({
               ...location,
               originalIndex: index,
@@ -428,9 +411,9 @@ const NavigationPage = () => {
         <div className="nav-header-left">
           <button 
             className="back-btn"
-            onClick={() => navigate('/driverhome')}
+            onClick={() => navigate(-1)}
           >
-            ← Back
+            <i className="fas fa-arrow-left"></i>
           </button>
           <h2>Navigation - Order #{currentOrderData.orderNumber || currentOrderData.orderId || 'N/A'}</h2>
         </div>
