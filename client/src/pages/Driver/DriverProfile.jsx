@@ -14,7 +14,6 @@ function DriverProfile() {
   const [showLicenseDetails, setShowLicenseDetails] = useState(false)
   const [showInsuranceDetails, setShowInsuranceDetails] = useState(false)
 
-  // Driver profile data
   const [profileData, setProfileData] = useState({
     name: 'Sunil Gamage',
     id: 'DRV001',
@@ -38,7 +37,6 @@ function DriverProfile() {
     }
   })
 
-  // License data
   const [licenseData, _setLicenseData] = useState({
     licenseNumber: 'B1234567',
     licenseType: 'Heavy Vehicle License',
@@ -52,7 +50,6 @@ function DriverProfile() {
     verified: true
   })
 
-  // Insurance data
   const [insuranceData, _setInsuranceData] = useState({
     policyNumber: 'INS-789456123',
     provider: 'SLIC Insurance',
@@ -67,7 +64,6 @@ function DriverProfile() {
     verified: true
   })
 
-  // Vehicle data
   const [vehicles, setVehicles] = useState([
     {
       id: 1,
@@ -126,8 +122,6 @@ function DriverProfile() {
     condition: '',
     preferredAreas: []
   })
-
-  // Reviews data
   const [reviews, _setReviews] = useState([
     {
       id: 1,
@@ -243,7 +237,7 @@ function DriverProfile() {
 
   const renderPersonalDetails = () => (
     <div className="orders-list">
-      {/* Profile Overview Card */}
+      
       <div className="order-card">
         <div className="order-header">
           <div className="customer-section">
@@ -278,7 +272,7 @@ function DriverProfile() {
         </div>
       </div>
 
-      {/* Personal Information Cards */}
+      
       <div className="order-card">
         <div className="order-header">
           <div className="customer-section">
@@ -359,7 +353,7 @@ function DriverProfile() {
         </div>
       </div>
 
-      {/* Emergency Contact Card */}
+      
       <div className="order-card">
         <div className="order-header">
           <div className="customer-section">
@@ -404,7 +398,7 @@ function DriverProfile() {
         </div>
       </div>
 
-      {/* Bank Details Card */}
+      
       <div className="order-card">
         <div className="order-header">
           <div className="customer-section">
@@ -459,7 +453,7 @@ function DriverProfile() {
 
   const renderVehicleDetails = () => (
     <div className="orders-list">
-      {/* Action Buttons */}
+      
       <div className="order-card">
         <div className="order-actions">
           <button 
@@ -486,7 +480,7 @@ function DriverProfile() {
         </div>
       </div>
 
-      {/* Vehicle Cards */}
+      
       {vehicles.map(vehicle => (
         <div key={vehicle.id} className="order-card">
           <div className="order-header">
@@ -562,7 +556,7 @@ function DriverProfile() {
         </div>
       ))}
 
-      {/* Add Vehicle Modal */}
+      
       {showAddVehicle && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -639,7 +633,7 @@ function DriverProfile() {
         </div>
       )}
 
-      {/* License Modal */}
+      
       {showLicenseDetails && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -664,7 +658,7 @@ function DriverProfile() {
         </div>
       )}
 
-      {/* Insurance Modal */}
+      
       {showInsuranceDetails && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -698,7 +692,7 @@ function DriverProfile() {
 
     return (
       <div className="orders-list">
-        {/* Review Stats */}
+        
         <div className="order-card">
           <div className="route-summary">
             <div className="route-info">
@@ -722,7 +716,7 @@ function DriverProfile() {
           </div>
         </div>
 
-        {/* Review Cards */}
+        
         {reviews.map(review => (
           <div key={review.id} className="order-card">
             <div className="order-header">
@@ -789,7 +783,7 @@ function DriverProfile() {
           </div>
         ))}
 
-        {/* No Reviews State */}
+        
         {reviews.length === 0 && (
           <div className="order-card">
             <div className="empty-state">
@@ -818,7 +812,7 @@ function DriverProfile() {
 
   return (
     <div className="simple-order-dashboard">
-      {/* Header */}
+      
       <div className="dashboard-header">
         <div className="header-left">
           <button className="back-btn" onClick={() => navigate(-1)}>
@@ -831,11 +825,11 @@ function DriverProfile() {
         </div>
 
         <div className="header-center">
-          {/* Tabs moved below */}
+          
         </div>
 
         <div className="header-right">
-          {/* Individual edit buttons are now in each section */}
+          
         </div>
       </div>
 
