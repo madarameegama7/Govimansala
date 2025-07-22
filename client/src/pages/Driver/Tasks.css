@@ -1,4 +1,4 @@
-/* Tasks Section Styles */
+
 .tasks-content {
   padding: 20px 30px;
   min-height: 100vh;
@@ -51,7 +51,7 @@
   color: white;
 }
 
-/* Tasks List */
+
 .tasks-list {
   display: flex;
   flex-direction: column;
@@ -158,7 +158,7 @@
   color: #6c757d;
 }
 
-/* Task Route */
+
 .task-route {
   display: flex;
   align-items: center;
@@ -189,7 +189,7 @@
   color: #6c757d;
 }
 
-/* Task Details */
+
 .task-details {
   display: flex;
   gap: 20px;
@@ -204,7 +204,7 @@
   color: #495057;
 }
 
-/* Task Actions */
+
 .task-actions {
   display: flex;
   gap: 10px;
@@ -245,7 +245,7 @@
   transform: translateY(-1px);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .tasks-content {
     padding: 15px;

@@ -1,4 +1,3 @@
-/* Simple Driver Profile Styles */
 .driver-profile {
   min-height: 100vh;
   background: #f5f5f5;
@@ -6,7 +5,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Improved text spacing */
 .page-title h1 {
   margin: 0 0 4px 0;
   letter-spacing: 0.3px;
@@ -30,7 +28,6 @@
   letter-spacing: 0.2px;
 }
 
-/* Header */
 .profile-header {
   background: white;
   padding: 20px;
@@ -55,7 +52,7 @@
   letter-spacing: 0.3px;
 }
 
-/* Tabs */
+
 .profile-tabs {
   background: white;
   padding: 10px;
@@ -88,7 +85,7 @@
   color: #333;
 }
 
-/* Edit button improvements */
+
 .order-header .order-actions {
   margin-left: auto;
 }
@@ -104,7 +101,7 @@
   margin-right: 4px;
 }
 
-/* Dashboard Header Centering */
+
 .dashboard-header {
   display: flex;
   justify-content: center;
@@ -152,7 +149,7 @@
   font-size: 14px;
 }
 
-/* Tabs Section - Now separate from header */
+
 .tabs-section {
   background: white;
   border-radius: 8px;
@@ -171,7 +168,7 @@
   border-radius: 6px;
 }
 
-/* Dashboard and Stats Section */
+
 .simple-order-dashboard {
   min-height: 100vh;
   background: #f8f9fa;
@@ -229,7 +226,7 @@
   letter-spacing: 0.2px;
 }
 
-/* Modal Styles - Centered Popups */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -378,7 +375,7 @@
   border-radius: 0 0 12px 12px;
 }
 
-/* Action Buttons in Modals */
+
 .modal-footer .action-btn {
   padding: 10px 20px;
   font-size: 14px;
@@ -408,7 +405,7 @@
   background: #5a6268;
 }
 
-/* Responsive Design for Modals */
+
 @media (max-width: 768px) {
   .modal-overlay {
     padding: 10px;
@@ -482,12 +479,12 @@
   cursor: pointer;
 }
 
-/* Content */
+
 .simple-content {
   padding: 20px;
 }
 
-/* Profile Photo Section */
+
 .profile-photo {
   text-align: center;
   margin-bottom: 30px;
@@ -511,7 +508,7 @@
   color: #666;
 }
 
-/* Simple Form */
+
 .simple-form {
   max-width: 600px;
 }
@@ -541,7 +538,7 @@
   color: #666;
 }
 
-/* Vehicle Cards */
+
 .simple-vehicle {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -610,7 +607,7 @@
   cursor: pointer;
 }
 
-/* Modal Styles */
+
 .simple-modal {
   position: fixed;
   top: 0;
@@ -684,7 +681,7 @@
   color: white;
 }
 
-/* Simple Info Display */
+
 .simple-info p {
   margin: 10px 0;
   padding: 8px 0;
@@ -695,7 +692,7 @@
   border-bottom: none;
 }
 
-/* Reviews */
+
 .reviews-summary {
   text-align: center;
   margin-bottom: 30px;
@@ -783,7 +780,7 @@
   color: #666;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .driver-profile {
     padding: 10px;

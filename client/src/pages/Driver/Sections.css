@@ -1,4 +1,4 @@
-/* History Section Styles */
+
 .history-content {
   padding: 20px 30px;
   min-height: 100vh;
@@ -33,7 +33,7 @@
   cursor: pointer;
 }
 
-/* History List */
+
 .history-list {
   display: flex;
   flex-direction: column;
@@ -132,7 +132,7 @@
   color: #388e3c;
 }
 
-/* Messages Section Styles */
+
 .messages-content {
   padding: 20px 30px;
   min-height: 100vh;
@@ -157,7 +157,7 @@
   font-weight: 700;
 }
 
-/* Messages List */
+
 .messages-list {
   display: flex;
   flex-direction: column;
@@ -237,7 +237,7 @@
   gap: 10px;
 }
 
-/* Earnings Section Styles */
+
 .earnings-content {
   padding: 20px 30px;
   min-height: 100vh;
@@ -272,7 +272,7 @@
   cursor: pointer;
 }
 
-/* Earnings Chart */
+
 .earnings-chart {
   background: white;
   border-radius: 15px;
@@ -310,7 +310,7 @@
   min-height: 30px;
 }
 
-/* Earnings Breakdown */
+
 .earnings-breakdown {
   background: white;
   border-radius: 15px;
@@ -351,7 +351,7 @@
   font-size: 1.2rem;
 }
 
-/* Settings Section Styles */
+
 .settings-content {
   padding: 20px 30px;
   min-height: 100vh;
@@ -421,7 +421,7 @@
   font-family: monospace;
 }
 
-/* Button Styles */
+
 .btn-primary {
   background: linear-gradient(135deg, #ff6b35 0%, #f5552a 100%);
   color: white;
@@ -456,7 +456,7 @@
   transform: translateY(-1px);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .history-content,
   .messages-content,

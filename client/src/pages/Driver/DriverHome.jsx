@@ -13,10 +13,9 @@ function DriverHome() {
   const navigate = useNavigate()
 
   const handleMyProfileClick = () => {
-    navigate("/driver/profile"); // make sure the path matches the one in your router
+    navigate("/driver/profile");
   };
 
-  // Sample driver data
   const [driverData] = useState({
     name: 'Sunil Gaage',
     id: 'DRV001',
@@ -45,7 +44,6 @@ function DriverHome() {
   })
 
 
-  // Sample tasks data
   const [tasks] = useState([
     {
       id: 'TASK001',
@@ -79,7 +77,6 @@ function DriverHome() {
     }
   ])
 
-  // Sample delivery history
   const [deliveryHistory] = useState([
     {
       id: 'TASK098',
@@ -110,7 +107,6 @@ function DriverHome() {
     }
   ])
 
-  // Sample messages
   const [messages] = useState([
     {
       id: 1,
@@ -138,7 +134,6 @@ function DriverHome() {
     }
   ])
 
-  // Sample orders data for order dashboard
   const [orders] = useState([
     {
       id: 'ORD001',
@@ -371,15 +366,12 @@ function DriverHome() {
     alert(`Task ${taskId} accepted! You can start the delivery.`)
   }
 
-  // Calculate optimized route based on distance
   const optimizeRoute = (locations) => {
     const pickups = locations.filter(loc => loc.type === 'pickup');
     const deliveries = locations.filter(loc => loc.type === 'delivery');
     
-    // Sort pickups by distance (nearest first)
     const sortedPickups = pickups.sort((a, b) => (a.distance || 0) - (b.distance || 0));
     
-    // Return optimized route: pickups first, then deliveries
     return [...sortedPickups, ...deliveries];
   };
 
@@ -402,15 +394,13 @@ function DriverHome() {
 
   const renderOrderDashboard = () => (
     <div className="order-dashboard-content">
-      {/* Header with Welcome Message */}
       <div className="order-dashboard-header">
-        <div className="header-left">
-          <h1> Welcome back, {driverData.name}!</h1>
-          <p>Ready to start your delivery journey today? Manage your orders and track your progress below.</p>
+        <div className="header-left" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+          <h1 style={{margin: '0 0 10px 0', padding: '0'}}>Welcome back, {driverData.name}!</h1>
+          <p style={{margin: '0', padding: '0', display: 'block'}}>Ready to start your delivery journey today? Manage your orders and track your progress below.</p>
         </div>
       </div>
 
-      {/* Welcome Action Buttons */}
       <div className="welcome-actions">
         <div className="action-buttons">
           <button 
@@ -453,7 +443,6 @@ function DriverHome() {
       </div>
 
 
-      {/* Stats */}
       <div className="stats-section">
         <div className="stats-grid">
           <div className="stat-card">
@@ -498,7 +487,6 @@ function DriverHome() {
         </div>
       </div>
 
-      {/* Orders */}
       <div className="orders-main">
         <div className="section-header">
           <div className="section-title-area">
@@ -594,7 +582,6 @@ function DriverHome() {
                 </div>
               </div>
 
-              {/* Show route overview only when showing all orders */}
               {showAllOrders && (
                 <div className="order-locations">
                   <h4>Route Overview:</h4>
@@ -665,7 +652,6 @@ function DriverHome() {
                       className="action-btn secondary"
                       onClick={(e) => {
                         e.stopPropagation();
-                        // Handle contact customer
                       }}
                     >
                       <i className="fas fa-phone"></i>
@@ -685,7 +671,6 @@ function DriverHome() {
           ))}
         </div>
 
-        {/* See More Button */}
         {!showAllOrders && orders.length > 2 && (
           <div className="see-more-section">
             <button 
@@ -703,7 +688,6 @@ function DriverHome() {
         )}
       </div>
 
-      {/* Order Details Modal */}
       {selectedOrder && (
         <div className="order-details-modal">
           <div className="modal-overlay" onClick={() => setSelectedOrder(null)}></div>
@@ -897,8 +881,19 @@ function DriverHome() {
 
   const renderTasks = () => (
     <div className="tasks-content">
+      <div className="dashboard-header">
+        <div className="header-left">
+          <button className="back-btn" onClick={() => setActiveSection('orders')}>
+            <i className="fas fa-arrow-left"></i>
+          </button>
+          <div className="page-title">
+            <h1>My Tasks</h1>
+            <span className="subtitle">Available delivery tasks</span>
+          </div>
+        </div>
+      </div>
+      
       <div className="tasks-header">
-        <h2>My Tasks</h2>
         <div className="task-filters">
           <button className="filter-btn active">All</button>
           <button className="filter-btn">Available</button>
@@ -980,8 +975,19 @@ function DriverHome() {
 
   const renderHistory = () => (
     <div className="history-content">
+      <div className="dashboard-header">
+        <div className="header-left">
+          <button className="back-btn" onClick={() => setActiveSection('orders')}>
+            <i className="fas fa-arrow-left"></i>
+          </button>
+          <div className="page-title">
+            <h1>Delivery History</h1>
+            <span className="subtitle">Your completed deliveries</span>
+          </div>
+        </div>
+      </div>
+
       <div className="history-header">
-        <h2>Delivery History</h2>
         <div className="history-filters">
           <select className="filter-select">
             <option>Last 7 days</option>
@@ -1036,8 +1042,19 @@ function DriverHome() {
 
   const renderMessages = () => (
     <div className="messages-content">
+      <div className="dashboard-header">
+        <div className="header-left">
+          <button className="back-btn" onClick={() => setActiveSection('orders')}>
+            <i className="fas fa-arrow-left"></i>
+          </button>
+          <div className="page-title">
+            <h1>Messages</h1>
+            <span className="subtitle">Your notifications and messages</span>
+          </div>
+        </div>
+      </div>
+
       <div className="messages-header">
-        <h2>Messages</h2>
         <button className="btn-primary">Mark All Read</button>
       </div>
       <div className="messages-list">
