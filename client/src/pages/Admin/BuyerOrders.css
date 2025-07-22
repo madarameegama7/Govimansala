@@ -1,0 +1,82 @@
+.buyer-orders-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.buyer-orders-container h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.buyer-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.buyer-orders-table th,
+.buyer-orders-table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.buyer-orders-table th {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.buyer-orders-table select {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.buyer-orders-table select:focus {
+  outline: none;
+  background-color: #e6e6e6;
+}
+
+.approve-btn,
+.decline-btn {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 6px;
+}
+
+.approve-btn {
+  background-color: #27ae60;
+}
+
+.approve-btn:hover {
+  background-color: #219150;
+}
+
+.decline-btn {
+  background-color: #e74c3c;
+}
+
+.decline-btn:hover {
+  background-color: #c0392b;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  display: inline-block;
+  text-transform: capitalize;
+}
+
