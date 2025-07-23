@@ -25,6 +25,8 @@ function Login() {
         navigate('/vendor/home')
       }else if(role === 'ADMIN'){
         navigate('/admin')
+      }else if(role === 'DRIVER'){
+        navigate('/driver')
       }
       else{
         navigate('/');

@@ -4,11 +4,14 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Components
 import PrivateRoute from "./components/privateRoute";
+import { DriverLocationProvider } from "./contexts/DriverLocationContext";
 
 // Layouts
 import PublicLayout from "./layouts/PublicLayout";
 import VendorLayout from "./layouts/VendorLayout";
 import BuyerLayout from "./layouts/BuyerLayout";
+import DriverLayout from "./layouts/DriverLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 // Pages
 import Contact from "./pages/Contact";
@@ -25,7 +28,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Buyer from "./pages/Buyer/Buyer";
 import Admin from "./pages/Admin/Admin";
 import Vendor from "./pages/Vendor/Vendor";
-import Driver from "./pages/Driver/Driver";
+import Driver from "./pages/Driver/DriverHome";
+import DriverProfile from "./pages/Driver/DriverProfile";
+import OrderDashboard from "./pages/Driver/OrderDashboard";
+import NavigationPage from "./pages/Driver/NavigationPageTest";
 import Farms from "./pages/Farms";
 import FarmPage from "./pages/FarmPage";
 import VendorOrder from "./pages/Vendor/VendorOrder";
@@ -36,6 +42,14 @@ import Orders from "./pages/Buyer/Orders";
 import EditProfile from "./pages/Buyer/EditProfile";
 import Cart from "./pages/Buyer/Cart";
 import Checkout from "./pages/Buyer/Checkout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import BuyerOrders from "./pages/Admin/BuyerOrders";
+import FarmerOrders from "./pages/Admin/FarmerOrders";
+import BuyerDetails from "./pages/Admin/BuyerDetails";
+import VendorDetails from "./pages/Admin/VendorDetails";
+import DriverDetails from "./pages/Admin/DriverDetails";
+import QADetails from "./pages/Admin/QADetails";
+import FarmerDetails from "./pages/Admin/FarmerDetails";
 
 function App() {
   return (
@@ -46,6 +60,22 @@ function App() {
           <Route path="/" element={<NewHome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/defaultHome" element={<NewHome />} />
+          <Route
+            path="/driverhome"
+            element={
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            }
+          />
+          <Route
+            path="/orderdashboard"
+            element={
+              <DriverLocationProvider>
+                <OrderDashboard />
+              </DriverLocationProvider>
+            }
+          />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
@@ -102,22 +132,63 @@ function App() {
           path="/admin"
           element={
             <PrivateRoute allowedRoles={["ADMIN"]}>
-              <PublicLayout />
-              <Admin />
+              <AdminLayout />
             </PrivateRoute>
           }
-        />
-
-        {/* DRIVER ROUTE */}
+          >
+          <Route path="AdminDashboard" element={<AdminDashboard />} />
+          <Route path="BuyerOrders" element={<BuyerOrders />} />
+          <Route path="FarmerOrders" element={<FarmerOrders />} />
+          <Route path="BuyerDetails" element={<BuyerDetails />} />
+          <Route path="VendorDetails" element={<VendorDetails />} />
+          <Route path="DriverDetails" element={<DriverDetails />} />
+          <Route path="QADetails" element={<QADetails />} />
+          <Route path="FarmerDetails" element={<FarmerDetails />} />
+        </Route>
+        
+        {/* DRIVER ROUTES */}
         <Route
           path="/driver"
           element={
             <PrivateRoute allowedRoles={["DRIVER"]}>
-              <PublicLayout />
-              <Driver />
+              <DriverLayout />
             </PrivateRoute>
           }
-        />
+        >
+          <Route
+            index
+            element={
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            }
+          />
+          <Route
+            path="home"
+            element={
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            }
+          />
+          <Route
+            path="order-dashboard"
+            element={
+              <DriverLocationProvider>
+                <OrderDashboard />
+              </DriverLocationProvider>
+            }
+          />
+          <Route path="profile" element={<DriverProfile />} />
+          <Route
+            path="navigation"
+            element={
+              <DriverLocationProvider>
+                <NavigationPage />
+              </DriverLocationProvider>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

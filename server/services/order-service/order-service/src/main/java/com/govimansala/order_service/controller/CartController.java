@@ -27,14 +27,42 @@ public class CartController {
             String userId = jwtUtil.extractUserId(token);
             cart.setUserId(Integer.parseInt(userId));
 
-            //set cart reference for each cartItem
-            if(cart.getItems() != null){
-                for(CartItem item : cart.getItems()){
+            // Set the cart reference for each cart item
+            if (cart.getItems() != null) {
+                for (CartItem item : cart.getItems()) {
                     item.setCart(cart);
                 }
             }
-            return ResponseEntity.ok(cartService.addItemToCart(cart));
+
+            try {
+                Cart updatedCart = cartService.addItemToCart(cart); // This should handle both create/update
+                return ResponseEntity.ok(updatedCart);
+            } catch (Exception e) {
+                e.printStackTrace(); // ✅ Logs the error in terminal (VS Code)
+                return ResponseEntity.internalServerError().build();
+            }
         }
+
         return ResponseEntity.badRequest().build();
     }
+
+
+
+    @GetMapping("/getCartByCartId/{cartId}")
+    public ResponseEntity<Cart> getCartByCartId(@PathVariable int cartId) {
+        return cartService.getCartByCartId(cartId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/getCartByUserId/{userId}")
+    public ResponseEntity<List<Cart>> getCartByUserId(@PathVariable int userId) {
+        List<Cart> carts = cartService.getCartByUserId(userId);
+        if (carts.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
+        return ResponseEntity.ok(carts); // 200 OK with list
+    }
+
+
+
 }
