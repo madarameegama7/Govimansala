@@ -10,6 +10,7 @@ import { DriverLocationProvider } from "./contexts/DriverLocationContext";
 import PublicLayout from "./layouts/PublicLayout";
 import VendorLayout from "./layouts/VendorLayout";
 import BuyerLayout from "./layouts/BuyerLayout";
+import DriverLayout from "./layouts/DriverLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
 // Pages
@@ -59,16 +60,22 @@ function App() {
           <Route path="/" element={<NewHome />} />
           <Route path="/home" element={<Home />} />
           <Route path="/defaultHome" element={<NewHome />} />
-          <Route path="/driverhome" element={
-            <DriverLocationProvider>
-              <Driver />
-            </DriverLocationProvider>
-          } />
-          <Route path="/orderdashboard" element={
-            <DriverLocationProvider>
-              <OrderDashboard />
-            </DriverLocationProvider>
-          } />
+          <Route
+            path="/driverhome"
+            element={
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            }
+          />
+          <Route
+            path="/orderdashboard"
+            element={
+              <DriverLocationProvider>
+                <OrderDashboard />
+              </DriverLocationProvider>
+            }
+          />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
@@ -128,7 +135,7 @@ function App() {
               <AdminLayout />
             </PrivateRoute>
           }
-        >
+          >
           <Route path="AdminDashboard" element={<AdminDashboard />} />
           <Route path="BuyerOrders" element={<BuyerOrders />} />
           <Route path="FarmerOrders" element={<FarmerOrders />} />
@@ -138,63 +145,50 @@ function App() {
           <Route path="QADetails" element={<QADetails />} />
           <Route path="FarmerDetails" element={<FarmerDetails />} />
         </Route>
-
-        {/* DRIVER ROUTE */}
+        
+        {/* DRIVER ROUTES */}
         <Route
           path="/driver"
           element={
             <PrivateRoute allowedRoles={["DRIVER"]}>
-              <PublicLayout />
-              <Driver />
+              <DriverLayout />
             </PrivateRoute>
           }
-        />
-        
-        {/* DRIVER HOME ROUTE */}
-        <Route
-          path="/driverhome"
-          element={
-            <PrivateRoute allowedRoles={["DRIVER"]}>
+        >
+          <Route
+            index
+            element={
               <DriverLocationProvider>
                 <Driver />
               </DriverLocationProvider>
-            </PrivateRoute>
-          }
-        />
-        
-        {/* DRIVER PROFILE ROUTE */}
-        <Route
-          path="/driver/profile"
-          element={
-            <PrivateRoute allowedRoles={["DRIVER"]}>
-              <DriverProfile />
-            </PrivateRoute>
-          }
-        />
-        
-        {/* ORDER DASHBOARD ROUTE */}
-        <Route
-          path="/order-dashboard"
-          element={
-            <PrivateRoute allowedRoles={["DRIVER"]}>
+            }
+          />
+          <Route
+            path="home"
+            element={
+              <DriverLocationProvider>
+                <Driver />
+              </DriverLocationProvider>
+            }
+          />
+          <Route
+            path="order-dashboard"
+            element={
               <DriverLocationProvider>
                 <OrderDashboard />
               </DriverLocationProvider>
-            </PrivateRoute>
-          }
-        />
-        
-        {/* NAVIGATION PAGE ROUTE */}
-        <Route
-          path="/driver-navigation"
-          element={
-            <PrivateRoute allowedRoles={["DRIVER"]}>
+            }
+          />
+          <Route path="profile" element={<DriverProfile />} />
+          <Route
+            path="navigation"
+            element={
               <DriverLocationProvider>
                 <NavigationPage />
               </DriverLocationProvider>
-            </PrivateRoute>
-          }
-        />
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
