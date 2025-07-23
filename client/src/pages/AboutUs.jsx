@@ -1,85 +1,117 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../pages/styles/AboutUs.css';
-import logoImg from '../assets/homePage/logo.png'; 
+import { FaSeedling, FaTruck, FaUsers, FaLeaf, FaHandshake } from 'react-icons/fa';
+import { MdPhoneIphone } from 'react-icons/md';
 
-function AboutUs() {
+const AboutUs = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Scroll reveal
+    const handleScroll = () => {
+      const sections = document.querySelectorAll('.section, .about-hero-content');
+      sections.forEach((section) => {
+        const top = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (top < windowHeight - 100) {
+          section.classList.add('visible');
+        }
+      });
+    };
+
+    handleScroll(); 
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="about-page">
-      {/* Header Section */}
+      {/* Hero Section */}
       <div className="about-hero">
-        <h1>About Us</h1>
-        <p>Home &gt; About Us</p>
+        <div className="about-hero-content">
+          <h1>About Govi Mansala</h1>
+          <p>Empowering farmers, connecting buyers, and revolutionizing Sri Lanka’s fresh produce industry.</p>
+          <div className="about-hero-badge">100% Farmer-First Platform</div>
+        </div>
       </div>
 
-      {/* Content Sections */}
-      <div className="about-content">
-
-  {/* Who We Are */}
-  <div className="about-card who-we-are">
-    <h2 className="section-title large-title">Who We Are</h2>
-    <div className="who-container">
-      <div className="who-left">
-        <p>
-          Welcome to Govi Mansala, your trusted digital bridge between Sri Lanka’s hardworking farmers and wholesale buyers across the country.
+      {/* Our Mission */}
+      <div className="section">
+        <h2 className="mission-title">Our Mission</h2>
+        <p className="mission-text">
+          We aim to eliminate middlemen, ensure fair prices for farmers, and provide a consistent, quality supply chain for wholesale buyers across Sri Lanka.
         </p>
-        <p>
-          Our goal is to make fresh farm produce easily accessible, fairly priced, and efficiently delivered from fields to wholesale markets.
-        </p>
+
+        <div className="features">
+          <div className="feature-card">
+            <FaSeedling className="feature-icon" size={36} />
+            <div className="feature-title">Empower Farmers</div>
+            <div className="feature-description">Connect directly to markets, reducing exploitation and increasing profitability.</div>
+          </div>
+
+          <div className="feature-card">
+            <FaTruck className="feature-icon" size={36} />
+            <div className="feature-title">Streamlined Logistics</div>
+            <div className="feature-description">Efficient delivery from farms to markets with traceability and freshness guaranteed.</div>
+          </div>
+
+          <div className="feature-card">
+            <FaUsers className="feature-icon" size={36} />
+            <div className="feature-title">Community Focused</div>
+            <div className="feature-description">We serve supermarkets, restaurants, and retailers with reliability and transparency.</div>
+          </div>
+        </div>
       </div>
-      <div className="who-right">
-        <img src={logoImg} alt="Govi Mansala Logo" className="about-logo-large" />
+
+      {/* Why Govi Mansala */}
+      <div className="why-section">
+        <div className="why-section-content">
+          <div>
+            <h2 className="why-title">Why Govi Mansala?</h2>
+            <p className="why-text">
+              We are transforming how agricultural products move in Sri Lanka — focusing on fairness, quality, and digital empowerment.
+            </p>
+            <div className="commitment-card">
+              <FaLeaf className="commitment-icon" />
+              <div>
+                <div className="commitment-title">Sustainability First</div>
+                <div className="commitment-description">Support for GAP and eco-friendly farming practices.</div>
+              </div>
+            </div>
+            <div className="commitment-card">
+              <FaHandshake className="commitment-icon" />
+              <div>
+                <div className="commitment-title">Direct Connection</div>
+                <div className="commitment-description">Transparent platform linking farmers and bulk buyers directly.</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <img
+              src="src\assets\Marketplace\happyFarmer.jpg"
+              alt="Farmer success"
+              style={{ borderRadius: '20px', width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  {/* Our Mission */}
-  <div className="about-card">
-    <h2 className="section-title">Our Mission</h2>
-    <div className="card-content">
-      <p>
-        Our mission is to empower farmers with technology and provide wholesale buyers with a transparent, direct, and dependable source of fresh produce.
-      </p>
-      <p>We aim to:</p>
-      <ul>
-        <li>Reduce middlemen and unfair price gaps</li>
-        <li>Ensure consistent supply and timely delivery</li>
-        <li>Promote GAP (Good Agricultural Practices)</li>
-        <li>Digitize traditional market processes for better efficiency</li>
-      </ul>
-    </div>
-  </div>
+      {/* Call to Action Section */}
+      <div className="cta-section">
+        <div className="cta-box">
+          <div className="cta-icon">
+            <MdPhoneIphone size={36} />
+          </div>
+          <h2 className="cta-title">Partner With Us</h2>
+          <p className="cta-text">Whether you're a supermarket, supplier, or logistics partner — Govi Mansala is your digital ally for fresh produce distribution.</p>
+          <p className="cta-subtext">Let’s create a smarter, fairer food supply together!</p>
+          <button className="cta-button">Join Now</button>
+        </div>
+      </div>
 
-  {/* Why Govi Mansala */}
-  <div className="about-card">
-    <h2 className="section-title">Why Govi Mansala</h2>
-    <div className="card-content">
-      <p>
-        In Sri Lanka, thousands of farmers struggle to find stable markets, while buyers often deal with inconsistent supply. FreshChain was built to change that. By using technology, we connect both ends of the chain directly, saving time, reducing waste, and ensuring both sides benefit fairly.
-      </p>
-      <p>We are committed to:</p>
-      <ul>
-        <li>Transparency in pricing and sourcing</li>
-        <li>Reliability in orders and delivery</li>
-        <li>Sustainability in operations and partnerships</li>
-      </ul>
     </div>
-  </div>
-
-  {/* Join Us */}
-  <div className="about-card">
-    <h2 className="section-title">Join Us !</h2>
-    <div className="card-content">
-      <p>
-        Whether you’re a supermarket, restaurant supplier, or retail chain — FreshChain is your trusted partner for sourcing fresh, quality products at scale.
-      </p>
-      <p>
-        Together, let’s build a smarter, fairer, and more connected future for Sri Lanka’s food system.
-      </p>
-    </div>
-  </div>
-</div>
-</div>
   );
-}
+};
 
 export default AboutUs;
+
