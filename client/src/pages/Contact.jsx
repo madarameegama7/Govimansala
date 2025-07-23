@@ -1,123 +1,88 @@
 import React, { useState } from 'react';
-import { Phone, Headphones, Globe, Send, Facebook, Instagram, Linkedin } from 'lucide-react';
 import '../pages/styles/Contact.css';
+import { FaFacebookF, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
+import contactImage from '../assets/Marketplace/contactPage_image.jpg'; 
 
-const ContactPage = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    message: ''
+    message: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setFormData({ firstName: '', lastName: '', email: '', message: '' });
-    setIsSubmitting(false);
-    alert('Message sent successfully!');
+    alert('Message sent!');
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
-    <div className="contact-page">
-      {/* Header Section */}
-      <div className="contact-hero">
-        <h1 className="contact-title">Contact Us</h1>
-        <p className="contact-subtitle">We’d love to hear from you! Reach out to our support team any time.</p>
-      </div>
+    <div className="contact-wrapper">
+      {/* Contact Info Section */}
+      <div className="contact-info-container">
+        <img src={contactImage} alt="Contact" className="contact-img" />
 
-      {/* Contact Form Section */}
-      <div className="contact-container">
-        <div className="contact-form-card">
-          <h2 className="form-heading">Send us a Message</h2>
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label>First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <label>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Message</label>
-              <textarea
-                name="message"
-                rows="5"
-                value={formData.message}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <button type="submit" className="submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send Message'} <Send size={16} />
-            </button>
-          </form>
-        </div>
+        <div className="contact-details">
+          <h2>Your Voice Matters</h2>
+          <p className="contact-desc">
+            Agriculture is a vital cornerstone of our society, encompassing everything from the cultivation of crops 
+            to the care of livestock. It provides us with food, clothing, medicine, and livelihoods. At the heart of this 
+            industry are the farmers, vendors, buyers, and experts who make it all possible. Whether you have a question, 
+            feedback, or simply want to connect — we’re here to support and grow with you.
+          </p>
 
-        <div className="support-box">
-          <h3>Need Help?</h3>
-          <p>Contact our support team</p>
-          <div className="support-icons">
-            <Phone size={32} />
-            <Headphones size={32} />
+          <div className="contact-block">
+            <p><strong>Address</strong><br />Colombo, Western Province, Sri Lanka</p>
+            <p><strong>Phone</strong><br />+94 75 123 4532</p>
+            <p><strong>Email</strong><br />support@govimansala.lk</p>
+          </div>
+
+          <div className="social-icons">
+            <a href="#"><FaFacebookF /></a>
+            <a href="#"><FaLinkedinIn /></a>
+            <a href="#"><FaInstagram /></a>
           </div>
         </div>
       </div>
 
-      {/* Social Section */}
-      <div className="social-section">
-        <h3><Globe size={24} /> Follow Us</h3>
-        <p>Stay connected for updates and fresh stories</p>
-        <div className="social-links">
-          <a href="https://facebook.com/govimansala" target="_blank" rel="noreferrer">
-            <Facebook /> Facebook
-          </a>
-          <a href="https://instagram.com/govimansala" target="_blank" rel="noreferrer">
-            <Instagram /> Instagram
-          </a>
-          <a href="https://linkedin.com/govimansala" target="_blank" rel="noreferrer">
-            <Linkedin /> LinkedIn
-          </a>
-        </div>
+      {/* Message Form Section */}
+      <div className="contact-form-section">
+        <h2>Send Your Message</h2>
+        <form onSubmit={handleSubmit} className="contact-form">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="message"
+            placeholder="Your message"
+            rows="5"
+            value={formData.message}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">SUBMIT</button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default ContactPage;
+export default Contact;
