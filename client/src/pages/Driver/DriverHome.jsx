@@ -17,7 +17,7 @@ function DriverHome() {
   };
 
   const [driverData] = useState({
-    name: 'Sunil Gaage',
+    name: 'Sunil Gamage',
     id: 'DRV001',
     phone: '+94 77 123 4567',
     email: 'sunilgamage@email.com',
