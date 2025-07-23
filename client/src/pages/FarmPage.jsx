@@ -3,12 +3,22 @@ import React, { useState } from "react";
 import "../pages/styles/FarmPage.css";
 
 const products = [
+  // vegetables
   { name: "Red Onion", image: "/src/assets/Marketplace/Vegetables/RedOnion.jpg", category: "vegetable", type: "organic" },
   { name: "Potato", image: "/src/assets/Marketplace/Vegetables/Potatoes.jpg", category: "vegetable", type: "conventional" },
   { name: "Tomato", image: "/src/assets/Marketplace/Vegetables/tomatoes.jpg", category: "vegetable", type: "organic" },
   { name: "Bombay Onion", image: "/src/assets/Marketplace/Vegetables/RedOnion.jpg", category: "vegetable", type: "conventional" },
   { name: "Carrot", image: "/src/assets/Marketplace/Vegetables/carrot.jpg", category: "vegetable", type: "organic" },
   { name: "Brinjal", image: "/src/assets/Marketplace/Vegetables/Brinjal.jpg", category: "vegetable", type: "conventional" },
+
+  // fruits
+  { name: "Avocado", image: "/src/assets/Marketplace/Fruits/avacado.jpg", category: "fruit", type: "organic" },
+  { name: "Guava", image: "/src/assets/Marketplace/Fruits/guava.jpg", category: "fruit", type: "conventional" },
+  { name: "Papaya", image: "/src/assets/Marketplace/Fruits/papaya.jpeg", category: "fruit", type: "organic" },
+  { name: "Watermelon", image: "/src/assets/Marketplace/Fruits/watermelon.jpg", category: "fruit", type: "conventional" },
+  { name: "Banana", image: "/src/assets/Marketplace/Fruits/banana.jpg", category: "fruit", type: "organic" },
+  { name: "Pineapple", image: "/src/assets/Marketplace/Fruits/pineapple.jpeg", category: "fruit", type: "conventional" },
+  { name: "Mango", image: "/src/assets/Marketplace/Fruits/mango.jpeg", category: "fruit", type: "organic" },
 ];
 
 const FarmPage = () => {
@@ -16,14 +26,13 @@ const FarmPage = () => {
   const [selectedVegFilter, setSelectedVegFilter] = useState("all");
   const [selectedFruitFilter, setSelectedFruitFilter] = useState("all");
 
-  const shouldShowVegetable = (type) => selectedVegFilter === "all" || selectedVegFilter === type;
-  const shouldShowFruit = (type) => selectedFruitFilter === "all" || selectedFruitFilter === type;
+  const filteredVegetables = products.filter(
+    (p) => p.category === "vegetable" && (selectedVegFilter === "all" || p.type === selectedVegFilter)
+  );
 
-  const filteredProducts = products.filter((p) => {
-    if (p.category === "vegetable") return shouldShowVegetable(p.type);
-    if (p.category === "fruit") return shouldShowFruit(p.type);
-    return true;
-  });
+  const filteredFruits = products.filter(
+    (p) => p.category === "fruit" && (selectedFruitFilter === "all" || p.type === selectedFruitFilter)
+  );
 
   return (
     <>
@@ -32,7 +41,6 @@ const FarmPage = () => {
         <p>Home &gt; Farms &gt; Green Valley Farm</p>
       </div>
 
-      {/* Sidebar Toggle Button placed properly */}
       <div className="top-bar">
         <button className="sidebar-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
           {sidebarOpen ? "×" : "≡"}
@@ -95,23 +103,54 @@ const FarmPage = () => {
         {/* Main Content */}
         <div className="content">
           <h1>Green Valley Farm</h1>
-          <div className="product-grid">
-            {filteredProducts.map((product, idx) => (
-              <div key={idx} className="product-card">
-                <img src={product.image} alt={product.name} />
-                <h3>{product.name}</h3>
-                <div className="product-actions">
-                  <label htmlFor={`qty-${idx}`}>Qty:</label>
-                  <select id={`qty-${idx}`}>
-                    {[...Array(100)].map((_, i) => (
-                      <option key={i + 1} value={i + 1}>{i + 1}</option>
-                    ))}
-                  </select>
-                  <button className="add-button">Add to Cart</button>
-                </div>
+
+          {/* Vegetable Section */}
+          {filteredVegetables.length > 0 && (
+            <>
+              <h2 className="category-title">Vegetables</h2>
+              <div className="product-grid">
+                {filteredVegetables.map((product, idx) => (
+                  <div key={`veg-${idx}`} className="product-card">
+                    <img src={product.image} alt={product.name} />
+                    <h3>{product.name}</h3>
+                    <div className="product-actions">
+                      <label htmlFor={`qty-veg-${idx}`}>Qty:</label>
+                      <select id={`qty-veg-${idx}`}>
+                        {[...Array(100)].map((_, i) => (
+                          <option key={i + 1} value={i + 1}>{i + 1}</option>
+                        ))}
+                      </select>
+                      <button className="add-button">Add to Cart</button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
+
+          {/* Fruit Section */}
+          {filteredFruits.length > 0 && (
+            <>
+              <h2 className="category-title">Fruits</h2>
+              <div className="product-grid">
+                {filteredFruits.map((product, idx) => (
+                  <div key={`fruit-${idx}`} className="product-card">
+                    <img src={product.image} alt={product.name} />
+                    <h3>{product.name}</h3>
+                    <div className="product-actions">
+                      <label htmlFor={`qty-fruit-${idx}`}>Qty:</label>
+                      <select id={`qty-fruit-${idx}`}>
+                        {[...Array(100)].map((_, i) => (
+                          <option key={i + 1} value={i + 1}>{i + 1}</option>
+                        ))}
+                      </select>
+                      <button className="add-button">Add to Cart</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
