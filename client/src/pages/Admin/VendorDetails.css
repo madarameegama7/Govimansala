@@ -1,0 +1,63 @@
+.vendors-container {
+  padding: 30px;
+  background-color: #f0f5f0;
+  min-height: 100vh;
+}
+
+.vendors-container h2 {
+  text-align: center;
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.vendors-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.vendors-table th,
+.vendors-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.vendors-table th {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+.delete-btn,
+.block-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 2px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+}
+
+.block-btn.block {
+  background-color: #f9a825;
+  color: white;
+}
+
+.block-btn.unblock {
+  background-color: #43a047;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+.block-btn:hover {
+  opacity: 0.85;
+}

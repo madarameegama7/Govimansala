@@ -11,6 +11,7 @@ import PublicLayout from "./layouts/PublicLayout";
 import VendorLayout from "./layouts/VendorLayout";
 import BuyerLayout from "./layouts/BuyerLayout";
 import DriverLayout from "./layouts/DriverLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 // Pages
 import Contact from "./pages/Contact";
@@ -41,6 +42,14 @@ import Orders from "./pages/Buyer/Orders";
 import EditProfile from "./pages/Buyer/EditProfile";
 import Cart from "./pages/Buyer/Cart";
 import Checkout from "./pages/Buyer/Checkout";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import BuyerOrders from "./pages/Admin/BuyerOrders";
+import FarmerOrders from "./pages/Admin/FarmerOrders";
+import BuyerDetails from "./pages/Admin/BuyerDetails";
+import VendorDetails from "./pages/Admin/VendorDetails";
+import DriverDetails from "./pages/Admin/DriverDetails";
+import QADetails from "./pages/Admin/QADetails";
+import FarmerDetails from "./pages/Admin/FarmerDetails";
 
 function App() {
   return (
@@ -123,11 +132,20 @@ function App() {
           path="/admin"
           element={
             <PrivateRoute allowedRoles={["ADMIN"]}>
-              <PublicLayout />
-              <Admin />
+              <AdminLayout />
             </PrivateRoute>
           }
-        />
+          >
+          <Route path="AdminDashboard" element={<AdminDashboard />} />
+          <Route path="BuyerOrders" element={<BuyerOrders />} />
+          <Route path="FarmerOrders" element={<FarmerOrders />} />
+          <Route path="BuyerDetails" element={<BuyerDetails />} />
+          <Route path="VendorDetails" element={<VendorDetails />} />
+          <Route path="DriverDetails" element={<DriverDetails />} />
+          <Route path="QADetails" element={<QADetails />} />
+          <Route path="FarmerDetails" element={<FarmerDetails />} />
+        </Route>
+        
         {/* DRIVER ROUTES */}
         <Route
           path="/driver"
