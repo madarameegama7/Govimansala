@@ -6,19 +6,29 @@
 
 /* Hero Section */
 .farms-hero {
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-bottom: 1px solid #ccc;
+  background: url('../public/pageNameBackground.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: #0A5446;
+  height: 180px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .farms-hero h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 2.2rem;
+  font-weight: bold
 }
 
 .farms-hero p {
-  margin-top: 5px;
-  color: #666;
+   margin-top: 10px;
+  color: #444;
+  font-size: 1rem;
 }
 
 /* Top Bar (for search and toggle) */
@@ -176,14 +186,30 @@
 }
 
 .add-button {
-  padding: 5px 10px;
+  padding: 6px 14px;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 6px;
+  font-size: 14px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.category-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 30px 0 15px;
+  color: #0A5446;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+}
+
+
 
 /* Responsive */
 @media screen and (max-width: 768px) {

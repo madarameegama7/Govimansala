@@ -4,14 +4,19 @@
 }
 
 .about-hero {
-  background: url('../public/pageNameBackground.png') no-repeat center;
+  background: url('../public/pageNameBackground.png') no-repeat center center;
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 60px 20px;
+  padding: 40px 20px;
   color: #0A5446;
-  position: relative;
-  height: 50px; /* Adjusted for better visibility */
+  height: 180px; /* Increased height to show text nicely */
+  font-family: 'Poppins', sans-serif;
 }
+
 
 .about-hero h1 {
   font-size: 2.5rem;

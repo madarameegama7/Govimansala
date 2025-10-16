@@ -1,17 +1,83 @@
-.privacy-hero{
-    background: url('../public/pageNameBackground.png') no-repeat center;
-    background-size: cover;
-    text-align: center;
-    padding: 60px 20px;
-    color: #0A5446;
-    position: relative;
+.privacy-hero {
+   background: url('../public/pageNameBackground.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  color: #0A5446;
+  height: 180px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.privacy-content{
-    max-width: 1200px;
-    margin: 0 auto;
+
+.privacy-hero h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: bold
+}
+
+.privacy-hero p {
+   margin-top: 10px;
+  color: #444;
+  font-size: 1rem;
+}
+
+/* Main content container */
+.privacy-content {
+  max-width: 900px;
+  margin: 40px auto 60px;
+  padding: 30px 40px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333333;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #0A5446;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 700;
+  border-bottom: 2px solid #0A5446;
+  padding-bottom: 5px;
+}
+
+.privacy-content p {
+  margin-bottom: 20px;
+}
+
+.privacy-content ul {
+  list-style: disc inside;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  color: #444;
+}
+
+.privacy-content ul li {
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .privacy-content {
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 10px 40px;
+  }
+  .privacy-hero {
+    padding: 60px 10px;
+    font-size: 2rem;
+  }
+  .privacy-hero p {
+    font-size: 1rem;
+  }
+  .section-title {
+    font-size: 1.3rem;
+  }
 }
