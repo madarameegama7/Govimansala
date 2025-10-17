@@ -53,18 +53,24 @@ public class AuthService {
     }
 
     public AuthResponse authenticate(AuthRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.UNAUTHORIZED, "Invalid email or password"
-                ));
+        System.out.println("LOGIN email: " + request.getEmail());
+        System.out.println("LOGIN password: " + request.getPassword());
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Invalid email or password"
-            );
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        System.out.println("USER FOUND: " + user.getEmail());
+        System.out.println("DB HASH: " + user.getPasswordHash());
+
+        boolean match = passwordEncoder.matches(request.getPassword(), user.getPasswordHash());
+        System.out.println("MATCH RESULT: " + match);
+
+        if (!match) {
+            throw new RuntimeException("Invalid email or password");
         }
 
         String token = jwtService.generateToken(user.getUserId());
         return new AuthResponse(token, user.getRole().name(), user.getUserId());
     }
+
 }
