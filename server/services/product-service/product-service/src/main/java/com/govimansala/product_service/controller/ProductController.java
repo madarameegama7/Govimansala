@@ -61,4 +61,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> getByCategory(@PathVariable String productCategory){
         return ResponseEntity.ok(productService.getProductByCategory(productCategory));
     }
+
+    // Vendor Order page
+    @GetMapping("/vendor/{userId}/ids")
+    public ResponseEntity<List<Integer>> getVendorProductIds(@PathVariable int userId) {
+        return ResponseEntity.ok(productService.getProductIdsByVendor(userId));
+    }
+
 }

@@ -9,6 +9,8 @@ import fertilizersImg from "../../assets/Marketplace/Vendor/fertilizer.jpg";
 import pesticidesImg from "../../assets/Marketplace/Vendor/pesticides.jpeg";
 import machineryImg from "../../assets/Marketplace/Vendor/machinery.jpg";
 
+console.log("✅ VendorMarketPlace component file loaded");
+
 function VendorMarketPlace() {
   const [editingProductId, setEditingProductId] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
@@ -37,11 +39,30 @@ function VendorMarketPlace() {
   ];
 
   // Filter products based on selected filter and search term
+  const normalizeValue = (value) => (value || "").toLowerCase().trim();
+
   const shouldShowProduct = (category, name) => {
-    const matchesFilter = selectedFilter === "all" || selectedFilter === category;
-    const matchesSearch = searchTerm === "" || name.toLowerCase().includes(searchTerm.toLowerCase());
+    const normalizedCategory = normalizeValue(category);
+    const normalizedName = normalizeValue(name);
+    const normalizedFilter = normalizeValue(selectedFilter);
+    const matchesFilter =
+      normalizedFilter === "all" ||
+      normalizedCategory === normalizedFilter ||
+      normalizedCategory.startsWith(normalizedFilter) ||
+      normalizedFilter.startsWith(normalizedCategory);
+    const matchesSearch =
+      normalizeValue(searchTerm) === "" ||
+      normalizedName.includes(normalizeValue(searchTerm));
+
+    console.log("🧩 Filter check:", {
+      selectedFilter,
+      category: normalizedCategory,
+      matchesFilter,
+      matchesSearch,
+    });
     return matchesFilter && matchesSearch;
   };
+
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -61,35 +82,70 @@ function VendorMarketPlace() {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    console.log("Token is", token);
+  const visibleProducts = Array.isArray(products)
+    ? products.filter((product) =>
+        shouldShowProduct(
+          product.productCategory ?? "",
+          product.productName ?? ""
+        )
+      )
+    : [];
 
-    // Decode token to get user ID
+  console.log("🔸 Component rendered. Filter:", selectedFilter);
+
+  useEffect(() => {
+    console.log("🟡 Category changed to:", selectedFilter);
+    const token = localStorage.getItem("accessToken");
+    const baseUrl = "http://localhost:8080/api/product";
+    const url =
+      selectedFilter && selectedFilter !== "all"
+        ? `${baseUrl}/category/${encodeURIComponent(selectedFilter)}`
+        : baseUrl;
+
+    console.log("🔵 Fetching from URL:", url);
+
+    const headers = {
+      Accept: "application/json",
+    };
+
     if (token) {
-      try {
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        console.log("Decoded token:", decoded);
-        setCurrentUserId(decoded.sub?.toString()); // Ensure we store as string
-      } catch (err) {
-        console.error("Error decoding token:", err);
-      }
+      headers.Authorization = `Bearer ${token}`;
     }
 
-    fetch("http://localhost:8080/api/product", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched products:", data);
-        setProducts(data);
+    fetch(url, { headers })
+      .then((res) => {
+        console.log("🟢 Response status:", res.status);
+        return res.text(); // 👈 get raw text instead of JSON for debugging
       })
-      .catch((err) => {
-        console.error("Error fetching products:", err);
-      });
-  }, []);
+      .then((text) => {
+        console.log("🟣 Raw response:", text);
+        try {
+          const data = JSON.parse(text);
+          console.log("✅ Parsed data:", data);
+
+          const normalizedProducts = (() => {
+            if (Array.isArray(data)) return data;
+            if (data && Array.isArray(data.content)) return data.content;
+            if (data && Array.isArray(data.data)) return data.data;
+            if (data && Array.isArray(data.products)) return data.products;
+            return [];
+          })();
+
+          if (!Array.isArray(normalizedProducts)) {
+            console.error("❌ Failed to derive products array, falling back to empty list.");
+            setProducts([]);
+            return;
+          }
+
+          console.log("📦 Normalized products:", normalizedProducts);
+          setProducts(normalizedProducts);
+        } catch (e) {
+          console.error("❌ JSON parse error:", e);
+          setProducts([]);
+        }
+      })
+      .catch((err) => console.error("🔥 Fetch error:", err));
+  }, [selectedFilter]);
 
   const handleEditProduct = (product) => {
     setEditingProductId(product.productId);
@@ -116,7 +172,7 @@ function VendorMarketPlace() {
       });
 
       if (res.ok) {
-        setProducts(products.filter((p) => p.productId !== productId));
+        setProducts((prev) => prev.filter((p) => p.productId !== productId));
         alert("✅ Product deleted successfully!");
       } else {
         alert("❌ Failed to delete product");
@@ -142,9 +198,11 @@ function VendorMarketPlace() {
 
       if (res.ok) {
         const updatedProduct = await res.json();
-        setProducts(products.map((p) =>
-          p.productId === updatedProduct.productId ? updatedProduct : p
-        ));
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.productId === updatedProduct.productId ? updatedProduct : p
+          )
+        );
         setEditingProductId(null);
         alert("✅ Product updated successfully!");
         setProductData({
@@ -184,7 +242,7 @@ function VendorMarketPlace() {
 
     if (res.ok) {
       const newProduct = await res.json();
-      setProducts([...products, newProduct]);
+      setProducts((prev) => [...prev, newProduct]);
       alert("✅ Product added successfully!");
       setProductData({
         productName: "",
@@ -199,6 +257,7 @@ function VendorMarketPlace() {
   };
 
   return (
+    
     <div className="vendor-marketplace">
       {/* Sidebar Toggle Button */}
       <button
@@ -308,47 +367,65 @@ function VendorMarketPlace() {
               </div>
             </div>
 
-            <div className="products-scroll" id="products-container">
-              {Array.isArray(products) && products.map((product) =>
-                shouldShowProduct(product.productCategory, product.productName) && (
-                  <div className="product-card" key={product.productId}>
-                    <div className="product-image">
-                      {product.productCategory === "Seeds" && <img src={seedsImg} alt="Seeds" />}
-                      {product.productCategory === "Fertilizers" && <img src={fertilizersImg} alt="Fertilizers" />}
-                      {product.productCategory === "Pesticides" && <img src={pesticidesImg} alt="Pesticides" />}
-                      {product.productCategory === "Machinery" && <img src={machineryImg} alt="Machinery" />}
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-name">
-                        <span>{product.productName}</span>
-                      </h3>
-                      <span className="product-type">{product.productCategory}</span>
-                      <p className="product-price">Rs.{product.productPrice}</p>
-                      <p className="product-quantity">Quantity: {product.productQuantity}</p>
-                      <p className="product-description">{product.productDescription}</p>
-                      
-                      {/* Edit/Delete Buttons - Only show for product owner */}
-                      {product.userId.toString() === currentUserId?.toString() && (
-                        <div className="product-actions">
-                          <button
-                            className="edit-btn"
-                            onClick={() => handleEditProduct(product)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="delete-btn"
-                            onClick={() => handleDeleteProduct(product.productId)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )
-              )}
-            </div>
+            <div
+  id="products-container"
+  className="products-scroll"
+  style={{
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "16px",
+    padding: "12px",
+    background: "#f9fafb",
+    borderRadius: "8px",
+    minHeight: "200px",        // ensures something visible
+  }}
+>
+  {visibleProducts.length > 0 ? (
+    visibleProducts.map((product) => (
+      <div
+        key={product.productId}
+        className="product-card"
+        style={{
+          flex: "0 0 260px",
+          background: "#fff",
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+          padding: "12px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          className="product-image"
+          style={{ width: "100%", height: "150px", marginBottom: "10px" }}
+        >
+          {product.productCategory === "Seeds" && (
+            <img src={seedsImg} alt="Seeds" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          )}
+          {product.productCategory === "Fertilizers" && (
+            <img src={fertilizersImg} alt="Fertilizers" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          )}
+          {product.productCategory === "Pesticides" && (
+            <img src={pesticidesImg} alt="Pesticides" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          )}
+          {product.productCategory === "Machinery" && (
+            <img src={machineryImg} alt="Machinery" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          )}
+        </div>
+        <h3>{product.productName}</h3>
+        <p style={{ color: "#555" }}>{product.productCategory}</p>
+        <p><strong>Rs.{product.productPrice}</strong></p>
+        <p>Qty: {product.productQuantity}</p>
+        <p style={{ fontSize: "0.9em", color: "#666" }}>{product.productDescription}</p>
+      </div>
+    ))
+  ) : (
+    <div style={{ width: "100%", textAlign: "center", color: "#666" }}>
+      <p>No products found for this category.</p>
+    </div>
+  )}
+</div>
+
           </div>
 
           {/* Add/Edit Product Form */}
@@ -431,6 +508,7 @@ function VendorMarketPlace() {
         </div>
       </div>
     </div>
+    
   );
 }
 
