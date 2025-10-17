@@ -63,5 +63,10 @@ public class ProductService{
 
     }
 
+    // NEW: return only IDs (faster than fetching full entities)
+    public List<Integer> getProductIdsByVendor(int userId) {
+        return productRepository.findProductIdsByVendor(userId);
+    }
+
 
 }
