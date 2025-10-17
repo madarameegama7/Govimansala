@@ -13,7 +13,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/auth/**","/api/product/**","/api/order/**").permitAll()
+                        .pathMatchers("/api/auth/**","/api/product/**","/api/order/**","/api/vendors/**").permitAll()
 
                         .anyExchange().authenticated()
                 )
