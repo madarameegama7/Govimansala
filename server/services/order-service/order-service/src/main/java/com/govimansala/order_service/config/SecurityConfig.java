@@ -26,9 +26,7 @@ public class SecurityConfig {
                 .and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/order/**").permitAll()
-                        // ✅ allow vendor orders listing
-                        .requestMatchers(HttpMethod.GET, "/api/vendors/*/orders").permitAll()
+                        .requestMatchers("/api/order/**", "/api/orders/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
