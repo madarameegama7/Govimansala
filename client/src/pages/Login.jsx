@@ -14,7 +14,7 @@ function Login() {
     setError('');
     try{
       const response=await loginApi(email,password);
-      const role=response.data.role;
+      const role=response.role;
       localStorage.setItem('role',role);
 
       if(role==='FARMER'){
