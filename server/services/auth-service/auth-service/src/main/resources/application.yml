@@ -2,11 +2,14 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/authdb
     username: postgres
-    password: 1234
+    password: anna #i had to change the pswrd as 1234 didnt work for me
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   application:
     name: auth-service
