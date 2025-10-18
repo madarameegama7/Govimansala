@@ -3,6 +3,7 @@ package com.govimansala.order_service.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table (name = "buyer_cart_items")
 public class BuyerCartItem {
 
     @Id

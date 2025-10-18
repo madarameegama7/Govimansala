@@ -4,12 +4,14 @@ import com.govimansala.order_service.dto.BuyerOrderRequest;
 import com.govimansala.order_service.dto.BuyerOrderItemRequest;
 import com.govimansala.order_service.model.BuyerOrder;
 import com.govimansala.order_service.model.BuyerOrderItem;
+import com.govimansala.order_service.enums.DeliveryStatus;
 import com.govimansala.order_service.repo.BuyerOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BuyerOrderService {
@@ -35,4 +37,19 @@ public class BuyerOrderService {
 
         return orderRepository.save(order);
     }
+
+    public BuyerOrder updateDeliveryStatus(Long orderId, DeliveryStatus newStatus) {
+        Optional<BuyerOrder> optionalOrder = orderRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            BuyerOrder order = optionalOrder.get();
+            order.setDeliveryStatus(newStatus);
+            return orderRepository.save(order);
+        }
+        throw new RuntimeException("Order not found");
+    }
+
+    public Optional<BuyerOrder> getOrderById(Long orderId) {
+        return orderRepository.findById(orderId);
+    }
+
 }

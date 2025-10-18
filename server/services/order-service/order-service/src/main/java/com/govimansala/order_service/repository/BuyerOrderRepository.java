@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BuyerOrderRepository extends JpaRepository<BuyerOrder, Long> {
-    List<BuyerOrder> findByUserIdAndUserType(Long userId, String userType);
+    List<BuyerOrder> findByBuyerId(Long buyerId);
 }
