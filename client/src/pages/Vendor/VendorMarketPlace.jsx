@@ -61,35 +61,35 @@ function VendorMarketPlace() {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    console.log("Token is", token);
 
-    // Decode token to get user ID
-    if (token) {
-      try {
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        console.log("Decoded token:", decoded);
-        setCurrentUserId(decoded.sub?.toString()); // Ensure we store as string
-      } catch (err) {
-        console.error("Error decoding token:", err);
-      }
+useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setCurrentUserId(decoded.sub?.toString());
+    } catch (err) {
+      console.error("Error decoding token:", err);
     }
+  }
+}, []);
 
-    fetch("http://localhost:8080/api/product", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+useEffect(() => {
+  const token = localStorage.getItem("accessToken");
+  if (!token || !currentUserId) return;
+
+  fetch("http://localhost:8080/api/product", {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Fetched products:", data);
+      setProducts(data);
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched products:", data);
-        setProducts(data);
-      })
-      .catch((err) => {
-        console.error("Error fetching products:", err);
-      });
-  }, []);
+    .catch(console.error);
+}, [currentUserId]);
+
+   
 
   const handleEditProduct = (product) => {
     setEditingProductId(product.productId);
