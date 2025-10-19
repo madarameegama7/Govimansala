@@ -14,7 +14,7 @@ const FarmerDetails = () => {
 
   const fetchFarmers = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/admin/farmers', {
+      const response = await axios.get('http://localhost:8080/api/admin/farmers', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -60,7 +60,7 @@ const FarmerDetails = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this farmer?')) {
       try {
-        await axios.delete(`http://localhost:8081/api/admin/farmers/${id}`, {
+        await axios.delete(`http://localhost:8080/api/admin/farmers/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -75,7 +75,7 @@ const FarmerDetails = () => {
   const handleBlockToggle = async (farmer) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8081/api/admin/farmers/${farmer.farmerId}/block`,
+        `http://localhost:8080/api/admin/farmers/${farmer.farmerId}/block`,
         { isBlocked: !farmer.isBlocked },
         { headers: { Authorization: `Bearer ${token}` } }
       );

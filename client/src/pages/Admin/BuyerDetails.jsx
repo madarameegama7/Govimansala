@@ -13,7 +13,7 @@ const BuyerDetails = () => {
 
   const fetchBuyers = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/admin/buyers', {
+      const response = await axios.get('http://localhost:8080/api/admin/buyers', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -56,7 +56,7 @@ const BuyerDetails = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this buyer?')) {
       try {
-        await axios.delete(`http://localhost:8081/api/admin/buyers/${id}`, {
+        await axios.delete(`http://localhost:8080/api/admin/buyers/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -71,7 +71,7 @@ const BuyerDetails = () => {
   const handleBlockToggle = async (buyer) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8081/api/admin/buyers/${buyer.buyerId}/block`,
+        `http://localhost:8080/api/admin/buyers/${buyer.buyerId}/block`,
         { isBlocked: !buyer.user?.isBlocked },
         { headers: { Authorization: `Bearer ${token}` } }
       );

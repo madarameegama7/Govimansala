@@ -15,7 +15,7 @@ const UserDetails = () => {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/api/auth/users', {
+      const response = await axios.get('http://localhost:8080/api/auth/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(response.data);
@@ -58,7 +58,7 @@ const UserDetails = () => {
   const handleDelete = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`http://localhost:8081/api/admin/farmers/${userId}`, {
+        await axios.delete(`http://localhost:8080/api/admin/farmers/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers((prev) => prev.filter((user) => user.user_id !== userId));
@@ -72,7 +72,7 @@ const UserDetails = () => {
   const handleBlockToggle = async (user) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8081/api/admin/farmers/${user.user_id}/block`,
+        `http://localhost:8080/api/admin/farmers/${user.user_id}/block`,
         { isBlocked: !user.isBlocked },
         { headers: { Authorization: `Bearer ${token}` } }
       );
