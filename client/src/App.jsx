@@ -50,6 +50,7 @@ import VendorDetails from "./pages/Admin/VendorDetails";
 import DriverDetails from "./pages/Admin/DriverDetails";
 import QADetails from "./pages/Admin/QADetails";
 import FarmerDetails from "./pages/Admin/FarmerDetails";
+import PlaceOrder from "./pages/Driver/PlaceOrder";
 import UserDetails from "./pages/Admin/UserDetails";
 
 function App() {
@@ -190,6 +191,7 @@ function App() {
               </DriverLocationProvider>
             }
           />
+            <Route path="place-order" element={<PlaceOrder />} />
         </Route>
       </Routes>
     </BrowserRouter>

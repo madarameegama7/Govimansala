@@ -10,6 +10,11 @@ function DriverHome() {
   const [activeSection, setActiveSection] = useState('orders')
   const [showAllOrders, setShowAllOrders] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState(null)
+  const [showNotification, setShowNotification] = useState(true);
+  const [notifications, setNotifications] = useState([]);
+  const [viewOrderDetails, setViewOrderDetails] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [locationFilter, setLocationFilter] = useState('all');
   const navigate = useNavigate()
 
   const handleMyProfileClick = () => {
@@ -42,6 +47,57 @@ function DriverHome() {
       branch: 'Kandy'
     }
   })
+
+  // Get driver's city (for demo, use Kandy)
+  const driverCity = 'Kandy';
+
+  React.useEffect(() => {
+    // Read notifications for driver's city from localStorage
+    const stored = JSON.parse(localStorage.getItem(`driver_notifications_${driverCity}`) || "[]");
+    setNotifications(stored);
+    setShowNotification(stored.length > 0);
+    // For demo, attach a dummy order to notification
+    if (stored.length > 0) {
+      // Dummy order for notification (simulate real order)
+      setOrderDetails({
+        pickups: [
+          { name: 'Green Farm', address: '456 Valley Road, Kandy', distance: 15 },
+          { name: 'Kandy Organic Farm', address: 'Market Street, Kandy', distance: 10 }
+        ],
+        delivery: { name: 'Kamatha Restaurant', address: '321 Restaurant Lane, Colombo', distance: 95 },
+        totalDistance: 120,
+        fare: 3500,
+        products: [
+          { name: 'Tomatoes', quantity: '80 kg', price: 4800, location: 'Green Farm' },
+          { name: 'Carrots', quantity: '50 kg', price: 3000, location: 'Kandy Organic Farm' }
+        ],
+        instructions: 'Handle vegetables carefully. Restaurant delivery - use rear entrance.'
+      });
+    }
+  }, []);
+
+  const handleCloseNotification = () => {
+    setShowNotification(false);
+    localStorage.setItem(`driver_notifications_${driverCity}`, JSON.stringify([]));
+  };
+
+  const handleViewOrder = () => {
+    setViewOrderDetails(true);
+    setShowNotification(false);
+  };
+
+  const handleCloseOrderDetails = () => {
+    setViewOrderDetails(false);
+  };
+
+  const handleViewRoute = () => {
+    alert('Route view not implemented in demo.');
+  };
+
+  const handleRequestOrderModal = () => {
+    alert('Order requested!');
+    setViewOrderDetails(false);
+  };
 
 
   const [tasks] = useState([
@@ -380,7 +436,7 @@ function DriverHome() {
   };
 
   const handleNavigateToOrder = (order) => {
-    navigate('/driver-navigation', {
+    navigate('/driver/navigation', {
       state: {
         orderData: order,
         orderDetails: order
@@ -391,6 +447,28 @@ function DriverHome() {
   const handleRequestOrder = (orderId) => {
     alert(`Order ${orderId} requested! You can start the delivery process.`)
   }
+
+  // Filter orders based on location
+  const getFilteredOrders = () => {
+    if (locationFilter === 'all') {
+      return orders;
+    } else if (locationFilter === 'hometown') {
+      // Filter orders with pickups or delivery in driver's hometown
+      return orders.filter(order => 
+        order.locations.some(loc => 
+          loc.address.includes(driverCity)
+        )
+      );
+    } else if (locationFilter === 'nearest') {
+      // Sort by nearest orders (based on total distance)
+      return [...orders].sort((a, b) => {
+        const distanceA = parseInt(a.totalDistance) || 0;
+        const distanceB = parseInt(b.totalDistance) || 0;
+        return distanceA - distanceB;
+      });
+    }
+    return orders;
+  };
 
   const renderOrderDashboard = () => (
     <div className="order-dashboard-content">
@@ -450,7 +528,7 @@ function DriverHome() {
               <i className="fas fa-clipboard-list"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-number">{orders.length}</div>
+              <div className="stat-number">{getFilteredOrders().length}</div>
               <div className="stat-label">Total Orders</div>
             </div>
           </div>
@@ -460,7 +538,7 @@ function DriverHome() {
               <i className="fas fa-truck"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-number">{orders.filter(o => o.status === 'assigned').length}</div>
+              <div className="stat-number">{getFilteredOrders().filter(o => o.status === 'assigned').length}</div>
               <div className="stat-label">Assigned Orders</div>
             </div>
           </div>
@@ -470,7 +548,7 @@ function DriverHome() {
               <i className="fas fa-road"></i>
             </div>
             <div className="stat-content">
-              <div className="stat-number">{orders.filter(o => o.status === 'in-progress').length}</div>
+              <div className="stat-number">{getFilteredOrders().filter(o => o.status === 'in-progress').length}</div>
               <div className="stat-label">In Progress</div>
             </div>
           </div>
@@ -498,18 +576,32 @@ function DriverHome() {
                 <i className="fas fa-arrow-left"></i>
               </button>
             )}
-            <h2>{showAllOrders ? `All Orders (${orders.length})` : 'My Orders'}</h2>
+            <h2>{showAllOrders ? `All Orders (${getFilteredOrders().length})` : 'My Orders'}</h2>
           </div>
           <div className="order-filters">
-            <button className="filter-btn active">All</button>
-            <button className="filter-btn">Assigned</button>
-            <button className="filter-btn">In Progress</button>
-            <button className="filter-btn">Pending</button>
+            <button 
+              className={`filter-btn ${locationFilter === 'all' ? 'active' : ''}`}
+              onClick={() => setLocationFilter('all')}
+            >
+              All
+            </button>
+            <button 
+              className={`filter-btn ${locationFilter === 'hometown' ? 'active' : ''}`}
+              onClick={() => setLocationFilter('hometown')}
+            >
+              Hometown ({driverCity})
+            </button>
+            <button 
+              className={`filter-btn ${locationFilter === 'nearest' ? 'active' : ''}`}
+              onClick={() => setLocationFilter('nearest')}
+            >
+              Nearest
+            </button>
           </div>
         </div>
 
         <div className="orders-grid">
-          {(showAllOrders ? orders : orders.slice(0, 2)).map(order => (
+          {(showAllOrders ? getFilteredOrders() : getFilteredOrders().slice(0, 2)).map(order => (
             <div 
               key={order.id} 
               className={`order-card ${order.status}`}
@@ -671,7 +763,7 @@ function DriverHome() {
           ))}
         </div>
 
-        {!showAllOrders && orders.length > 2 && (
+        {!showAllOrders && getFilteredOrders().length > 2 && (
           <div className="see-more-section">
             <button 
               className="btn-see-more"
@@ -682,7 +774,7 @@ function DriverHome() {
                 alt="Orders" 
                 style={{width: '16px', height: '16px', marginRight: '5px'}} 
               />
-              See All Orders ({orders.length})
+              See All Orders ({getFilteredOrders().length})
             </button>
           </div>
         )}
@@ -1097,6 +1189,82 @@ function DriverHome() {
       <div className="main-content">
         {renderContent()}
       </div>
+      {/* Notification Popup for driver with order summary */}
+      {showNotification && notifications.length > 0 && orderDetails && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.3)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999
+        }}>
+          <div style={{ background: "#fff", padding: 30, borderRadius: 10, minWidth: 350 }}>
+            <h3>New Order Notification</h3>
+            <p><b>Pickup Locations:</b></p>
+            <ul>
+              {orderDetails.pickups.map((p, idx) => (
+                <li key={idx}>{p.name} - {p.address} ({p.distance} km)</li>
+              ))}
+            </ul>
+            <p><b>Delivery Location:</b></p>
+            <ul>
+              <li>{orderDetails.delivery.name} - {orderDetails.delivery.address} ({orderDetails.delivery.distance} km)</li>
+            </ul>
+            <p><b>Total Distance:</b> {orderDetails.totalDistance} km</p>
+            <button onClick={handleViewOrder} style={{ marginRight: 10 }}>View Order</button>
+            <button onClick={handleCloseNotification}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {/* Full Order Details Modal */}
+      {viewOrderDetails && orderDetails && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.3)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999
+        }}>
+          <div style={{ background: "#fff", padding: 30, borderRadius: 10, minWidth: 400 }}>
+            <h3>Order Details</h3>
+            <p><b>Pickups:</b></p>
+            <ul>
+              {orderDetails.pickups.map((p, idx) => (
+                <li key={idx}>{p.name} - {p.address} ({p.distance} km)</li>
+              ))}
+            </ul>
+            <p><b>Delivery:</b></p>
+            <ul>
+              <li>{orderDetails.delivery.name} - {orderDetails.delivery.address} ({orderDetails.delivery.distance} km)</li>
+            </ul>
+            <p><b>Products:</b></p>
+            <ul>
+              {orderDetails.products.map((prod, idx) => (
+                <li key={idx}>{prod.name} - {prod.quantity} (Rs. {prod.price}) from {prod.location}</li>
+              ))}
+            </ul>
+            <p><b>Total Distance:</b> {orderDetails.totalDistance} km</p>
+            <p><b>Fare:</b> Rs. {orderDetails.fare}</p>
+            <p><b>Instructions:</b> {orderDetails.instructions}</p>
+            <div style={{ marginTop: 20 }}>
+              <button onClick={handleViewRoute} style={{ marginRight: 10 }}>View Route</button>
+              <button onClick={handleRequestOrderModal}>Request Order</button>
+              <button onClick={handleCloseOrderDetails} style={{ marginLeft: 10 }}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

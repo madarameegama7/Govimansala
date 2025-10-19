@@ -41,4 +41,6 @@ public class BuyerCartService {
     public void deleteCartItem(Long cartItemId) {
         repository.deleteById(cartItemId);
     }
+
+    public Optional<BuyerCartItem> getCartItemById(Long id) {return repository.findById(id);}
 }
