@@ -657,7 +657,10 @@
 
 /* Order Locations */
 .order-locations {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 140px; /* reserve consistent space */
 }
 
 .order-locations h4 {
@@ -671,6 +674,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 160px; /* fixed list height */
+  overflow-y: auto;
+  padding-right: 6px; /* space for scrollbar */
 }
 
 .location-item {
@@ -1038,24 +1044,28 @@
 /* Orders Grid */
 .orders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 20px;
+  align-items: stretch; /* Ensure all cards stretch to equal height */
 }
 
 .order-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border: 2px solid #e9ecef;
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 560px; /* Fixed height for consistent blocks */
 }
 
 .order-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
   border-color: #ff6b35;
 }
 
@@ -1065,78 +1075,89 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 5px;
   background: #e9ecef;
-  border-radius: 8px 8px 0 0;
+  border-radius: 12px 12px 0 0;
 }
 
 .order-card.pending::before {
-  background: #ff6b35;
+  background: linear-gradient(90deg, #ff6b35 0%, #ff8c5f 100%);
 }
 
-.order-card.approved::before {
-  background: #0A5446;
+.order-card.assigned::before {
+  background: linear-gradient(90deg, #0A5446 0%, #0d6e5a 100%);
 }
 
-.order-card.active::before {
-  background: #0A5446;
+.order-card.in-progress::before {
+  background: linear-gradient(90deg, #2563eb 0%, #4f87ff 100%);
 }
 
 .order-card.completed::before {
-  background: #6c757d;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
 }
 
 .order-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f3f5;
 }
 
 .order-number {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #0A5446;
+  letter-spacing: 0.3px;
 }
 
 .order-status {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .order-customer {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .customer-avatar {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  background: #0A5446;
+  background: linear-gradient(135deg, #0A5446 0%, #0d6e5a 100%);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(10, 84, 70, 0.2);
 }
 
 .customer-info {
   flex: 1;
+  min-width: 0;
 }
 
 .customer-name {
   font-size: 14px;
   font-weight: 600;
-  color: #0A5446;
-  margin-bottom: 2px;
+  color: #2c3e50;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .customer-phone {
@@ -1146,34 +1167,38 @@
 
 .order-time {
   text-align: right;
+  flex-shrink: 0;
 }
 
 .time-label {
-  font-size: 12px;
+  font-size: 11px;
   color: #6c757d;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .time-value {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ff6b35;
 }
 
 /* Route Summary */
 .route-summary {
-  margin-bottom: 15px;
-  padding: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  margin-bottom: 16px;
+  padding: 14px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #e9ecef;
 }
 
 .route-info {
   display: flex;
-  gap: 15px;
+  gap: 16px;
 }
 
 .route-item {
@@ -1181,11 +1206,13 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: #6c757d;
+  color: #495057;
+  font-weight: 500;
 }
 
 .route-item i {
   color: #ff6b35;
+  font-size: 14px;
 }
 
 .distance-info {
@@ -1193,71 +1220,82 @@
 }
 
 .distance {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: #0A5446;
+  margin-bottom: 2px;
 }
 
 .time-estimate {
-  font-size: 12px;
+  font-size: 11px;
   color: #6c757d;
+  font-weight: 500;
 }
 
 /* Order Summary */
 .order-summary {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
 }
 
 .order-items {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  min-height: 48px; /* keep space consistent */
 }
 
 .item-tag {
-  background: #e9ecef;
+  background: #e7f3ff;
   color: #0A5446;
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 5px 10px;
+  border-radius: 14px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
+  border: 1px solid #d0e7ff;
 }
 
 .more-items {
-  background: #ff6b35;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c5f 100%);
   color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 5px 10px;
+  border-radius: 14px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(255, 107, 53, 0.2);
 }
 
 .order-amount {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background: #f8f9fa;
+  padding: 12px;
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8dc 100%);
   border-radius: 8px;
+  border: 1px solid #ffd9c4;
+  margin-top: 8px;
 }
 
 .amount-label {
-  font-size: 14px;
-  color: #0A5446;
+  font-size: 13px;
+  color: #495057;
   font-weight: 600;
 }
 
 .amount-value {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   color: #0A5446;
+  letter-spacing: 0.3px;
 }
 
 /* Order Actions */
 .order-actions {
   display: flex;
   gap: 8px;
+  margin-top: auto; /* push actions to bottom for equal alignment */
 }
 
 .action-btn {
