@@ -51,6 +51,7 @@ import DriverDetails from "./pages/Admin/DriverDetails";
 import QADetails from "./pages/Admin/QADetails";
 import FarmerDetails from "./pages/Admin/FarmerDetails";
 import PlaceOrder from "./pages/Driver/PlaceOrder";
+import UserDetails from "./pages/Admin/UserDetails";
 
 function App() {
   return (
@@ -145,6 +146,7 @@ function App() {
           <Route path="DriverDetails" element={<DriverDetails />} />
           <Route path="QADetails" element={<QADetails />} />
           <Route path="FarmerDetails" element={<FarmerDetails />} />
+          <Route path="UserDetails" element={<UserDetails />} />
         </Route>
         
         {/* DRIVER ROUTES */}

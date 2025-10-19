@@ -10,6 +10,7 @@ function AdminHeroContent() {
       </div>
       <ul className="nav-list">
         <li><Link to="/admin/AdminDashboard">Dashboard</Link></li>
+          <li><Link to="/admin/UserDetails">Users</Link></li>
         <li><Link to="/admin/FarmerDetails">Farmers</Link></li>
         <li><Link to="/admin/BuyerDetails">Buyers</Link></li>
         <li><Link to="/admin/VendorDetails">Vendors</Link></li>
