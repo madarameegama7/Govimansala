@@ -2,7 +2,10 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/authdb
     username: postgres
-    password: 1234#i had to change the pswrd as 1234 didnt work for me
+
+  
+    password: 1234
+
   jpa:
     hibernate:
       ddl-auto: update
