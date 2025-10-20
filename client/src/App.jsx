@@ -125,9 +125,9 @@ function App() {
         >
           <Route path="Home" element={<NewHome />} />
           <Route path="Marketplace" element={<Marketplace />} />
-          <Route path="Farms" element={<Farms />} />
+          {/* <Route path="Farms" element={<Farms />} /> */}
           <Route path="FarmPage" element={<FarmPage />} />
-          <Route path="BuyerAnalytics" element={<BuyerAnalytics />} />
+          {/* <Route path="BuyerAnalytics" element={<BuyerAnalytics />} /> */}
           <Route path="Orders" element={<Orders />} />
           <Route path="EditProfile" element={<EditProfile />} />
           <Route path="Cart" element={<Cart />} />

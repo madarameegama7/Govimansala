@@ -43,6 +43,21 @@ spring:
           predicates:
               - Path=/api/vendors/**
 
+        - id: buyer-order
+          uri: lb://order-service
+          predicates:
+              - Path=/api/buyer-order/**
+
+        - id: buyer-cart
+          uri: lb://order-service
+          predicates:
+              - Path=/api/buyer-cart/**
+
+        - id: buyer-product
+          uri: lb://product-service
+          predicates:
+              - Path=/api/product/buyer_product/**
+
         # Admin routes
         - id: buyer-service
           uri: lb://auth-service
