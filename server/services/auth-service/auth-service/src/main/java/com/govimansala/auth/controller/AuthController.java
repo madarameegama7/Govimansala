@@ -7,6 +7,7 @@ import com.govimansala.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -35,4 +36,10 @@ public class AuthController {
 
         return authService.authenticate(request);
     }
+
+    @GetMapping("/users")
+    public ResponseEntity<?> getAllUsers(){
+        return ResponseEntity.ok(authService.getAllUserProfiles());
+    }
+
 }

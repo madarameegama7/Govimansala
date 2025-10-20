@@ -11,22 +11,55 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+
       routes:
         - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
+
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/qa/**
+
         - id: product-service
           uri: lb://product-service
           predicates:
             - Path=/api/product/**
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/farmer_product/**
+
         - id: order-service
           uri: lb://order-service
           predicates:
-            # include both paths handled by order-service
-            - Path=/api/order/**, /api/vendors/**
+            - Path=/api/order/**
 
-      # Optional but helpful for browser dev
+        # Admin routes
+        - id: buyer-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/admin/buyers/**
+
+        - id: vendor-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/admin/vendors/**
+
+        - id: driver-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/admin/drivers/**
+
+        - id: farmer-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/admin/farmers/**
+
+      # Global CORS config for frontend development
       globalcors:
         cors-configurations:
           '[/**]':

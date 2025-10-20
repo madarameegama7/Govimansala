@@ -12,6 +12,7 @@ import VendorLayout from "./layouts/VendorLayout";
 import BuyerLayout from "./layouts/BuyerLayout";
 import DriverLayout from "./layouts/DriverLayout";
 import AdminLayout from "./layouts/AdminLayout";
+import QALayout from "./layouts/QALayout";
 
 // Pages
 import Contact from "./pages/Contact";
@@ -51,6 +52,12 @@ import DriverDetails from "./pages/Admin/DriverDetails";
 import QADetails from "./pages/Admin/QADetails";
 import FarmerDetails from "./pages/Admin/FarmerDetails";
 import PlaceOrder from "./pages/Driver/PlaceOrder";
+import UserDetails from "./pages/Admin/UserDetails";
+import QADashboard from "./pages/QA/QADashboard";
+import QAInspectionList from "./pages/QA/QAInspectionList";
+import QAMetrics from "./pages/QA/QAMetrics";
+import QAInspectionDetails from "./pages/QA/QAInspectionDetails";
+import QAProfile from "./pages/QA/QAProfile";
 
 function App() {
   return (
@@ -145,6 +152,7 @@ function App() {
           <Route path="DriverDetails" element={<DriverDetails />} />
           <Route path="QADetails" element={<QADetails />} />
           <Route path="FarmerDetails" element={<FarmerDetails />} />
+          <Route path="UserDetails" element={<UserDetails />} />
         </Route>
         
         {/* DRIVER ROUTES */}
@@ -191,6 +199,22 @@ function App() {
           />
             <Route path="place-order" element={<PlaceOrder />} />
         </Route>
+        {/*QA ROUTES */}
+           <Route
+          path="/qa"
+          element={
+            <PrivateRoute allowedRoles={["QA"]}>
+              <QALayout />
+            </PrivateRoute>
+          }
+          >
+      <Route path="/qa/dashboard" element={<QADashboard />} />
+      <Route path="/qa/inspections" element={<QAInspectionList />} />
+      <Route path="/qa/inspection/:productId" element={<QAInspectionDetails />} />
+      <Route path="/qa/profile" element={<QAProfile />} />
+      <Route path="/qa/metrics" element={<QAMetrics />} />
+        </Route>
+        
       </Routes>
     </BrowserRouter>
   );

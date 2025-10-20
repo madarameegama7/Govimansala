@@ -25,6 +25,7 @@ public class JwtService {
 
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
+                .claim("userId", userId)  // add userId claim
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -33,6 +34,12 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return parseClaims(token).getSubject();
+    }
+
+    // NEW method to extract userId from token
+    public Long extractUserId(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("userId", Long.class);
     }
 
     public boolean isTokenValid(String token) {
