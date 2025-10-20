@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "cb8decab-1098-47f9-92c0-39a8c5257a50",
+		"name": "Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33620906",
+		"_collection_link": "https://speeding-meteor-859864.postman.co/workspace/Govimansala~414bf10c-99b5-484a-a453-3ff0da5234f3/collection/33620906-cb8decab-1098-47f9-92c0-39a8c5257a50?action=share&source=collection_link&creator=33620906"
+	},
+	"item": [
+		{
+			"name": "Get Farmer Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/farmers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"farmers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Buyer Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/buyers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"buyers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vendor",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get Driver Details",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get QA details",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

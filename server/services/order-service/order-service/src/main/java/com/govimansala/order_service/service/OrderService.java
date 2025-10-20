@@ -1,37 +1,57 @@
 package com.govimansala.order_service.service;
 
 import com.govimansala.order_service.enums.OrderStatus;
-import com.govimansala.order_service.enums.PaymentStatus;
-import com.govimansala.order_service.enums.DeliveryStatus;
 import com.govimansala.order_service.model.*;
 import com.govimansala.order_service.repository.CartRepository;
 import com.govimansala.order_service.repository.CartItemRepository;
 import com.govimansala.order_service.repository.OrderRepository;
-import lombok.RequiredArgsConstructor;
+import com.govimansala.order_service.repository.VendorOrderRow;
+import com.govimansala.order_service.dto.response.ProductResponseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.govimansala.order_service.dto.response.ProductResponseDTO;
-import com.govimansala.order_service.repository.VendorOrderRow;
-import com.govimansala.order_service.service.PagedResponse;
-import com.govimansala.order_service.service.OrderListItem;
-import org.springframework.beans.factory.annotation.Value;
+
 import java.time.ZoneOffset;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
-
-    @Autowired
-    private RestTemplate restTemplate;
-    @Autowired
-    private CartItemRepository cartItemRepository;
 
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final CartItemRepository cartItemRepository;
+    private final RestTemplate plainRestTemplate; // for Gateway or localhost URLs
+    private final RestTemplate lbRestTemplate;     // for serviceId calls (Eureka)
 
+    @Value("${products.base-url:http://localhost:8080}")
+    private String productsBaseUrl;
+
+    @Autowired
+    public OrderService(
+            @Qualifier("plainRestTemplate") RestTemplate plainRestTemplate,
+            @Qualifier("lbRestTemplate") RestTemplate lbRestTemplate,
+            CartRepository cartRepository,
+            OrderRepository orderRepository,
+            CartItemRepository cartItemRepository
+    ) {
+        this.plainRestTemplate = plainRestTemplate;
+        this.lbRestTemplate = lbRestTemplate;
+        this.cartRepository = cartRepository;
+        this.orderRepository = orderRepository;
+        this.cartItemRepository = cartItemRepository;
+    }
+
+    /** Helper — pick correct RestTemplate depending on URL */
+    private RestTemplate pickTemplate(String baseUrl) {
+        String lower = baseUrl.toLowerCase(Locale.ROOT);
+        boolean isLocalhost = lower.startsWith("http://localhost") || lower.startsWith("https://localhost");
+        boolean isLb = lower.startsWith("lb://") || lower.contains("product-service");
+        return (isLb && !isLocalhost) ? lbRestTemplate : plainRestTemplate;
+    }
+
+    // --- CHECKOUT & ORDER CREATION ---
     public Order checkoutCart(int cartId) {
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         if (optionalCart.isEmpty()) {
@@ -53,7 +73,8 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
         double total = 0.0;
 
-        String productServiceUrl = "http://localhost:8080/api/product/id/";
+        String productServiceUrl = productsBaseUrl + "/api/product/id/";
+        RestTemplate rt = pickTemplate(productsBaseUrl);
 
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -61,7 +82,7 @@ public class OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
 
             try {
-                ProductResponseDTO product = restTemplate.getForObject(
+                ProductResponseDTO product = rt.getForObject(
                         productServiceUrl + cartItem.getProductId(),
                         ProductResponseDTO.class
                 );
@@ -90,25 +111,24 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
-    @Value("${products.base-url:http://localhost:8082}") // or your gateway URL
-    private String productsBaseUrl;
 
-    /**
-     * Fetch orders that contain products owned by vendorUserId.
-     * Filters: status (Placed/Out for Delivery/Delivered/Returned) and q (order# fragment or YYYY-MM-DD)
-     */
+    // --- FETCH ORDERS FOR VENDOR ---
     public PagedResponse<OrderListItem> getVendorOrders(
             int vendorUserId, String status, String q, int page, int pageSize) {
 
-        // 1) Ask product-service for this vendor's product IDs
-        String url = productsBaseUrl + "/api/product/vendor/{id}/ids";
-        Integer[] productIds = restTemplate.getForObject(url, Integer[].class, vendorUserId);
+        RestTemplate rt = pickTemplate(productsBaseUrl);
+
+        // Ensure base URL clean (avoid double slashes)
+        String base = productsBaseUrl.replaceAll("/+$", "");
+        String url = base + "/api/product/vendor/{id}/ids";
+
+        Integer[] productIds = rt.getForObject(url, Integer[].class, vendorUserId);
 
         if (productIds == null || productIds.length == 0) {
             return new PagedResponse<>(List.of(), page, pageSize, 0);
         }
 
-        // 2) Normalize filters
+        // Normalize filters
         String statusUi = switch (status == null ? "" : status.trim()) {
             case "Placed", "Out for Delivery", "Delivered", "Returned" -> status.trim();
             case "" -> null;
@@ -120,11 +140,11 @@ public class OrderService {
         int safePageSize = Math.max(1, pageSize);
         int offset = (safePage - 1) * safePageSize;
 
-        // 3) Query DB via your repository
+        // Query DB via repository
         List<VendorOrderRow> rows = orderRepository.findVendorOrders(productIds, statusUi, qNorm, offset, safePageSize);
         long total = orderRepository.countVendorOrders(productIds, statusUi, qNorm);
 
-        // 4) Map to UI DTOs
+        // Map to DTOs
         List<OrderListItem> items = rows.stream().map(r -> new OrderListItem(
                 r.getOrderId(),
                 r.getUserId(),

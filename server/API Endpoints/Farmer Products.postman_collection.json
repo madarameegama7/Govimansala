@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "879bb0ee-00c7-4157-98c6-5b3ca48889db",
+		"name": "Farmer Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33620906",
+		"_collection_link": "https://speeding-meteor-859864.postman.co/workspace/Govimansala~414bf10c-99b5-484a-a453-3ff0da5234f3/collection/33620906-879bb0ee-00c7-4157-98c6-5b3ca48889db?action=share&source=collection_link&creator=33620906"
+	},
+	"item": [
+		{
+			"name": "My products by farmer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/product/farmer_product/my",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"product",
+						"farmer_product",
+						"my"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All products",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Organic Tomatoes\",\r\n  \"category\": \"Vegetables\",\r\n  \"description\": \"Fresh organic tomatoes\",\r\n  \"price\": 450.0,\r\n  \"quantity\": 50\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/product/farmer_product/all",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"product",
+						"farmer_product",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Organic mangoes\",\r\n  \"category\": \"Vegetables\",\r\n  \"unitPrice\": 150.0,\r\n  \"quantity\": 20,\r\n  \"description\": \"Freshly harvested organic tomatoes\",\r\n  \"location\": \"Galle\", \r\n  \"isOrganic\": true,\r\n  \"status\": \"AVAILABLE\",\r\n  \"harvestDate\": \"2025-10-18\",\r\n  \"expiryDate\": \"2025-11-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/product/farmer_product/add",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"product",
+						"farmer_product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Organic Tomato - Fresh\",\r\n  \"category\": \"Vegetables\",\r\n  \"unitPrice\": 160.0,\r\n  \"quantity\": 25,\r\n  \"description\": \"Freshly harvested organic tomatoes\",\r\n  \"location\": \"Galle\",\r\n  \"isOrganic\": true,\r\n  \"status\": \"Available\",\r\n  \"harvestDate\": \"2025-10-18\",\r\n  \"expiryDate\": \"2025-11-05\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/product/farmer_product/delete/8",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"product",
+						"farmer_product",
+						"delete",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Updated Organic Tomato\",\r\n  \"quantity\": 15,\r\n  \"unitPrice\": 160.0,\r\n  \"status\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/product/farmer_product/update/9",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"product",
+						"farmer_product",
+						"update",
+						"9"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
