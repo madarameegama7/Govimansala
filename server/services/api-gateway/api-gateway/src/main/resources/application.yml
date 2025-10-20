@@ -38,6 +38,11 @@ spring:
           predicates:
             - Path=/api/order/**
 
+        - id: vendor-orders
+          uri: lb://order-service
+          predicates:
+              - Path=/api/vendors/**
+
         # Admin routes
         - id: buyer-service
           uri: lb://auth-service
@@ -60,12 +65,83 @@ spring:
             - Path=/api/admin/farmers/**
 
       # Global CORS config for frontend development
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
+      server:
+        port: 8080
+
+      spring:
+        application:
+          name: api-gateway
+
+        cloud:
+          gateway:
+            discovery:
+              locator:
+                enabled: true
+                lower-case-service-id: true
+
+            routes:
+              - id: auth-service
+                uri: lb://auth-service
+                predicates:
+                  - Path=/api/auth/**
+
+              - id: product-service
+                uri: lb://product-service
+                predicates:
+                  - Path=/api/product/**
+
+              - id: product-service
+                uri: lb://product-service
+                predicates:
+                  - Path=/api/product/farmer_product/**
+
+              - id: order-service
+                uri: lb://order-service
+                predicates:
+                  - Path=/api/order/**
+
+              - id: vendor-orders
+                uri: lb://order-service
+                predicates:
+                  - Path=/api/vendors/**
+
+              # Admin routes
+              - id: buyer-service
+                uri: lb://auth-service
+                predicates:
+                  - Path=/api/admin/buyers/**
+
+              - id: vendor-service
+                uri: lb://auth-service
+                predicates:
+                  - Path=/api/admin/vendors/**
+
+              - id: driver-service
+                uri: lb://auth-service
+                predicates:
+                  - Path=/api/admin/drivers/**
+
+              - id: farmer-service
+                uri: lb://auth-service
+                predicates:
+                  - Path=/api/admin/farmers/**
+
+            # Global CORS config for frontend development
+                # Let Gateway handle CORS (so you can remove .cors() in SecurityConfig)
+                globalcors:
+                  add-to-simple-url-handler-mapping: true
+                  cors-configurations:
+                    '[/**]':
+                      allowedOriginPatterns: "*"
+                      allowedMethods: "*"
+                      allowedHeaders: "*"
+                      allowCredentials: false
+
+      eureka:
+        client:
+          service-url:
+            defaultZone: http://localhost:8761/eureka/
+
 
 eureka:
   client:
