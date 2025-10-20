@@ -30,4 +30,11 @@ public class RegisterRequest {
     private String licenseNumber;
     private String vehicleNo;
     private String currentLocation;
+
+    //QA specific fields
+    private String certificationId;
+    private String expertiseArea;
+    private String region;
+    private Integer yearsOfExperience;
+
 }
