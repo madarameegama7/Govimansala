@@ -30,6 +30,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/product/**").permitAll()
                         .requestMatchers("/api/product/farmer_product/**").permitAll()
+                        .requestMatchers("/api/product/buyer_product/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())

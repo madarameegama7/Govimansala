@@ -28,7 +28,8 @@ public class SecurityConfig {
                                 "/api/admin/vendors/**",
                                 "/api/admin/drivers/**",
                                 "/api/vendors/**",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/api/product/buyer_product/**
                         ).permitAll()
                         .anyExchange().authenticated()
                 )
