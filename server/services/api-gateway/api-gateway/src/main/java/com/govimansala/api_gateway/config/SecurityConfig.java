@@ -12,8 +12,9 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(ServerHttpSecurity.CorsSpec::disable) //disabled here since Api handles cors globally
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/auth/**","/api/product/**","/api/order/**","/api/admin/farmers/**","/api/admin/buyers/**","/api/admin/vendors/**","/api/admin/drivers/**","/api/vendors/**","/api/product/farmer_product/**").permitAll()
+                        .pathMatchers("/api/auth/**","/api/product/**","/api/order/**","/api/admin/farmers/**","/api/admin/buyers/**","/api/admin/vendors/**","/api/admin/drivers/**","/api/vendors/**","/api/product/farmer_product/**","/actuator/**").permitAll()
 
 
                         .anyExchange().authenticated()

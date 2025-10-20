@@ -33,6 +33,11 @@ spring:
           predicates:
             - Path=/api/order/**
 
+        - id: vendor-orders
+          uri: lb://order-service
+          predicates:
+              - Path=/api/vendors/**
+
         # Admin routes
         - id: buyer-service
           uri: lb://auth-service

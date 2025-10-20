@@ -27,8 +27,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/order/**", "/api/buyer-order/**","/api/buyer-cart/**").permitAll()
+                        // Permit actuator health for diagnostics
+                        .requestMatchers("/actuator/**").permitAll()
+                        // Permit vendor orders for now (we’ll secure with roles later)
+                        .requestMatchers(HttpMethod.GET, "/api/vendors/**").permitAll()
                         .anyRequest().authenticated()
+
                 )
+                // Enable JWT-based authentication (not sessions)
+                //.oauth2ResourceServer(oauth2 -> oauth2.jwt())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable());
 
