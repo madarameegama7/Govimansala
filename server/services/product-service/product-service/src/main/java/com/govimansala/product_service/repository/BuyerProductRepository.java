@@ -11,4 +11,6 @@ public interface BuyerProductRepository extends JpaRepository<FarmerProduct, Lon
     List<FarmerProduct> findByCategoryIgnoreCaseAndIsOrganicTrue(String category);
 
     List<FarmerProduct> findByCategoryIgnoreCaseAndIsOrganicFalse(String category);
+
+    List<FarmerProduct> findByNameIgnoreCase(String name);
 }

@@ -24,4 +24,8 @@ public class BuyerProductService {
     public List<FarmerProduct> getConventionalByCategory(String category) {
         return repository.findByCategoryIgnoreCaseAndIsOrganicFalse(category);
     }
+
+    public List<FarmerProduct> getAllByProductName(String name) {
+        return repository.findByNameIgnoreCase(name);
+    }
 }
