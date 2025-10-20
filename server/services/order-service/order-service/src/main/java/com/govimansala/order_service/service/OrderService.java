@@ -22,10 +22,10 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
-    private final RestTemplate plainRestTemplate; // for Gateway URLs
-    private final RestTemplate lbRestTemplate;     // for serviceId calls
+    private final RestTemplate plainRestTemplate; // for Gateway or localhost URLs
+    private final RestTemplate lbRestTemplate;     // for serviceId calls (Eureka)
 
-    @Value("${products.base-url:http://product-service}")
+    @Value("${products.base-url:http://localhost:8080}")
     private String productsBaseUrl;
 
     @Autowired
@@ -41,6 +41,14 @@ public class OrderService {
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
         this.cartItemRepository = cartItemRepository;
+    }
+
+    /** Helper — pick correct RestTemplate depending on URL */
+    private RestTemplate pickTemplate(String baseUrl) {
+        String lower = baseUrl.toLowerCase(Locale.ROOT);
+        boolean isLocalhost = lower.startsWith("http://localhost") || lower.startsWith("https://localhost");
+        boolean isLb = lower.startsWith("lb://") || lower.contains("product-service");
+        return (isLb && !isLocalhost) ? lbRestTemplate : plainRestTemplate;
     }
 
     // --- CHECKOUT & ORDER CREATION ---
@@ -65,8 +73,8 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
         double total = 0.0;
 
-        // Use the service name (Eureka discovery)
-        String productServiceUrl = "http://product-service/api/product/id/";
+        String productServiceUrl = productsBaseUrl + "/api/product/id/";
+        RestTemplate rt = pickTemplate(productsBaseUrl);
 
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -74,7 +82,7 @@ public class OrderService {
             orderItem.setQuantity(cartItem.getQuantity());
 
             try {
-                ProductResponseDTO product = lbRestTemplate.getForObject(
+                ProductResponseDTO product = rt.getForObject(
                         productServiceUrl + cartItem.getProductId(),
                         ProductResponseDTO.class
                 );
@@ -108,15 +116,19 @@ public class OrderService {
     public PagedResponse<OrderListItem> getVendorOrders(
             int vendorUserId, String status, String q, int page, int pageSize) {
 
-        // 1) Ask product-service for this vendor's product IDs
-        String url = productsBaseUrl + "/api/product/vendor/{id}/ids";
-        Integer[] productIds = lbRestTemplate.getForObject(url, Integer[].class, vendorUserId);
+        RestTemplate rt = pickTemplate(productsBaseUrl);
+
+        // Ensure base URL clean (avoid double slashes)
+        String base = productsBaseUrl.replaceAll("/+$", "");
+        String url = base + "/api/product/vendor/{id}/ids";
+
+        Integer[] productIds = rt.getForObject(url, Integer[].class, vendorUserId);
 
         if (productIds == null || productIds.length == 0) {
             return new PagedResponse<>(List.of(), page, pageSize, 0);
         }
 
-        // 2) Normalize filters
+        // Normalize filters
         String statusUi = switch (status == null ? "" : status.trim()) {
             case "Placed", "Out for Delivery", "Delivered", "Returned" -> status.trim();
             case "" -> null;
@@ -128,11 +140,11 @@ public class OrderService {
         int safePageSize = Math.max(1, pageSize);
         int offset = (safePage - 1) * safePageSize;
 
-        // 3) Query DB via repository
+        // Query DB via repository
         List<VendorOrderRow> rows = orderRepository.findVendorOrders(productIds, statusUi, qNorm, offset, safePageSize);
         long total = orderRepository.countVendorOrders(productIds, statusUi, qNorm);
 
-        // 4) Map to DTOs
+        // Map to DTOs
         List<OrderListItem> items = rows.stream().map(r -> new OrderListItem(
                 r.getOrderId(),
                 r.getUserId(),

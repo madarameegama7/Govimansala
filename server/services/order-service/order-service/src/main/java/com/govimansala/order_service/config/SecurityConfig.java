@@ -37,6 +37,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/vendors/**").permitAll()
                         .requestMatchers("/api/vendors/*/analytics/**").permitAll()
                         .requestMatchers("/api/analytics/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/vendor-orders/**").permitAll() // <— add this line
+
                         .anyRequest().authenticated()
 
                 )
