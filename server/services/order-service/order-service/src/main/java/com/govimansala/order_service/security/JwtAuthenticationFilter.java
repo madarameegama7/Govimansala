@@ -24,29 +24,53 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        String method = request.getMethod();
+
+        if ("OPTIONS".equalsIgnoreCase(method)) return true;
+
+        // skip analytics, order listings, buyer order/cart, etc.
+        return path.startsWith("/actuator")
+                || path.startsWith("/api/analytics")
+                || path.startsWith("/api/order/")
+                || path.startsWith("/api/buyer-order/")
+                || path.startsWith("/api/buyer-cart/")
+                || path.contains("/vendors/")   // <— note contains instead of startsWith
+                || path.contains("/vendor-orders"); // in case route name differs
+    }
+
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
-        String token = null;
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        if (token != null && jwtUtil.validateToken(token)) {
-            Claims claims = jwtUtil.extractClaims(token);
-            String username = claims.getSubject();
+        String token = authHeader.substring(7);
+        try {
+            if (jwtUtil.validateToken(token)) {
+                Claims claims = jwtUtil.extractClaims(token);
+                String username = claims.getSubject();
 
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (Exception e) {
+            // Invalid token — ignore, don’t block the request
         }
 
         filterChain.doFilter(request, response);
     }
+
 }

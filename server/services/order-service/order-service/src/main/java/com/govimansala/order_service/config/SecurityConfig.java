@@ -13,9 +13,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.util.List;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -25,6 +27,8 @@ public class SecurityConfig {
                 .cors() // Enable CORS
                 .and()
                 .csrf(csrf -> csrf.disable())
+
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/order/**", "/api/buyer-order/**","/api/buyer-cart/**").permitAll()
@@ -36,6 +40,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
 
                 )
+
+
                 // Enable JWT-based authentication (not sessions)
                 //.oauth2ResourceServer(oauth2 -> oauth2.jwt())
                 .httpBasic(httpBasic -> httpBasic.disable())
