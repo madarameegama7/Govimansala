@@ -1,43 +1,41 @@
 package com.govimansala.auth.dto;
 
-import com.govimansala.auth.model.Role;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class RegisterRequest {
+@Getter
+@Setter
+public class UserProfileUpdateRequest {
     private String name;
     private String email;
-    private String password;
-    private String confirmPassword;
-
-    @Pattern(regexp = "\\d{10}", message = "Phone must be 10 digits")
     private String phone;
-
     private String address;
-    private Role role;
 
-    // 🔹 Farmer-specific fields
+    // Farmer fields
     private Double farmSize;
     private String farmType;
     private String location;
 
-    // 🔹 Vendor-specific fields
+    // Vendor fields
     private String companyName;
     private String licenseNo;
 
-    // 🔹 Buyer-specific fields
+    // Buyer fields
     private String businessName;
     private String deliveryAddress;
 
-    // 🔹 Driver-specific fields
+    // Driver fields
     private String licenseNumber;
     private String vehicleNo;
+    private Boolean available;
     private String currentLocation;
 
-    //QA specific fields
+    // QA fields
     private String certificationId;
     private String expertiseArea;
     private String region;
     private Integer yearsOfExperience;
 
+    private Integer credits;   // for FARMER
+    private Double rating;     // for QA
 }
