@@ -32,7 +32,6 @@ public class SecurityConfig {
                         // Permit vendor orders for now (we’ll secure with roles later)
                         .requestMatchers(HttpMethod.GET, "/api/vendors/**").permitAll()
                         .requestMatchers("/api/vendors/*/analytics/**").permitAll()
-                        .requestMatchers("/api/vendors/**/analytics/**").permitAll()   // supports multiple path segments
                         .requestMatchers("/api/analytics/**").permitAll()
                         .anyRequest().authenticated()
 

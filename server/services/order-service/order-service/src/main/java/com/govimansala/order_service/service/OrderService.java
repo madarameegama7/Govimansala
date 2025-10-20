@@ -53,7 +53,7 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
         double total = 0.0;
 
-        String productServiceUrl = "http://localhost:8080/api/product/id/";
+        String productServiceUrl = "http://product-service/api/product/id/";
 
         for (CartItem cartItem : cartItems) {
             OrderItem orderItem = new OrderItem();
@@ -90,7 +90,7 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
-    @Value("${products.base-url:http://localhost:8082}") // or your gateway URL
+    @Value("${products.base-url:http://localhost:8082}")
     private String productsBaseUrl;
 
     /**
