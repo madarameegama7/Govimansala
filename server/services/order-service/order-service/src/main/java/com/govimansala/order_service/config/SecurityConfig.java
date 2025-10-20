@@ -26,11 +26,14 @@ public class SecurityConfig {
                 .and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/order/**", "/api/buyer-order/**","/api/buyer-cart/**").permitAll()
-                        // Permit actuator health for diagnostics
                         .requestMatchers("/actuator/**").permitAll()
                         // Permit vendor orders for now (we’ll secure with roles later)
                         .requestMatchers(HttpMethod.GET, "/api/vendors/**").permitAll()
+                        .requestMatchers("/api/vendors/*/analytics/**").permitAll()
+                        .requestMatchers("/api/vendors/**/analytics/**").permitAll()   // supports multiple path segments
+                        .requestMatchers("/api/analytics/**").permitAll()
                         .anyRequest().authenticated()
 
                 )

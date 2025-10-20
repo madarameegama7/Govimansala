@@ -25,6 +25,9 @@ public class SecurityConfig {
                 .and()
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/internal/**").permitAll()
+
                         .requestMatchers("/api/product/**").permitAll()
                         .requestMatchers("/api/product/farmer_product/**").permitAll()
                         .anyRequest().authenticated()
