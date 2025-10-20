@@ -1,173 +1,383 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import '../pages/styles/Marketplace.css'
-import SimpleSearchBar from '../components/search/SearchBar'
-// Import vegetable images
-import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg'
-import brinjal from '../assets/Marketplace/Vegetables/Brinjal.jpg'
-import potatoes from '../assets/Marketplace/Vegetables/Potatoes.jpg'
-import redOnion from '../assets/Marketplace/Vegetables/RedOnion.jpg'
-import tomatoes from '../assets/Marketplace/Vegetables/tomatoes.jpg'
-// Import fruit images
-import avocadoImg from '../assets/Marketplace/Fruits/avacado.jpg'
-import bananaImg from '../assets/Marketplace/Fruits/banana.jpg'
-import guavaImg from '../assets/Marketplace/Fruits/guava.jpg'
-import mangoImg from '../assets/Marketplace/Fruits/mango.jpeg'
-import papayaImg from '../assets/Marketplace/Fruits/papaya.jpeg'
-import watermelonImg from '../assets/Marketplace/Fruits/watermelon.jpg'
-import pineappleImg from '../assets/Marketplace/Fruits/pineapple.jpeg'
-// Import organic and non-organic icons
-import organicIcon from '../assets/Marketplace/organic.png'
-import nonOrganicIcon from '../assets/Marketplace/non-organic.jpg'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../pages/styles/Marketplace.css';
+import SimpleSearchBar from '../components/search/SearchBar';
+
+// Import images
+import watermelonImg from '../assets/Marketplace/Fruits/watermelon.jpg';
+import pineappleImg from '../assets/Marketplace/Fruits/pineapple.jpeg';
+import papayaImg from '../assets/Marketplace/Fruits/papaya.jpeg';
+import mangoImg from '../assets/Marketplace/Fruits/mango.jpeg';
+import bananaImg from '../assets/Marketplace/Fruits/banana.jpg';
+
+import BrinjalImg from '../assets/Marketplace/Vegetables/Brinjal.jpg';
+import carrotImg from '../assets/Marketplace/Vegetables/carrot.jpg';
+import potatoesImg from '../assets/Marketplace/Vegetables/Potatoes.jpg';
+import redOnionImg from '../assets/Marketplace/Vegetables/RedOnion.jpg';
+import tomatoesImg from '../assets/Marketplace/Vegetables/tomatoes.jpg';
+
+import organicIcon from '../assets/Marketplace/organic.png';
+import nonOrganicIcon from '../assets/Marketplace/non-organic.jpg';
+
+const API_BASE_URL = 'http://localhost:8080/api/product/buyer_product';
+
+const productImageMap = {
+  // Vegetables (try multiple variations)
+  'Carrots': carrotImg,
+  
+  'Brinjal': BrinjalImg,
+  
+  'Potatoes': potatoesImg,
+  
+  'Red Onion': redOnionImg,
+  
+  'tomatoes': tomatoesImg,
+
+
+  // Fruits
+  'Watermelon': watermelonImg,
+  'watermelon': watermelonImg,
+  
+  'Pineapple': pineappleImg,
+  'pineapple': pineappleImg,
+  
+  'Papaya': papayaImg,
+  'papaya': papayaImg,
+  
+  'Mango': mangoImg,
+  'mango': mangoImg,
+  'Mangoes': mangoImg,
+  'mangoes': mangoImg,
+  
+  'Bananas': bananaImg,
+  'banana': bananaImg,
+  'Banana': bananaImg,
+  'bananas': bananaImg
+};
+
+const getLocalImage = (productName) => {
+  if (!productName) {
+    return 'https://via.placeholder.com/300x200?text=No+Image';
+  }
+  
+  // Try exact match first
+  if (productImageMap[productName]) {
+    return productImageMap[productName];
+  }
+  
+  // Try lowercase
+  if (productImageMap[productName.toLowerCase()]) {
+    return productImageMap[productName.toLowerCase()];
+  }
+  
+  // Try to find partial match
+  const productNameLower = productName.toLowerCase();
+  const matchedKey = Object.keys(productImageMap).find(key => 
+    key.toLowerCase().includes(productNameLower) || 
+    productNameLower.includes(key.toLowerCase())
+  );
+  
+  if (matchedKey) {
+    return productImageMap[matchedKey];
+  }
+  
+  // Fallback to placeholder
+  console.warn(`No image found for product: ${productName}`);
+  return 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(productName);
+};
 
 function Marketplace() {
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [selectedVegFilter, setSelectedVegFilter] = useState('all')
-  const [selectedFruitFilter, setSelectedFruitFilter] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
-  const navigate = useNavigate()
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [selectedVegFilter, setSelectedVegFilter] = useState('all');
+  const [selectedFruitFilter, setSelectedFruitFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [vegetables, setVegetables] = useState([]);
+  const [fruits, setFruits] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // All products for search suggestions
-  const allProductNames = [
-    'Carrots', 'Brinjal', 'Potatoes', 'Red Onions', 'Tomatoes',
-    'Avocado', 'Bananas', 'Guava', 'Mango', 'Papaya', 'Watermelon', 'Pineapple',
-    'Organic', 'Conventional', 'Fresh'
-  ]
+  useEffect(() => { 
+    fetchProducts(); 
+  }, []);
 
-  // Filter vegetables based on selected filter and search term
-  const shouldShowVegetable = (type, name) => {
-    const matchesFilter = selectedVegFilter === 'all' || selectedVegFilter === type
-    const matchesSearch = searchTerm === '' || name.toLowerCase().includes(searchTerm.toLowerCase())
-    return matchesFilter && matchesSearch
-  }
+  const fetchProducts = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const [veggiesResponse, fruitsResponse] = await Promise.all([
+        fetch(`${API_BASE_URL}/Vegetable`),
+        fetch(`${API_BASE_URL}/Fruit`)
+      ]);
 
-  // Filter fruits based on selected filter and search term
-  const shouldShowFruit = (type, name) => {
-    const matchesFilter = selectedFruitFilter === 'all' || selectedFruitFilter === type
-    const matchesSearch = searchTerm === '' || name.toLowerCase().includes(searchTerm.toLowerCase())
-    return matchesFilter && matchesSearch
-  }
+      if (!veggiesResponse.ok || !fruitsResponse.ok) {
+        throw new Error('Failed to fetch products');
+      }
 
-  const handleSearch = (term) => {
-    setSearchTerm(term)
-  }
+      const veggiesData = await veggiesResponse.json();
+      const fruitsData = await fruitsResponse.json();
+      
+      console.log('Vegetables:', veggiesData); // Debug log
+      console.log('Fruits:', fruitsData); // Debug log
+      
+      setVegetables(veggiesData);
+      setFruits(fruitsData);
+    } catch (err) {
+      setError(err.message);
+      console.error('Fetch error:', err);
+    } finally { 
+      setLoading(false); 
+    }
+  };
+
+  const fetchFilteredVegetables = async (type) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/Vegetable/${type}`);
+      if (!response.ok) throw new Error('Failed to fetch filtered vegetables');
+      setVegetables(await response.json());
+    } catch (err) { 
+      console.error(err); 
+    }
+  };
+
+  const fetchFilteredFruits = async (type) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/Fruit/${type}`);
+      if (!response.ok) throw new Error('Failed to fetch filtered fruits');
+      setFruits(await response.json());
+    } catch (err) { 
+      console.error(err); 
+    }
+  };
+
+  useEffect(() => {
+    if (selectedVegFilter !== 'all') {
+      fetchFilteredVegetables(selectedVegFilter);
+    } else {
+      fetchCategoryProducts('Vegetable', setVegetables);
+    }
+  }, [selectedVegFilter]);
+
+  useEffect(() => {
+    if (selectedFruitFilter !== 'all') {
+      fetchFilteredFruits(selectedFruitFilter);
+    } else {
+      fetchCategoryProducts('Fruit', setFruits);
+    }
+  }, [selectedFruitFilter]);
+
+  const fetchCategoryProducts = async (category, setter) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${category}`);
+      if (!response.ok) throw new Error(`Failed to fetch ${category}`);
+      setter(await response.json());
+    } catch (err) { 
+      console.error(err); 
+    }
+  };
+
+  const filterBySearch = (products) => {
+    if (!searchTerm) return products;
+    return products.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (product.productType && product.productType.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
+
+  const handleSearch = (term) => setSearchTerm(term);
 
   const scrollLeft = (containerId) => {
-    const container = document.getElementById(containerId)
-    if (container) {
-      container.scrollBy({ left: -300, behavior: 'smooth' })
-    }
-  }
+    const container = document.getElementById(containerId);
+    if (container) container.scrollBy({ left: -300, behavior: 'smooth' });
+  };
 
   const scrollRight = (containerId) => {
-    const container = document.getElementById(containerId)
-    if (container) {
-      container.scrollBy({ left: 300, behavior: 'smooth' })
-    }
+    const container = document.getElementById(containerId);
+    if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
+  };
+
+  const renderProductCard = (product) => {
+    const isOrganic = product.isOrganic;
+    
+    console.log('Rendering product:', product.name, 'Image:', getLocalImage(product.name)); // Debug log
+
+    return (
+      <div key={product.productId} className="product-card">
+        <div className="product-image">
+          <img 
+            src={getLocalImage(product.name)} 
+            alt={product.name}
+            onError={(e) => {
+              console.error('Image load error for:', product.name);
+              e.target.src = 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(product.name);
+            }}
+          />
+        </div>
+
+        <div className="product-info">
+          <h3 className="product-name">
+            <span>{product.name}</span>
+            <img
+              src={isOrganic ? organicIcon : nonOrganicIcon}
+              alt={isOrganic ? 'Organic' : 'Conventional'}
+              className="organic-icon"
+            />
+          </h3>
+
+          <span className={`product-type ${isOrganic ? 'organic' : 'conventional'}`}>
+            {isOrganic ? 'Organic' : 'Conventional'}
+          </span>
+
+          <p className="product-description">
+            {product.description || `Fresh ${product.name.toLowerCase()}`}
+          </p>
+
+          <div className="product-details">
+            <p className="product-price">Rs. {product.unitPrice}/kg</p>
+            <p className="product-quantity">
+              <span className="quantity-label">Available:</span> {product.quantity} kg
+            </p>
+            <p className="product-location">
+              <span className="location-icon">📍 {product.location}
+            </span></p>
+          </div>
+
+          <button 
+            className="add-to-cart-btn" 
+            onClick={() => navigate(`/product/${product.productId}`)}
+          >
+            View More Details
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className="marketplace">
+        <div className="loading-container">
+          <p>Loading products...</p>
+        </div>
+      </div>
+    );
   }
+  
+  if (error) {
+    return (
+      <div className="marketplace">
+        <div className="error-container">
+          <p>Error: {error}</p>
+          <button onClick={fetchProducts}>Retry</button>
+        </div>
+      </div>
+    );
+  }
+
+  const filteredVegetables = filterBySearch(vegetables);
+  const filteredFruits = filterBySearch(fruits);
+
+  const allProductNames = [
+    ...vegetables.map(v => v.name),
+    ...fruits.map(f => f.name),
+    'Organic', 'Conventional', 'Fresh'
+  ];
 
   return (
     <div className="marketplace">
-      {/* Sidebar Toggle Button - positioned below logo */}
       <button 
-        className="sidebar-toggle-below-logo"
+        className="sidebar-toggle-below-logo" 
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? '×' : '≡'}
       </button>
-      
+
       <div className="marketplace-container">
-        {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
           <h3>Filter Products</h3>
-          
-          {/* Vegetables Filter Section */}
+
           <div className="filter-section">
-            <h4> Vegetables</h4>
+            <h4>Vegetables</h4>
             <div className="type-filters">
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="veg-all" 
+                  id="veg-all"
                   name="vegetables" 
-                  checked={selectedVegFilter === 'all'}
-                  onChange={() => setSelectedVegFilter('all')}
+                  checked={selectedVegFilter === 'all'} 
+                  onChange={() => setSelectedVegFilter('all')} 
                 />
                 <label htmlFor="veg-all">All Vegetables</label>
               </div>
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="veg-organic" 
+                  id="veg-organic"
                   name="vegetables" 
-                  checked={selectedVegFilter === 'organic'}
-                  onChange={() => setSelectedVegFilter('organic')}
+                  checked={selectedVegFilter === 'organic'} 
+                  onChange={() => setSelectedVegFilter('organic')} 
                 />
-                <label htmlFor="veg-organic"> Organic</label>
+                <label htmlFor="veg-organic">Organic</label>
               </div>
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="veg-conventional" 
+                  id="veg-conventional"
                   name="vegetables" 
-                  checked={selectedVegFilter === 'conventional'}
-                  onChange={() => setSelectedVegFilter('conventional')}
+                  checked={selectedVegFilter === 'conventional'} 
+                  onChange={() => setSelectedVegFilter('conventional')} 
                 />
-                <label htmlFor="veg-conventional"> Conventional</label>
+                <label htmlFor="veg-conventional">Conventional</label>
               </div>
             </div>
           </div>
 
-          {/* Fruits Filter Section */}
           <div className="filter-section">
-            <h4> Fruits</h4>
+            <h4>Fruits</h4>
             <div className="type-filters">
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="fruit-all" 
+                  id="fruit-all"
                   name="fruits" 
-                  checked={selectedFruitFilter === 'all'}
-                  onChange={() => setSelectedFruitFilter('all')}
+                  checked={selectedFruitFilter === 'all'} 
+                  onChange={() => setSelectedFruitFilter('all')} 
                 />
                 <label htmlFor="fruit-all">All Fruits</label>
               </div>
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="fruit-organic" 
+                  id="fruit-organic"
                   name="fruits" 
-                  checked={selectedFruitFilter === 'organic'}
-                  onChange={() => setSelectedFruitFilter('organic')}
+                  checked={selectedFruitFilter === 'organic'} 
+                  onChange={() => setSelectedFruitFilter('organic')} 
                 />
                 <label htmlFor="fruit-organic">Organic</label>
               </div>
               <div className="type-filter">
                 <input 
                   type="radio" 
-                  id="fruit-conventional" 
+                  id="fruit-conventional"
                   name="fruits" 
-                  checked={selectedFruitFilter === 'conventional'}
-                  onChange={() => setSelectedFruitFilter('conventional')}
+                  checked={selectedFruitFilter === 'conventional'} 
+                  onChange={() => setSelectedFruitFilter('conventional')} 
                 />
-                <label htmlFor="fruit-conventional"> Conventional</label>
+                <label htmlFor="fruit-conventional">Conventional</label>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Main Content */}
         <div className={`main-content ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          {/* Search Bar */}
           <div className="marketplace-search-container">
             <SimpleSearchBar 
-              placeholder="Search fruits, vegetables..."
-              onSearch={handleSearch}
-              data={allProductNames}
+              placeholder="Search fruits, vegetables..." 
+              onSearch={handleSearch} 
+              data={allProductNames} 
             />
           </div>
 
-          {/* Header */}
           <div className="marketplace-header">
             <h1>Fresh Marketplace</h1>
             <p>Discover fresh, quality produce from local farmers</p>
@@ -182,158 +392,24 @@ function Marketplace() {
               </h2>
               <div className="scroll-controls">
                 <button 
-                  className="scroll-btn scroll-left"
+                  className="scroll-btn"
                   onClick={() => scrollLeft('vegetables-container')}
-                  aria-label="Scroll left"
                 >
                   ←
                 </button>
                 <button 
-                  className="scroll-btn scroll-right"
+                  className="scroll-btn"
                   onClick={() => scrollRight('vegetables-container')}
-                  aria-label="Scroll right"
                 >
                   →
                 </button>
               </div>
             </div>
-            
             <div className="products-scroll" id="vegetables-container">
-              {/* Fresh Carrots - Organic */}
-              {shouldShowVegetable('organic', 'Fresh Carrots') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={carrotImg} alt="Fresh Carrots" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Fresh Carrots</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Fresh organic carrots, perfect for salads.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Fresh Brinjal - Organic */}
-              {shouldShowVegetable('organic', 'Fresh Brinjal') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={brinjal} alt="Fresh Brinjal" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Fresh Brinjal</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Fresh organic brinjal, perfect for curries.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Organic Potatoes - Organic */}
-              {shouldShowVegetable('organic', 'Organic Potatoes') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={potatoes} alt="Organic Potatoes" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Organic Potatoes</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Organic potatoes, great for mashing or roasting.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Red Onions - Conventional */}
-              {shouldShowVegetable('conventional', 'Red Onions') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={redOnion} alt="Red Onions" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Red Onions</span>
-                      <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                    </h3>
-                    <span className="product-type conventional">Conventional</span>
-                    <p className="product-description">Fresh red onions, essential for cooking.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Tomatoes - Conventional (4 cards) */}
-              {shouldShowVegetable('conventional', 'Tomatoes') && (
-                <>
-                  <div className="product-card">
-                    <div className="product-image">
-                      <img src={tomatoes} alt="Tomatoes" />
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-name">
-                        <span>Tomatoes</span>
-                        <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                      </h3>
-                      <span className="product-type conventional">Conventional</span>
-                      <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
-                      <button className="add-to-cart-btn">View More Details</button>
-                    </div>
-                  </div>
-
-                  <div className="product-card">
-                    <div className="product-image">
-                      <img src={tomatoes} alt="Tomatoes" />
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-name">
-                        <span>Tomatoes</span>
-                        <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                      </h3>
-                      <span className="product-type conventional">Conventional</span>
-                      <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
-                      <button className="add-to-cart-btn">View More Details</button>
-                    </div>
-                  </div>
-
-                  <div className="product-card">
-                    <div className="product-image">
-                      <img src={tomatoes} alt="Tomatoes" />
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-name">
-                        <span>Tomatoes</span>
-                        <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                      </h3>
-                      <span className="product-type conventional">Conventional</span>
-                      <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
-                      <button className="add-to-cart-btn">View More Details</button>
-                    </div>
-                  </div>
-
-                  <div className="product-card">
-                    <div className="product-image">
-                      <img src={tomatoes} alt="Tomatoes" />
-                    </div>
-                    <div className="product-info">
-                      <h3 className="product-name">
-                        <span>Tomatoes</span>
-                        <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                      </h3>
-                      <span className="product-type conventional">Conventional</span>
-                      <p className="product-description">Ripe tomatoes, perfect for sauces and salads.</p>
-                      <button className="add-to-cart-btn">View More Details</button>
-                    </div>
-                  </div>
-                </>
+              {filteredVegetables.length > 0 ? (
+                filteredVegetables.map(renderProductCard)
+              ) : (
+                <p className="no-products">No vegetables found</p>
               )}
             </div>
           </div>
@@ -341,175 +417,37 @@ function Marketplace() {
           {/* Fruits Section */}
           <div className="section">
             <div className="section-header">
-              <h2 className="clickable-heading" onClick={() => navigate('/fruits')}>
+              <h2 className="section-title" onClick={() => navigate('/fruits')}>
                 Fruits
+                <span className="section-subtitle">Sweet and fresh</span>
               </h2>
               <div className="scroll-controls">
                 <button 
-                  className="scroll-btn scroll-left"
+                  className="scroll-btn"
                   onClick={() => scrollLeft('fruits-container')}
                 >
                   ←
                 </button>
                 <button 
-                  className="scroll-btn scroll-right"
+                  className="scroll-btn"
                   onClick={() => scrollRight('fruits-container')}
                 >
                   →
                 </button>
               </div>
             </div>
-            
             <div className="products-scroll" id="fruits-container">
-              {/* Organic Apples - Organic */}
-              {shouldShowFruit('organic', 'Pineapple') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={pineappleImg} alt="Pineapple" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Organic Apples</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Crisp organic apples, perfect for snacking.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Fresh Bananas - Conventional */}
-              {shouldShowFruit('conventional', 'Bananas') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={bananaImg} alt="Fresh Bananas" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Fresh Bananas</span>
-                      <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                    </h3>
-                    <span className="product-type conventional">Conventional</span>
-                    <p className="product-description">Sweet bananas, rich in potassium.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Organic Oranges - Organic */}
-              {shouldShowFruit('organic', 'Avocado') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={avocadoImg} alt="Organic Oranges" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Organic Oranges</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Juicy organic oranges, high in vitamin C.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Watermelon - Conventional */}
-              {shouldShowFruit('conventional', 'Watermelon') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={watermelonImg} alt="Watermelon" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Watermelon</span>
-                      <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                    </h3>
-                    <span className="product-type conventional">Conventional</span>
-                    <p className="product-description">Sweet watermelon, perfect for desserts.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Organic Guava - Organic */}
-              {shouldShowFruit('organic', 'Guava') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={guavaImg} alt="Organic Grapes" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Organic Guava</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Organic guava, great for snacking.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Papaya - Conventional */}
-              {shouldShowFruit('conventional', 'Papaya') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={papayaImg} alt="Pineapple" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Papaya</span>
-                      <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                    </h3>
-                    <span className="product-type conventional">Conventional</span>
-                    <p className="product-description">Tropical Papaya, sweet and tangy.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Organic Avacado - Organic */}
-              {shouldShowFruit('organic', 'Avocado') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={avocadoImg} alt="Organic Blueberries" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Organic Avacado</span>
-                      <img src={organicIcon} alt="Organic" className="organic-icon" />
-                    </h3>
-                    <span className="product-type organic">Organic</span>
-                    <p className="product-description">Fresh organic avacado, packed with antioxidants.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
-              )}
-
-              {/* Mangoes - Conventional */}
-              {shouldShowFruit('conventional', 'Mango') && (
-                <div className="product-card">
-                  <div className="product-image">
-                    <img src={mangoImg} alt="Mangoes" />
-                  </div>
-                  <div className="product-info">
-                    <h3 className="product-name">
-                      <span>Mangoes</span>
-                      <img src={nonOrganicIcon} alt="Conventional" className="organic-icon" />
-                    </h3>
-                    <span className="product-type conventional">Conventional</span>
-                    <p className="product-description">Sweet tropical mangoes, rich in vitamins.</p>
-                    <button className="add-to-cart-btn">View More Details</button>
-                  </div>
-                </div>
+              {filteredFruits.length > 0 ? (
+                filteredFruits.map(renderProductCard)
+              ) : (
+                <p className="no-products">No fruits found</p>
               )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Marketplace
+export default Marketplace;
