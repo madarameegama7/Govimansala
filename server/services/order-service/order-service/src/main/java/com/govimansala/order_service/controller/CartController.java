@@ -1,13 +1,17 @@
 package com.govimansala.order_service.controller;
 
 import com.govimansala.order_service.model.Cart;
+import com.govimansala.order_service.model.Order;
 import com.govimansala.order_service.model.CartItem;
 import com.govimansala.order_service.service.CartService;
+import com.govimansala.order_service.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import com.govimansala.order_service.security.JwtUtil;
+import org.springframework.http.HttpStatus;
+
 
 import java.util.List;
 
@@ -17,6 +21,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final OrderService orderService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/addtoCart")
@@ -27,7 +32,6 @@ public class CartController {
             String userId = jwtUtil.extractUserId(token);
             cart.setUserId(Integer.parseInt(userId));
 
-            // Set the cart reference for each cart item
             if (cart.getItems() != null) {
                 for (CartItem item : cart.getItems()) {
                     item.setCart(cart);
@@ -35,10 +39,10 @@ public class CartController {
             }
 
             try {
-                Cart updatedCart = cartService.addItemToCart(cart); // This should handle both create/update
+                Cart updatedCart = cartService.addItemToCart(cart);
                 return ResponseEntity.ok(updatedCart);
             } catch (Exception e) {
-                e.printStackTrace(); // ✅ Logs the error in terminal (VS Code)
+                e.printStackTrace();
                 return ResponseEntity.internalServerError().build();
             }
         }
@@ -62,6 +66,21 @@ public class CartController {
         }
         return ResponseEntity.ok(carts); // 200 OK with list
     }
+    @PostMapping("/checkout/{cartId}")
+    public ResponseEntity<Order> checkoutCart(@PathVariable int cartId) {
+        try {
+            Order order = orderService.checkoutCart(cartId);
+            if (order != null) {
+                return new ResponseEntity<>(order, HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 
 
 

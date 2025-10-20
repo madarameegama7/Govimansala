@@ -18,9 +18,11 @@ spring:
 
   application:
     name: order-service
-
+# this is what OrderService @Value("${products.base-url:...}") reads
+products:
+  base-url: http://localhost:8080
 jwt:
-  secret: supersecretkeysupersecretkeysupersecretkey
+  secret: 3fa8dfe024b158d4d7519381250e1958
   expiration: 3600000
 
 server:

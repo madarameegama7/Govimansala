@@ -35,6 +35,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/admin/farmers/**").permitAll()
+                        .requestMatchers("/api/admin/buyers/**").permitAll()
+                        .requestMatchers("/api/admin/drivers/**").permitAll()
+                        .requestMatchers("/api/admin/vendors/**").permitAll()
+                        .requestMatchers("/api/qa/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .httpBasic(httpBasic -> httpBasic.disable())
@@ -54,7 +60,9 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-*/
+
+ */
+
 
 
 

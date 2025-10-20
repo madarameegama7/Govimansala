@@ -12,9 +12,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import java.util.List;
 
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -24,10 +27,25 @@ public class SecurityConfig {
                 .cors() // Enable CORS
                 .and()
                 .csrf(csrf -> csrf.disable())
+
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/order/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/order/**", "/api/buyer-order/**","/api/buyer-cart/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        // Permit vendor orders for now (we’ll secure with roles later)
+                        .requestMatchers(HttpMethod.GET, "/api/vendors/**").permitAll()
+                        .requestMatchers("/api/vendors/*/analytics/**").permitAll()
+                        .requestMatchers("/api/analytics/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/vendor-orders/**").permitAll() // <— add this line
+
                         .anyRequest().authenticated()
+
                 )
+
+
+                // Enable JWT-based authentication (not sessions)
+                //.oauth2ResourceServer(oauth2 -> oauth2.jwt())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable());
 

@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "c18067bf-8aaf-45ca-b257-1cc1a87cf632",
+		"name": "API-Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33620906",
+		"_collection_link": "https://speeding-meteor-859864.postman.co/workspace/Govimansala~414bf10c-99b5-484a-a453-3ff0da5234f3/collection/33620906-c18067bf-8aaf-45ca-b257-1cc1a87cf632?action=share&source=collection_link&creator=33620906"
+	},
+	"item": [
+		{
+			"name": "SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Driver\",\r\n  \"email\": \"driver@gmail.com\",\r\n  \"password\": \"1234\",\r\n  \"phone\": \"0771234567\",\r\n  \"address\": \"Colombo\",\r\n  \"role\": \"DRIVER\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"Admin@2024\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

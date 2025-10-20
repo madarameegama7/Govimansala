@@ -1,0 +1,127 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.5
+-- Dumped by pg_dump version 17.5
+
+-- Started on 2025-10-20 15:46:40
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 220 (class 1259 OID 49964)
+-- Name: farmer_products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.farmer_products (
+    product_id bigint NOT NULL,
+    user_id bigint,
+    name character varying(255) NOT NULL,
+    category character varying(255) NOT NULL,
+    unit_price double precision NOT NULL,
+    quantity integer NOT NULL,
+    harvest_date date,
+    expiry_date date,
+    status character varying(255) DEFAULT 'AVAILABLE'::character varying,
+    location character varying(255),
+    description character varying(255),
+    is_organic boolean DEFAULT false,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT farmer_products_quantity_check CHECK ((quantity >= 0)),
+    CONSTRAINT farmer_products_status_check CHECK (((status)::text = ANY (ARRAY[('AVAILABLE'::character varying)::text, ('SOLD'::character varying)::text])))
+);
+
+
+ALTER TABLE public.farmer_products OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 49963)
+-- Name: farmer_products_product_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.farmer_products_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.farmer_products_product_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4906 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: farmer_products_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.farmer_products_product_id_seq OWNED BY public.farmer_products.product_id;
+
+
+--
+-- TOC entry 4745 (class 2604 OID 49978)
+-- Name: farmer_products product_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.farmer_products ALTER COLUMN product_id SET DEFAULT nextval('public.farmer_products_product_id_seq'::regclass);
+
+
+--
+-- TOC entry 4900 (class 0 OID 49964)
+-- Dependencies: 220
+-- Data for Name: farmer_products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.farmer_products (product_id, user_id, name, category, unit_price, quantity, harvest_date, expiry_date, status, location, description, is_organic, created_at, updated_at) FROM stdin;
+10	35	Mango	Fruits	150	20	2025-10-01	2025-11-28	AVAILABLE	Galle	Fresh	t	2025-10-20 01:54:53.189041	2025-10-20 01:54:53.189041
+2	2	Carrot	Fruits	200	50	2025-10-10	2025-10-25	AVAILABLE	Kandy	Crisp and juicy red apples	f	2025-10-19 04:50:03.771024	2025-10-19 04:50:03.771024
+3	3	Potato	Vegetables	120.75	75	2025-10-12	2025-10-28	SOLD	Gampaha	Sweet organic carrots	t	2025-10-19 04:50:03.771024	2025-10-19 04:50:03.771024
+4	1	Onion	Vegetables	180	200	2025-10-14	2025-10-29	AVAILABLE	Colombo	Spicy green chillies	f	2025-10-19 04:50:03.771024	2025-10-19 04:50:03.771024
+5	35	Banana	Fruits	90	120	2025-10-13	2025-10-27	AVAILABLE	Kandy	Ripe yellow bananas	f	2025-10-19 04:50:03.771024	2025-10-19 04:50:03.771024
+9	35	Mango	Vegetables	160	15	2025-10-18	2025-11-05	AVAILABLE	Galle	Freshly harvested organic tomatoes	t	2025-10-20 01:50:04.962848	2025-10-20 01:50:33.142599
+1	1	Tomato	Vegetables	150.5	100	2025-10-15	2025-10-30	AVAILABLE	Colombo	Fresh organic tomatoes from local farm	t	2025-10-19 04:50:03.771024	2025-10-19 04:50:03.771024
+11	35	Strawberry	Fruits	3000	60	2025-10-02	2025-11-28	AVAILABLE	Kandy	Fresh	t	2025-10-20 02:19:41.508327	2025-10-20 02:19:58.761277
+\.
+
+
+--
+-- TOC entry 4907 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: farmer_products_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.farmer_products_product_id_seq', 11, true);
+
+
+--
+-- TOC entry 4753 (class 2606 OID 49980)
+-- Name: farmer_products farmer_products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.farmer_products
+    ADD CONSTRAINT farmer_products_pkey PRIMARY KEY (product_id);
+
+
+-- Completed on 2025-10-20 15:46:40
+
+--
+-- PostgreSQL database dump complete
+--
+
