@@ -94,6 +94,11 @@ SELECT pg_catalog.setval('public.users_user_id_seq', 32, true);
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
+ALTER TABLE users 
+    ADD CONSTRAINT chk_role 
+    CHECK (role IN ('FARMER', 'BUYER', 'VENDOR', 'DRIVER', 'ADMIN', 'QA'));
+
+
 
 -- Completed on 2025-10-17 15:43:48
 

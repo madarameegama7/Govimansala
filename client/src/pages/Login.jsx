@@ -28,7 +28,10 @@ function Login() {
         navigate("/admin");
       } else if (role === "DRIVER") {
         navigate("/driver");
-      } else {
+      } else if (role === "QA") {
+        navigate("/qa/dashboard");
+      }
+      else {
         navigate("/");
       }
       console.log("Success");
