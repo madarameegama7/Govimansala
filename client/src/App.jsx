@@ -20,7 +20,7 @@ import AboutUs from "./pages/AboutUs";
 import Marketplace from "./pages/Marketplace";
 import Vegetables from "./pages/vegetables";
 import Fruits from "./pages/fruits";
-import MoreDetails from "./pages/MoreDetails";
+import MoreDetails from "./pages/Buyer/MoreDetails";
 import Home from "./pages/Home";
 import NewHome from "./pages/DefaultHomePage";
 import Login from "./pages/Login";
@@ -92,7 +92,6 @@ function App() {
           <Route path="/Marketplace" element={<Marketplace />} />
           <Route path="/vegetables" element={<Vegetables />} />
           <Route path="/fruits" element={<Fruits />} />
-          <Route path="/moreDetails" element={<MoreDetails />} />
           <Route path="/Farms" element={<Farms />} />
           <Route path="/FarmPage" element={<FarmPage />} />
         </Route>
@@ -133,6 +132,8 @@ function App() {
           <Route path="EditProfile" element={<EditProfile />} />
           <Route path="Cart" element={<Cart />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="moreDetails" element={<MoreDetails />} />
+
         </Route>
 
         {/* ADMIN ROUTE */}

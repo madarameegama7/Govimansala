@@ -29,7 +29,9 @@ public class SecurityConfig {
                                 "/api/admin/drivers/**",
                                 "/api/vendors/**",
                                 "/actuator/**",
-                                "/api/product/buyer_product/**
+                                "/api/product/buyer_product/**",
+                                "/api/buyer-order/**",
+                                "/api/buyer-cart/**"
                         ).permitAll()
                         .anyExchange().authenticated()
                 )
