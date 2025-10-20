@@ -58,6 +58,7 @@ import QAInspectionList from "./pages/QA/QAInspectionList";
 import QAMetrics from "./pages/QA/QAMetrics";
 import QAInspectionDetails from "./pages/QA/QAInspectionDetails";
 import QAProfile from "./pages/QA/QAProfile";
+import RevenueOrders from "./pages/Admin/RevenueOrders";
 
 function App() {
   return (
@@ -147,6 +148,7 @@ function App() {
           <Route path="AdminDashboard" element={<AdminDashboard />} />
           <Route path="BuyerOrders" element={<BuyerOrders />} />
           <Route path="FarmerOrders" element={<FarmerOrders />} />
+          <Route path="RevenueOrders" element={<RevenueOrders />} />
           <Route path="BuyerDetails" element={<BuyerDetails />} />
           <Route path="VendorDetails" element={<VendorDetails />} />
           <Route path="DriverDetails" element={<DriverDetails />} />
