@@ -26,20 +26,20 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
+    @Transactional
     public AuthResponse register(RegisterRequest request, String clientSource) {
-        //Passowrd at least one number, upper case, lower case, special symbol with 8 characters
+        // Password policy
         if (!request.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
         }
 
-
-        // Check if email already exists
+        // Duplicate email check
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Email already exists"
-            );
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
+
+        // Create user
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -54,9 +54,52 @@ public class AuthService {
         }
 
         userRepository.save(user);
+
+        //Create role-specific profile
+        switch (user.getRole()) {
+            case FARMER -> {
+                FarmerProfile profile = new FarmerProfile();
+                profile.setUser(user);
+                profile.setFarmSize(request.getFarmSize());
+                profile.setFarmType(request.getFarmType());
+                profile.setLocation(request.getLocation());
+                profile.setCredits(0);
+                farmerRepo.save(profile);
+            }
+            case VENDOR -> {
+                VendorProfile profile = new VendorProfile();
+                profile.setUser(user);
+                profile.setCompanyName(request.getCompanyName());
+                profile.setLicenseNo(request.getLicenseNo());
+                profile.setLocation(request.getLocation());
+                vendorRepo.save(profile);
+            }
+            case BUYER -> {
+                BuyerProfile profile = new BuyerProfile();
+                profile.setUser(user);
+                profile.setBusinessName(request.getBusinessName());
+                profile.setDeliveryAddress(request.getDeliveryAddress());
+                buyerRepo.save(profile);
+            }
+            case DRIVER -> {
+                DriverProfile profile = new DriverProfile();
+                profile.setUser(user);
+                profile.setLicenseNumber(request.getLicenseNumber());
+                profile.setVehicleNo(request.getVehicleNo());
+                profile.setAvailable(true);
+                profile.setCurrentLocation(request.getCurrentLocation());
+                driverRepo.save(profile);
+            }
+            case ADMIN -> {
+                // No profile required
+            }
+        }
+
+        // Generate token
         String token = jwtService.generateToken(user.getUserId());
         return new AuthResponse(token, user.getRole().name(), user.getUserId());
     }
+
 
     public AuthResponse authenticate(AuthRequest request) {
         System.out.println("LOGIN email: " + request.getEmail());
