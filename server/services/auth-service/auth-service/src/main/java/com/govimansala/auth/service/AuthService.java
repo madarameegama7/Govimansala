@@ -177,4 +177,93 @@ public class AuthService {
             return profileData;
         }).collect(Collectors.toList());
     }
+    @Transactional
+    public Map<String, Object> updateUserProfile(String token, UserProfileUpdateRequest request)
+    {
+        if (token == null || !token.startsWith("Bearer ")) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing or invalid token");
+        }
+
+        Long userId = jwtService.extractUserId(token.substring(7));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        // --- Update base user info ---
+        if (request.getName() != null) user.setName(request.getName());
+        if (request.getEmail() != null) user.setEmail(request.getEmail());
+        if (request.getPhone() != null) user.setPhone(request.getPhone());
+        if (request.getAddress() != null) user.setAddress(request.getAddress());
+        userRepository.save(user);
+
+        // --- Update role-specific profile ---
+        switch (user.getRole()) {
+            case FARMER -> farmerRepo.findByUserUserId(user.getUserId()).ifPresent(p -> {
+                if (request.getFarmSize() != null) p.setFarmSize(request.getFarmSize());
+                if (request.getFarmType() != null) p.setFarmType(request.getFarmType());
+                if (request.getLocation() != null) p.setLocation(request.getLocation());
+
+                // ✅ Convert if credits is sent as Double (or String)
+                if (request.getCredits() != null) {
+                    p.setCredits(request.getCredits().intValue()); // safe conversion
+                }
+
+                farmerRepo.save(p);
+            });
+
+
+            case VENDOR -> vendorRepo.findByUserUserId(user.getUserId()).ifPresent(p -> {
+                if (request.getCompanyName() != null) p.setCompanyName(request.getCompanyName());
+                if (request.getLicenseNo() != null) p.setLicenseNo(request.getLicenseNo());
+                if (request.getLocation() != null) p.setLocation(request.getLocation());
+                vendorRepo.save(p);
+            });
+
+            case BUYER -> buyerRepo.findByUserUserId(user.getUserId()).ifPresent(p -> {
+                if (request.getBusinessName() != null) p.setBusinessName(request.getBusinessName());
+                if (request.getDeliveryAddress() != null) p.setDeliveryAddress(request.getDeliveryAddress());
+                buyerRepo.save(p);
+            });
+
+            case DRIVER -> driverRepo.findByUserUserId(user.getUserId()).ifPresent(p -> {
+                if (request.getLicenseNumber() != null) p.setLicenseNumber(request.getLicenseNumber());
+                if (request.getVehicleNo() != null) p.setVehicleNo(request.getVehicleNo());
+                if (request.getAvailable() != null) p.setAvailable(request.getAvailable());
+                if (request.getCurrentLocation() != null) p.setCurrentLocation(request.getCurrentLocation());
+                driverRepo.save(p);
+            });
+
+            case QA -> qaRepo.findByUser_UserId(user.getUserId()).ifPresent(p -> {
+                if (request.getCertificationId() != null) p.setCertificationId(request.getCertificationId());
+                if (request.getExpertiseArea() != null) p.setExpertiseArea(request.getExpertiseArea());
+                if (request.getRegion() != null) p.setRegion(request.getRegion());
+                if (request.getYearsOfExperience() != null) p.setYearsOfExperience(request.getYearsOfExperience());
+
+                // ✅ Only if you have rating updates — convert from String to Double
+                if (request.getRating() != null) {
+                    try {
+                        p.setRating(Double.parseDouble(request.getRating().toString()));
+                    } catch (NumberFormatException e) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid rating value");
+                    }
+                }
+
+                qaRepo.save(p);
+            });
+
+
+            default -> {}
+        }
+
+        // Return updated profile as confirmation
+        Map<String, Object> updatedProfile = new HashMap<>();
+        updatedProfile.put("userId", user.getUserId());
+        updatedProfile.put("name", user.getName());
+        updatedProfile.put("email", user.getEmail());
+        updatedProfile.put("role", user.getRole().name());
+        updatedProfile.put("phone", user.getPhone());
+        updatedProfile.put("address", user.getAddress());
+
+        return updatedProfile;
+    }
+
 }

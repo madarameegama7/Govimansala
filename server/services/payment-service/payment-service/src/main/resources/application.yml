@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/paymentdb
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  application:
+    name: payment-service
+
+jwt:
+  secret: 08788b9566dad0f379f4530d090c9163cc199fdf76eef8443bee827d05bee706fff39966
+  expiration: 3600000
+
+server:
+  port: 8084
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry:  true
+    register-with-eureka: true
+
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security=DEBUG:
+
+
