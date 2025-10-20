@@ -174,21 +174,24 @@ function Marketplace() {
           </div>
 
           {/* Vegetables Section */}
-          <div className="section">
+          <div className="section vegetables-section">
             <div className="section-header">
-              <h2 className="clickable-heading" onClick={() => navigate('/vegetables')}>
+              <h2 className="section-title" onClick={() => navigate('/vegetables')}>
                 Vegetables
+                <span className="section-subtitle">Fresh from local farms</span>
               </h2>
               <div className="scroll-controls">
                 <button 
                   className="scroll-btn scroll-left"
                   onClick={() => scrollLeft('vegetables-container')}
+                  aria-label="Scroll left"
                 >
                   ←
                 </button>
                 <button 
                   className="scroll-btn scroll-right"
                   onClick={() => scrollRight('vegetables-container')}
+                  aria-label="Scroll right"
                 >
                   →
                 </button>

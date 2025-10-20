@@ -14,10 +14,10 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private Integer  productId;
+    private Long  productId;
 
     @Column(name = "user_id")
-    private Integer  userId;
+    private Long  userId;
 
     @Column(name = "name")
     private String productName;

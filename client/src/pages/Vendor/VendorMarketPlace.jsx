@@ -93,59 +93,60 @@ function VendorMarketPlace() {
 
   console.log("🔸 Component rendered. Filter:", selectedFilter);
 
-  useEffect(() => {
-    console.log("🟡 Category changed to:", selectedFilter);
-    const token = localStorage.getItem("accessToken");
-    const baseUrl = "http://localhost:8080/api/product";
-    const url =
-      selectedFilter && selectedFilter !== "all"
-        ? `${baseUrl}/category/${encodeURIComponent(selectedFilter)}`
-        : baseUrl;
+useEffect(() => {
+  console.log("🟡 Category changed to:", selectedFilter);
+  const token = localStorage.getItem("accessToken");
+  const baseUrl = "http://localhost:8080/api/product";
+  const url =
+    selectedFilter && selectedFilter !== "all"
+      ? `${baseUrl}/category/${encodeURIComponent(selectedFilter)}`
+      : baseUrl;
 
-    console.log("🔵 Fetching from URL:", url);
+  console.log("🔵 Fetching from URL:", url);
 
-    const headers = {
-      Accept: "application/json",
-    };
+  const headers = {
+    Accept: "application/json",
+  };
 
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
 
-    fetch(url, { headers })
-      .then((res) => {
-        console.log("🟢 Response status:", res.status);
-        return res.text(); // 👈 get raw text instead of JSON for debugging
-      })
-      .then((text) => {
-        console.log("🟣 Raw response:", text);
-        try {
-          const data = JSON.parse(text);
-          console.log("✅ Parsed data:", data);
+  // Add the actual fetch call here
+  fetch(url, { headers })
+    .then((res) => {
+      console.log("🟢 Response status:", res.status);
+      return res.text(); // 👈 get raw text instead of JSON for debugging
+    })
+    .then((text) => {
+      console.log("🟣 Raw response:", text);
+      try {
+        const data = JSON.parse(text);
+        console.log("✅ Parsed data:", data);
 
-          const normalizedProducts = (() => {
-            if (Array.isArray(data)) return data;
-            if (data && Array.isArray(data.content)) return data.content;
-            if (data && Array.isArray(data.data)) return data.data;
-            if (data && Array.isArray(data.products)) return data.products;
-            return [];
-          })();
+        const normalizedProducts = (() => {
+          if (Array.isArray(data)) return data;
+          if (data && Array.isArray(data.content)) return data.content;
+          if (data && Array.isArray(data.data)) return data.data;
+          if (data && Array.isArray(data.products)) return data.products;
+          return [];
+        })();
 
-          if (!Array.isArray(normalizedProducts)) {
-            console.error("❌ Failed to derive products array, falling back to empty list.");
-            setProducts([]);
-            return;
-          }
-
-          console.log("📦 Normalized products:", normalizedProducts);
-          setProducts(normalizedProducts);
-        } catch (e) {
-          console.error("❌ JSON parse error:", e);
+        if (!Array.isArray(normalizedProducts)) {
+          console.error("❌ Failed to derive products array, falling back to empty list.");
           setProducts([]);
+          return;
         }
-      })
-      .catch((err) => console.error("🔥 Fetch error:", err));
-  }, [selectedFilter]);
+
+        console.log("📦 Normalized products:", normalizedProducts);
+        setProducts(normalizedProducts);
+      } catch (e) {
+        console.error("❌ JSON parse error:", e);
+        setProducts([]);
+      }
+    })
+    .catch((err) => console.error("🔥 Fetch error:", err));
+}, [selectedFilter]);
 
   const handleEditProduct = (product) => {
     setEditingProductId(product.productId);

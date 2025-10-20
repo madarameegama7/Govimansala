@@ -23,8 +23,8 @@ public class ProductController {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7);
-            String userId = jwtUtil.extractUserId(token);
-            product.setUserId(Integer.parseInt(userId));
+            Long userId = jwtUtil.extractUserId(token);
+            product.setUserId(userId);
             return ResponseEntity.ok(productService.addProduct(product));
         }
         return ResponseEntity.badRequest().build();
