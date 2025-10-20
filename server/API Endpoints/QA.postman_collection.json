@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "385103cc-52f7-4ec2-817e-9df49af861c1",
+		"name": "QA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33620906",
+		"_collection_link": "https://speeding-meteor-859864.postman.co/workspace/Govimansala~414bf10c-99b5-484a-a453-3ff0da5234f3/collection/33620906-385103cc-52f7-4ec2-817e-9df49af861c1?action=share&source=collection_link&creator=33620906"
+	},
+	"item": [
+		{
+			"name": "Get inspections",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/qa/inspections",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"qa",
+						"inspections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update QA profie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"certificationId\": \"QA12345\",\r\n  \"expertiseArea\": \"Vegetables\",\r\n  \"region\": \"Colombo\",\r\n  \"yearsOfExperience\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/qa/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"qa",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/qa/profile/49",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"qa",
+						"profile",
+						"49"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -24,8 +24,8 @@ public class JwtService {
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))  // This is for username/subject
-                .claim("userId", userId)             // Add this line for the userId claim
+                .setSubject(String.valueOf(userId))
+                .claim("userId", userId)  // add userId claim
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -34,6 +34,12 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return parseClaims(token).getSubject();
+    }
+
+    // NEW method to extract userId from token
+    public Long extractUserId(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("userId", Long.class);
     }
 
     public boolean isTokenValid(String token) {

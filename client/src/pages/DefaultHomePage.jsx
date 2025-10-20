@@ -11,6 +11,7 @@ import farmerImage from "../assets/Marketplace/farmer.jpg";
 import buyerImage from "../assets/Marketplace/buyer.jpg"; 
 import vendorImage from "../assets/Marketplace/vendor.jpg"; 
 import driverImage from "../assets/Marketplace/driver.jpg"; 
+import QAImage from "../assets/Marketplace/QA.jpg";
 import welcomeVideo from "../assets/Marketplace/welcome.mp4"; 
 
 function NewHome() {
@@ -311,6 +312,29 @@ function NewHome() {
                 </div>
                 <div className="role-image">
                   <img src={driverImage} alt="Driver delivering fresh produce" />
+                </div>
+              </div>
+            </div>
+                {/* QA Role */}
+            <div className="role-item qa-role">
+              <div className="role-content">
+                <div className="role-text">
+                  <h3>For Quality Assurance</h3>
+                  <p>
+                  Quality Assurance (QA) role involves implementing systems and processes to ensure agricultural products are safe, 
+                  high-quality, and meet all relevant standards and regulations. This includes a wide range of responsibilities, 
+                  from developing quality management policies and ensuring compliance with food safety laws to using technology 
+                  for data-driven decision-making on the farm and verifying that products are consistent and defect-free. 
+                  </p>
+                  <button 
+                    className="role-cta-btn"
+                    onClick={() => handleGetStarted('QA')}
+                  >
+                    Become a QA
+                  </button>
+                </div>
+                <div className="role-image">
+                  <img src={QAImage} alt="Ensure agricultural products are safe" />
                 </div>
               </div>
             </div>
