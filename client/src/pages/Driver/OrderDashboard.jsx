@@ -289,7 +289,7 @@ const OrderDashboard = () => {
     if (order) {
       const optimizedRoute = optimizeRoute(order.locations);
       
-      navigate('/driver-navigation', {
+      navigate('/driver/navigation', {
         state: {
           orderId: orderId,
           route: optimizedRoute,

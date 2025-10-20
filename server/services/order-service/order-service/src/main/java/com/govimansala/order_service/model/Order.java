@@ -7,7 +7,10 @@ import java.util.List;
 import com.govimansala.order_service.enums.OrderStatus;
 import com.govimansala.order_service.enums.PaymentStatus;
 import com.govimansala.order_service.enums.DeliveryStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 @Getter
@@ -25,6 +28,7 @@ public class Order{
     protected LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItem> items;
 
     @Enumerated(EnumType.STRING)
@@ -37,6 +41,15 @@ public class Order{
     private DeliveryStatus deliveryStatus;
 
     private String assignedDriver;
+
+    public void setOrderItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public void setTotal(double total) {
+        this.totalAmount = total;
+    }
+
 
 
 }

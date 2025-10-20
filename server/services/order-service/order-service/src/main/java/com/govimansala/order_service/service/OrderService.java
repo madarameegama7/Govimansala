@@ -1,0 +1,140 @@
+package com.govimansala.order_service.service;
+
+import com.govimansala.order_service.enums.OrderStatus;
+import com.govimansala.order_service.enums.PaymentStatus;
+import com.govimansala.order_service.enums.DeliveryStatus;
+import com.govimansala.order_service.model.*;
+import com.govimansala.order_service.repository.CartRepository;
+import com.govimansala.order_service.repository.CartItemRepository;
+import com.govimansala.order_service.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.govimansala.order_service.dto.response.ProductResponseDTO;
+import com.govimansala.order_service.repository.VendorOrderRow;
+import com.govimansala.order_service.service.PagedResponse;
+import com.govimansala.order_service.service.OrderListItem;
+import org.springframework.beans.factory.annotation.Value;
+import java.time.ZoneOffset;
+import java.time.LocalDateTime;
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+    private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
+
+    public Order checkoutCart(int cartId) {
+        Optional<Cart> optionalCart = cartRepository.findById(cartId);
+        if (optionalCart.isEmpty()) {
+            throw new RuntimeException("Cart not found with ID: " + cartId);
+        }
+
+        Cart cart = optionalCart.get();
+        List<CartItem> cartItems = cartItemRepository.findByCart_CartId(cartId);
+
+        if (cartItems.isEmpty()) {
+            throw new RuntimeException("Cart is empty.");
+        }
+
+        return placeOrder(cartItems);
+    }
+
+    public Order placeOrder(List<CartItem> cartItems) {
+        Order order = new Order();
+        List<OrderItem> orderItems = new ArrayList<>();
+        double total = 0.0;
+
+        String productServiceUrl = "http://localhost:8080/api/product/id/";
+
+        for (CartItem cartItem : cartItems) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProductId(cartItem.getProductId());
+            orderItem.setQuantity(cartItem.getQuantity());
+
+            try {
+                ProductResponseDTO product = restTemplate.getForObject(
+                        productServiceUrl + cartItem.getProductId(),
+                        ProductResponseDTO.class
+                );
+                System.out.println("Fetched product: " + product);
+
+                if (product != null) {
+                    double unitPrice = product.getProductPrice();
+                    orderItem.setUnitPrice(unitPrice);
+                    total += unitPrice * orderItem.getQuantity();
+                } else {
+                    orderItem.setUnitPrice(0.0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                orderItem.setUnitPrice(0.0);
+            }
+
+            orderItem.setOrder(order);
+            orderItem.setOrderStatus(OrderStatus.PENDING);
+            orderItems.add(orderItem);
+        }
+
+        order.setOrderItems(orderItems);
+        order.setTotal(total);
+        order.setOrderStatus(OrderStatus.PENDING);
+
+        return orderRepository.save(order);
+    }
+    @Value("${products.base-url:http://localhost:8082}") // or your gateway URL
+    private String productsBaseUrl;
+
+    /**
+     * Fetch orders that contain products owned by vendorUserId.
+     * Filters: status (Placed/Out for Delivery/Delivered/Returned) and q (order# fragment or YYYY-MM-DD)
+     */
+    public PagedResponse<OrderListItem> getVendorOrders(
+            int vendorUserId, String status, String q, int page, int pageSize) {
+
+        // 1) Ask product-service for this vendor's product IDs
+        String url = productsBaseUrl + "/api/product/vendor/{id}/ids";
+        Integer[] productIds = restTemplate.getForObject(url, Integer[].class, vendorUserId);
+
+        if (productIds == null || productIds.length == 0) {
+            return new PagedResponse<>(List.of(), page, pageSize, 0);
+        }
+
+        // 2) Normalize filters
+        String statusUi = switch (status == null ? "" : status.trim()) {
+            case "Placed", "Out for Delivery", "Delivered", "Returned" -> status.trim();
+            case "" -> null;
+            default -> null;
+        };
+        String qNorm = (q == null || q.isBlank()) ? null : q.trim();
+
+        int safePage = Math.max(1, page);
+        int safePageSize = Math.max(1, pageSize);
+        int offset = (safePage - 1) * safePageSize;
+
+        // 3) Query DB via your repository
+        List<VendorOrderRow> rows = orderRepository.findVendorOrders(productIds, statusUi, qNorm, offset, safePageSize);
+        long total = orderRepository.countVendorOrders(productIds, statusUi, qNorm);
+
+        // 4) Map to UI DTOs
+        List<OrderListItem> items = rows.stream().map(r -> new OrderListItem(
+                r.getOrderId(),
+                r.getUserId(),
+                r.getOrderStatus(),
+                r.getDeliveryStatus(),
+                r.getTotalAmount(),
+                r.getCreatedAt().toInstant().atOffset(ZoneOffset.UTC).toInstant(),
+                r.getUiStatus()
+        )).toList();
+
+        return new PagedResponse<>(items, safePage, safePageSize, total);
+    }
+}
