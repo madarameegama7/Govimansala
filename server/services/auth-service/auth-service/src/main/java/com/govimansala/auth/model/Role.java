@@ -1,5 +1,5 @@
 package com.govimansala.auth.model;
 
 public enum Role{
-    FARMER, BUYER, VENDOR, DRIVER, ADMIN
+    FARMER, BUYER, VENDOR, DRIVER, ADMIN, QA
 }

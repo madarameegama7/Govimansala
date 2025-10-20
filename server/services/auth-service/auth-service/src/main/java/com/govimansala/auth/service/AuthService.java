@@ -1,6 +1,5 @@
 package com.govimansala.auth.service;
 
-
 import com.govimansala.auth.dto.*;
 import com.govimansala.auth.model.*;
 import com.govimansala.auth.repository.*;
@@ -23,23 +22,26 @@ public class AuthService {
     private final VendorProfileRepository vendorRepo;
     private final BuyerProfileRepository buyerRepo;
     private final DriverProfileRepository driverRepo;
+    private final QaProfileRepository qaRepo;
+
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
+    // ---------------- REGISTER ----------------
+    @Transactional
     public AuthResponse register(RegisterRequest request, String clientSource) {
-        //Passowrd at least one number, upper case, lower case, special symbol with 8 characters
+        // Password policy
         if (!request.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character");
         }
 
-
-        // Check if email already exists
+        // Duplicate email check
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Email already exists"
-            );
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
+
+        // Create base user
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
@@ -54,23 +56,68 @@ public class AuthService {
         }
 
         userRepository.save(user);
+
+        // Create role-specific profile
+        switch (user.getRole()) {
+            case FARMER -> {
+                FarmerProfile profile = new FarmerProfile();
+                profile.setUser(user);
+                profile.setFarmSize(request.getFarmSize());
+                profile.setFarmType(request.getFarmType());
+                profile.setLocation(request.getLocation());
+                profile.setCredits(0);
+                farmerRepo.save(profile);
+            }
+            case VENDOR -> {
+                VendorProfile profile = new VendorProfile();
+                profile.setUser(user);
+                profile.setCompanyName(request.getCompanyName());
+                profile.setLicenseNo(request.getLicenseNo());
+                profile.setLocation(request.getLocation());
+                vendorRepo.save(profile);
+            }
+            case BUYER -> {
+                BuyerProfile profile = new BuyerProfile();
+                profile.setUser(user);
+                profile.setBusinessName(request.getBusinessName());
+                profile.setDeliveryAddress(request.getDeliveryAddress());
+                buyerRepo.save(profile);
+            }
+            case DRIVER -> {
+                DriverProfile profile = new DriverProfile();
+                profile.setUser(user);
+                profile.setLicenseNumber(request.getLicenseNumber());
+                profile.setVehicleNo(request.getVehicleNo());
+                profile.setAvailable(true);
+                profile.setCurrentLocation(request.getCurrentLocation());
+                driverRepo.save(profile);
+            }
+            case QA -> {
+                QaProfile profile = new QaProfile();
+                profile.setUser(user);
+                profile.setCertificationId(request.getCertificationId());
+                profile.setExpertiseArea(request.getExpertiseArea());
+                profile.setRegion(request.getRegion());
+                profile.setYearsOfExperience(request.getYearsOfExperience());
+                profile.setRating(0.0);
+                qaRepo.save(profile);
+            }
+            case ADMIN -> {
+                // Admin doesn't need a profile table
+            }
+        }
+
+        // Generate JWT
         String token = jwtService.generateToken(user.getUserId());
         return new AuthResponse(token, user.getRole().name(), user.getUserId());
     }
 
+    // ---------------- AUTHENTICATE ----------------
     public AuthResponse authenticate(AuthRequest request) {
-        System.out.println("LOGIN email: " + request.getEmail());
-        System.out.println("LOGIN password: " + request.getPassword());
-
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
-        System.out.println("USER FOUND: " + user.getEmail());
-        System.out.println("DB HASH: " + user.getPasswordHash());
-
         boolean match = passwordEncoder.matches(request.getPassword(), user.getPasswordHash());
-        System.out.println("MATCH RESULT: " + match);
-
         if (!match) {
             throw new RuntimeException("Invalid email or password");
         }
@@ -79,12 +126,13 @@ public class AuthService {
         return new AuthResponse(token, user.getRole().name(), user.getUserId());
     }
 
+    // ---------------- FETCH ALL PROFILES ----------------
     @Transactional(readOnly = true)
-    public List<Map<String,Object>> getAllUserProfiles(){
+    public List<Map<String, Object>> getAllUserProfiles() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map(user->{
-            Map<String,Object> profileData=new HashMap<>();
+        return users.stream().map(user -> {
+            Map<String, Object> profileData = new HashMap<>();
             profileData.put("user_id", user.getUserId());
             profileData.put("name", user.getName());
             profileData.put("email", user.getEmail());
@@ -116,11 +164,17 @@ public class AuthService {
                     profileData.put("business_name", p.getBusinessName());
                     profileData.put("delivery_address", p.getDeliveryAddress());
                 });
+                case QA -> qaRepo.findByUser_UserId(user.getUserId()).ifPresent(p -> {
+                    profileData.put("certification_id", p.getCertificationId());
+                    profileData.put("expertise_area", p.getExpertiseArea());
+                    profileData.put("region", p.getRegion());
+                    profileData.put("years_of_experience", p.getYearsOfExperience());
+                    profileData.put("rating", p.getRating());
+                });
                 default -> {}
             }
 
             return profileData;
         }).collect(Collectors.toList());
     }
-
 }

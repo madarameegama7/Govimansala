@@ -35,6 +35,9 @@ function Home() {
       <button onClick={() => navigate("/signup?role=VENDOR")}>
         Sign Up as Vendor
       </button>
+      <button onClick={() => navigate("/signup?role=QA")}>
+        Sign Up as Vendor
+      </button>
 
       {/* Shop By Category */}
       <div className="shop-by-category">

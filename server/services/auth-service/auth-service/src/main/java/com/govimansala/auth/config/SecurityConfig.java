@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/buyers/**").permitAll()
                         .requestMatchers("/api/admin/drivers/**").permitAll()
                         .requestMatchers("/api/admin/vendors/**").permitAll()
+                        .requestMatchers("/api/qa/**").permitAll()
 
                         .anyRequest().authenticated()
                 )
