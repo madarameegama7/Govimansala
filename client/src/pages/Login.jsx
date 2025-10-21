@@ -25,7 +25,7 @@ function Login() {
       } else if (role === "VENDOR") {
         navigate("/vendor/home");
       } else if (role === "ADMIN") {
-        navigate("/admin");
+        navigate("/admin/AdminDashboard");
       } else if (role === "DRIVER") {
         navigate("/driver");
       } else if (role === "QA") {
