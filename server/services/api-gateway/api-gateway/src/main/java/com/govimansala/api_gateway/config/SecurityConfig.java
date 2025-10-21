@@ -31,7 +31,7 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/api/product/buyer_product/**",
                                 "/api/buyer-order/**",
-                                "/api/buyer-cart/**"
+                                "/api/buyer-cart/**",
                                 "/api/payhere"
                         ).permitAll()
                         .anyExchange().authenticated()

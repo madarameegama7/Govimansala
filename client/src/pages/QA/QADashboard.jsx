@@ -65,6 +65,22 @@ const QADashboard = () => {
                 </button>
               </div>
             </div>
+            <div className="qa-card">
+              <div className="qa-card-content">
+                <div className="qa-icon">📋</div>
+                <h3>Checklist</h3>
+                <p>Products waiting for your review</p>
+                <p className="qa-count">{pendingCount}</p>
+              </div>
+              <div className="qa-card-actions">
+                <button 
+                  className="qa-btn qa-btn-primary"
+                  onClick={() => navigate("/qa/checklist")}
+                >
+                  View Checklist
+                </button>
+              </div>
+            </div>
 
             <div className="qa-card">
               <div className="qa-card-content">

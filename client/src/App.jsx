@@ -214,6 +214,7 @@ function App() {
       <Route path="/qa/inspection/:productId" element={<QAInspectionDetails />} />
       <Route path="/qa/profile" element={<QAProfile />} />
       <Route path="/qa/metrics" element={<QAMetrics />} />
+      <Route path="/qa/checklist" element={<QAInspectionList />} />
         </Route>
         
       </Routes>
