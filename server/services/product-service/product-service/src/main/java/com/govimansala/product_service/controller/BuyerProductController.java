@@ -38,4 +38,10 @@ public class BuyerProductController {
         List<FarmerProduct> products = service.getConventionalByCategory(category);
         return ResponseEntity.ok(products);
     }
+
+    @GetMapping("/product_name/{name}")
+    public ResponseEntity<List<FarmerProduct>> getAllByProductName(@PathVariable String name) {
+        List<FarmerProduct> products = service.getAllByProductName(name);
+        return ResponseEntity.ok(products);
+    }
 }

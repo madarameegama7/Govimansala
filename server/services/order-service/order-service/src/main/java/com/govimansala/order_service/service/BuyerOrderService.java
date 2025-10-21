@@ -52,4 +52,6 @@ public class BuyerOrderService {
         return orderRepository.findById(orderId);
     }
 
+    public List<BuyerOrder> getOrdersByBuyerId(Long buyerId) {return orderRepository.findByBuyerId(buyerId);}
+
 }

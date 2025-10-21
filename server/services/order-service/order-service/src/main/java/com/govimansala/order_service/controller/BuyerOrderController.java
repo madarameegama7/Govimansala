@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/buyer-order")
@@ -46,6 +47,20 @@ public class BuyerOrderController {
         BuyerOrder savedOrder = orderService.placeOrder(request);
         return ResponseEntity.ok(savedOrder);
     }
+
+    @GetMapping("/buyer")
+    public ResponseEntity<List<BuyerOrder>> getOrdersForBuyer(HttpServletRequest httpRequest) {
+        Long buyerId = extractBuyerIdFromRequest(httpRequest);
+        if (buyerId == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        List<BuyerOrder> orders = orderService.getOrdersByBuyerId(buyerId);
+        if (orders.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(orders);
+    }
+
 
     @GetMapping("/{orderId}")
     public ResponseEntity<BuyerOrder> getBuyerOrder(@PathVariable Long orderId,
