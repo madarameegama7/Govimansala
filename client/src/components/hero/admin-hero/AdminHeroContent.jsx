@@ -18,6 +18,7 @@ function AdminHeroContent() {
         <li><Link to="/admin/QADetails">QA Inspectors</Link></li>
         <li><Link to="/admin/BuyerOrders">Orders from Buyers</Link></li>
         <li><Link to="/admin/FarmerOrders">Orders from Farmers</Link></li>
+        <li><Link to="/admin/RevenueOrders">Revenue & Orders</Link></li>
       </ul>
     </nav>
   );

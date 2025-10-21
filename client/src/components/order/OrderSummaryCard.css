@@ -1,0 +1,418 @@
+.order-summary-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.order-summary-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Header Section */
+.order-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #2c3e50;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.order-header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.order-id {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.order-status {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending {
+  background: #ffa726;
+  color: #000;
+}
+
+.status-processing {
+  background: #42a5f5;
+  color: white;
+}
+
+.status-shipped {
+  background: #ff7043;
+  color: white;
+}
+
+.status-delivered {
+  background: #27ae60;
+  color: white;
+}
+
+.status-cancelled {
+  background: #e74c3c;
+  color: white;
+}
+
+.order-header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.order-date {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.order-total {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.expand-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+/* Buyer Information */
+.order-buyer-info {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 15px 20px;
+  background: #e0f2f1;
+  border-bottom: 1px solid #b2dfdb;
+}
+
+.buyer-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.buyer-icon {
+  color: #004d40;
+  font-size: 1.1rem;
+}
+
+.buyer-label {
+  font-weight: 600;
+  color: #666;
+  margin-right: 8px;
+}
+
+.buyer-name,
+.buyer-address {
+  color: #333;
+}
+
+/* Expandable Content */
+.order-summary-content {
+  padding: 20px;
+  background: #fafafa;
+}
+
+.section-title {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000000;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #004d40;
+}
+
+/* Items Table */
+.order-items-section {
+  margin-bottom: 25px;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.items-table thead {
+  background: #2c3e50;
+  color: white;
+}
+
+.items-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.items-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.items-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.items-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.item-total {
+  font-weight: 600;
+  color: #004d40;
+}
+
+/* Revenue Breakdown */
+.revenue-breakdown-section {
+  margin-bottom: 25px;
+}
+
+.revenue-breakdown {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.breakdown-row:last-child {
+  border-bottom: none;
+}
+
+.breakdown-label {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.breakdown-value {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.service-charge {
+  background: #fff9e6;
+  margin: 5px -10px;
+  padding: 10px 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+.service-charge .breakdown-label {
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.service-charge .breakdown-value {
+  color: #f57c00;
+}
+
+.total-row {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 2px solid #004d40;
+  border-bottom: none;
+}
+
+.total-row .breakdown-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.total-amount {
+  font-size: 1.3rem !important;
+  color: #004d40 !important;
+  font-weight: 700 !important;
+}
+
+/* Farmer Bills Section */
+.farmer-bills-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.farmer-bills-container {
+  margin-top: 15px;
+}
+
+/* Farmer Summary */
+.farmer-summary-section {
+  margin-bottom: 10px;
+}
+
+.farmer-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.farmer-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #27ae60;
+  transition: transform 0.2s ease;
+}
+
+.farmer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.farmer-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.farmer-card-icon {
+  font-size: 1.5rem;
+  color: #27ae60;
+}
+
+.farmer-card-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.farmer-card-farm {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.farmer-card-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.farmer-card-location i {
+  color: #f44336;
+}
+
+.farmer-card-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.farmer-item {
+  font-size: 0.85rem;
+  color: #555;
+  padding: 4px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .items-table {
+    font-size: 0.85rem;
+  }
+
+  .items-table th,
+  .items-table td {
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .order-summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .order-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .order-buyer-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .items-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .farmer-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .order-total {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-summary-card {
+    margin-bottom: 15px;
+  }
+
+  .order-summary-header {
+    padding: 15px;
+  }
+
+  .order-id {
+    font-size: 1.1rem;
+  }
+
+  .order-summary-content {
+    padding: 15px;
+  }
+
+  .revenue-breakdown {
+    padding: 15px;
+  }
+
+  .breakdown-label,
+  .breakdown-value {
+    font-size: 0.85rem;
+  }
+}
