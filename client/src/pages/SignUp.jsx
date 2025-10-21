@@ -28,6 +28,10 @@ function SignUp() {
     );
   };
 
+  const isValidPhoneNumber = (phoneNumber) => {
+    return /^\+?[1-9]\d{1,14}$/.test(phoneNumber);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,6 +50,15 @@ function SignUp() {
         icon: "error",
         title: "Weak Password",
         text: "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character",
+        confirmButtonColor: "#d33",
+      });
+      return;
+    }
+    if (!isValidPhoneNumber(mobile)) {
+      Swal.fire({
+        icon: "error",        
+        title: "Invalid Mobile Number",
+        text: "Please enter a valid mobile number",
         confirmButtonColor: "#d33",
       });
       return;
