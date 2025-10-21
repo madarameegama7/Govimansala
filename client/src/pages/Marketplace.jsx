@@ -16,61 +16,43 @@ import potatoesImg from '../assets/Marketplace/Vegetables/Potatoes.jpg';
 import redOnionImg from '../assets/Marketplace/Vegetables/RedOnion.jpg';
 import tomatoesImg from '../assets/Marketplace/Vegetables/tomatoes.jpg';
 
-import organicIcon from '../assets/Marketplace/organic.png';
-import nonOrganicIcon from '../assets/Marketplace/non-organic.jpg';
-
 const API_BASE_URL = 'http://localhost:8080/api/product/buyer_product';
 
 const productImageMap = {
-  // Vegetables (try multiple variations)
   'Carrots': carrotImg,
-  
   'Brinjal': BrinjalImg,
-  
   'Potatoes': potatoesImg,
-  
   'Red Onion': redOnionImg,
-  
   'tomatoes': tomatoesImg,
-
-
-  // Fruits
   'Watermelon': watermelonImg,
   'watermelon': watermelonImg,
-  
   'Pineapple': pineappleImg,
   'pineapple': pineappleImg,
-  
   'Papaya': papayaImg,
   'papaya': papayaImg,
-  
   'Mango': mangoImg,
   'mango': mangoImg,
   'Mangoes': mangoImg,
   'mangoes': mangoImg,
-  
   'Bananas': bananaImg,
   'banana': bananaImg,
   'Banana': bananaImg,
   'bananas': bananaImg
 };
 
-const getLocalImage = (productName) => {
+export const getLocalImage = (productName) => {
   if (!productName) {
     return 'https://via.placeholder.com/300x200?text=No+Image';
   }
   
-  // Try exact match first
   if (productImageMap[productName]) {
     return productImageMap[productName];
   }
   
-  // Try lowercase
   if (productImageMap[productName.toLowerCase()]) {
     return productImageMap[productName.toLowerCase()];
   }
   
-  // Try to find partial match
   const productNameLower = productName.toLowerCase();
   const matchedKey = Object.keys(productImageMap).find(key => 
     key.toLowerCase().includes(productNameLower) || 
@@ -81,7 +63,6 @@ const getLocalImage = (productName) => {
     return productImageMap[matchedKey];
   }
   
-  // Fallback to placeholder
   console.warn(`No image found for product: ${productName}`);
   return 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(productName);
 };
@@ -117,8 +98,8 @@ function Marketplace() {
       const veggiesData = await veggiesResponse.json();
       const fruitsData = await fruitsResponse.json();
       
-      console.log('Vegetables:', veggiesData); // Debug log
-      console.log('Fruits:', fruitsData); // Debug log
+      console.log('Vegetables:', veggiesData);
+      console.log('Fruits:', fruitsData);
       
       setVegetables(veggiesData);
       setFruits(fruitsData);
@@ -196,57 +177,42 @@ function Marketplace() {
     if (container) container.scrollBy({ left: 300, behavior: 'smooth' });
   };
 
+  const handleSeeMore = (product) => {
+    const category = vegetables.some(v => v.productId === product.productId) ? 'Vegetable' : 'Fruit';
+    
+    navigate('/buyer/MoreDetails', { 
+      state: { 
+        productName: product.name,
+        category: category,
+        isOrganic: product.isOrganic
+      } 
+    });
+  };
+
   const renderProductCard = (product) => {
     const isOrganic = product.isOrganic;
-    
-    console.log('Rendering product:', product.name, 'Image:', getLocalImage(product.name)); // Debug log
-
+    const imageSrc = getLocalImage(product.name);
     return (
       <div key={product.productId} className="product-card">
         <div className="product-image">
           <img 
-            src={getLocalImage(product.name)} 
+            src={imageSrc} 
             alt={product.name}
-            onError={(e) => {
-              console.error('Image load error for:', product.name);
-              e.target.src = 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(product.name);
+            onError={(e) => { 
+              e.target.src = 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(product.name); 
             }}
           />
         </div>
-
         <div className="product-info">
-          <h3 className="product-name">
-            <span>{product.name}</span>
-            <img
-              src={isOrganic ? organicIcon : nonOrganicIcon}
-              alt={isOrganic ? 'Organic' : 'Conventional'}
-              className="organic-icon"
-            />
-          </h3>
-
+          <h3 className="product-name">{product.name}</h3>
           <span className={`product-type ${isOrganic ? 'organic' : 'conventional'}`}>
             {isOrganic ? 'Organic' : 'Conventional'}
           </span>
-
-          <p className="product-description">
-            {product.description || `Fresh ${product.name.toLowerCase()}`}
-          </p>
-
-          <div className="product-details">
-            <p className="product-price">Rs. {product.unitPrice}/kg</p>
-            <p className="product-quantity">
-              <span className="quantity-label">Available:</span> {product.quantity} kg
-            </p>
-            <p className="product-location">
-              <span className="location-icon">📍 {product.location}
-            </span></p>
-          </div>
-
           <button 
-            className="add-to-cart-btn" 
-            onClick={() => navigate(`/product/${product.productId}`)}
+            className="view-details-btn" 
+            onClick={() => handleSeeMore(product)}
           >
-            View More Details
+            See More 
           </button>
         </div>
       </div>
@@ -383,7 +349,6 @@ function Marketplace() {
             <p>Discover fresh, quality produce from local farmers</p>
           </div>
 
-          {/* Vegetables Section */}
           <div className="section vegetables-section">
             <div className="section-header">
               <h2 className="section-title" onClick={() => navigate('/vegetables')}>
@@ -414,7 +379,6 @@ function Marketplace() {
             </div>
           </div>
 
-          {/* Fruits Section */}
           <div className="section">
             <div className="section-header">
               <h2 className="section-title" onClick={() => navigate('/fruits')}>

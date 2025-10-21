@@ -21,9 +21,9 @@ function HeroContent() {
           >
             MARKETPLACE
           </NavLink>
-          <NavLink to="/buyer/Farms">FARMS</NavLink>
+          {/* <NavLink to="/buyer/Farms">FARMS</NavLink> */}
           <NavLink to="/buyer/Orders">ORDERS</NavLink>
-          <NavLink to="/buyer/BuyerAnalytics">ANALYTICS</NavLink>
+          {/* <NavLink to="/buyer/BuyerAnalytics">ANALYTICS</NavLink> */}
           <NavLink to="/buyer/Cart">CART</NavLink>
         </nav>
       </div>
