@@ -82,29 +82,73 @@ function AdminDashboard() {
     custom: 'Last 30 Days'
   });
   
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
+  
   // Handlers for generating reports
-  const handleGenerateUserReport = () => {
-    generateUserReport(userReportOptions, reportPeriods.user);
+  const handleGenerateUserReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generateUserReport(userReportOptions, reportPeriods.user);
+    } catch (error) {
+      console.error('Error generating user report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
   
-  const handleGenerateOrderReport = () => {
-    generateOrderReport(orderReportOptions, reportPeriods.order);
+  const handleGenerateOrderReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generateOrderReport(orderReportOptions, reportPeriods.order);
+    } catch (error) {
+      console.error('Error generating order report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
   
-  const handleGenerateRevenueReport = () => {
-    generateRevenueReport(revenueReportOptions, reportPeriods.revenue);
+  const handleGenerateRevenueReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generateRevenueReport(revenueReportOptions, reportPeriods.revenue);
+    } catch (error) {
+      console.error('Error generating revenue report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
   
-  const handleGeneratePerformanceReport = () => {
-    generatePerformanceReport(performanceReportOptions, reportPeriods.performance);
+  const handleGeneratePerformanceReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generatePerformanceReport(performanceReportOptions, reportPeriods.performance);
+    } catch (error) {
+      console.error('Error generating performance report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
   
-  const handleGenerateInventoryReport = () => {
-    generateInventoryReport(inventoryReportOptions, reportPeriods.inventory);
+  const handleGenerateInventoryReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generateInventoryReport(inventoryReportOptions, reportPeriods.inventory);
+    } catch (error) {
+      console.error('Error generating inventory report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
   
-  const handleGenerateCustomReport = () => {
-    generateCustomReport(customReportOptions, reportPeriods.custom);
+  const handleGenerateCustomReport = async () => {
+    try {
+      setIsGeneratingReport(true);
+      await generateCustomReport(customReportOptions, reportPeriods.custom);
+    } catch (error) {
+      console.error('Error generating custom report:', error);
+    } finally {
+      setIsGeneratingReport(false);
+    }
   };
 
   useEffect(() => {
@@ -195,48 +239,6 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {/* Key Metrics Cards */}
-      <div className="metrics-grid">
-        <div className="metric-card success">
-          <div className="metric-icon">
-            <i className="fas fa-shopping-cart"></i>
-          </div>
-          <div className="metric-details">
-            <h3 className="metric-title">Total Orders</h3>
-            <p className="metric-value">{stats.ordersCount}</p>
-            <span className="metric-change positive">
-              <i className="fas fa-arrow-up"></i> {stats.completedOrders} completed
-            </span>
-          </div>
-        </div>
-
-        <div className="metric-card info">
-          <div className="metric-icon">
-            <i className="fas fa-users"></i>
-          </div>
-          <div className="metric-details">
-            <h3 className="metric-title">Active Users</h3>
-            <p className="metric-value">{stats.activeUsers}</p>
-            <span className="metric-change neutral">
-              <i className="fas fa-circle"></i> Online now
-            </span>
-          </div>
-        </div>
-
-        <div className="metric-card warning">
-          <div className="metric-icon">
-            <i className="fas fa-clock"></i>
-          </div>
-          <div className="metric-details">
-            <h3 className="metric-title">Pending Tasks</h3>
-            <p className="metric-value">{stats.pendingQA}</p>
-            <span className="metric-change neutral">
-              <i className="fas fa-clipboard-check"></i> QA assignments
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Stats Overview Cards */}
       <div className="stats-grid">
         <div className="stat-card">
@@ -284,38 +286,8 @@ function AdminDashboard() {
             <i className="fas fa-box"></i>
           </div>
           <div className="stat-info">
-            <h4 className="stat-label">Buyer Orders</h4>
+            <h4 className="stat-label">Total Orders</h4>
             <p className="stat-value">{stats.ordersCount}</p>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon pending">
-            <i className="fas fa-hourglass-half"></i>
-          </div>
-          <div className="stat-info">
-            <h4 className="stat-label">Pending QA</h4>
-            <p className="stat-value">{stats.pendingQA}</p>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon active-drivers">
-            <i className="fas fa-shipping-fast"></i>
-          </div>
-          <div className="stat-info">
-            <h4 className="stat-label">Active Drivers</h4>
-            <p className="stat-value">{stats.activeDrivers}</p>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon completed">
-            <i className="fas fa-check-circle"></i>
-          </div>
-          <div className="stat-info">
-            <h4 className="stat-label">Completed Orders</h4>
-            <p className="stat-value">{stats.completedOrders}</p>
           </div>
         </div>
       </div>
@@ -442,32 +414,6 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="quick-actions-section">
-        <h3 className="section-title">
-          <i className="fas fa-bolt"></i>
-          Quick Actions
-        </h3>
-        <div className="quick-actions-grid">
-          <button className="action-btn primary">
-            <i className="fas fa-user-plus"></i>
-            <span>Add New User</span>
-          </button>
-          <button className="action-btn success">
-            <i className="fas fa-file-invoice"></i>
-            <span>View Reports</span>
-          </button>
-          <button className="action-btn info">
-            <i className="fas fa-cog"></i>
-            <span>Settings</span>
-          </button>
-          <button className="action-btn warning">
-            <i className="fas fa-bell"></i>
-            <span>Notifications</span>
-          </button>
-        </div>
-      </div>
-
       {/* Report Generation Section */}
       <div className="report-generation-section">
         <h3 className="section-title">
@@ -532,9 +478,13 @@ function AdminDashboard() {
                 <option value="Last Quarter">Last Quarter</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn users" onClick={handleGenerateUserReport}>
-                <i className="fas fa-download"></i>
-                Generate PDF
+              <button 
+                className="generate-btn users" 
+                onClick={handleGenerateUserReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Generate PDF'}
               </button>
             </div>
           </div>
@@ -595,9 +545,13 @@ function AdminDashboard() {
                 <option value="Last Quarter">Last Quarter</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn orders" onClick={handleGenerateOrderReport}>
-                <i className="fas fa-download"></i>
-                Generate PDF
+              <button 
+                className="generate-btn orders" 
+                onClick={handleGenerateOrderReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Generate PDF'}
               </button>
             </div>
           </div>
@@ -658,9 +612,13 @@ function AdminDashboard() {
                 <option value="Last Quarter">Last Quarter</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn revenue" onClick={handleGenerateRevenueReport}>
-                <i className="fas fa-download"></i>
-                Generate PDF
+              <button 
+                className="generate-btn revenue" 
+                onClick={handleGenerateRevenueReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Generate PDF'}
               </button>
             </div>
           </div>
@@ -721,9 +679,13 @@ function AdminDashboard() {
                 <option value="Last Quarter">Last Quarter</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn performance" onClick={handleGeneratePerformanceReport}>
-                <i className="fas fa-download"></i>
-                Generate PDF
+              <button 
+                className="generate-btn performance" 
+                onClick={handleGeneratePerformanceReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Generate PDF'}
               </button>
             </div>
           </div>
@@ -784,9 +746,13 @@ function AdminDashboard() {
                 <option value="Last Quarter">Last Quarter</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn inventory" onClick={handleGenerateInventoryReport}>
-                <i className="fas fa-download"></i>
-                Generate PDF
+              <button 
+                className="generate-btn inventory" 
+                onClick={handleGenerateInventoryReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-download"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Generate PDF'}
               </button>
             </div>
           </div>
@@ -847,9 +813,13 @@ function AdminDashboard() {
                 <option value="Last 30 Days">Last 30 Days</option>
                 <option value="Last Year">Last Year</option>
               </select>
-              <button className="generate-btn custom" onClick={handleGenerateCustomReport}>
-                <i className="fas fa-cog"></i>
-                Configure
+              <button 
+                className="generate-btn custom" 
+                onClick={handleGenerateCustomReport}
+                disabled={isGeneratingReport}
+              >
+                <i className={isGeneratingReport ? "fas fa-spinner fa-spin" : "fas fa-cog"}></i>
+                {isGeneratingReport ? 'Generating...' : 'Configure'}
               </button>
             </div>
           </div>

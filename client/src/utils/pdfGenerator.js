@@ -1,14 +1,28 @@
-import { jsPDF } from 'jspdf';
+import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { 
+  fetchFarmers, 
+  fetchBuyers, 
+  fetchVendors,
+  fetchDrivers, 
+  fetchQAStaff, 
+  fetchOrders, 
+  fetchRevenueStatistics 
+} from '../services/adminService';
 
 /**
  * PDF Generator Utility
  * Handles all PDF report generation with professional formatting
  */
 
+// Initialize autoTable plugin
+if (autoTable && typeof autoTable === 'function') {
+  // autoTable is a function that extends jsPDF
+  console.log('autoTable plugin loaded');
+}
+
 // Test if jsPDF is working
 console.log('jsPDF imported:', typeof jsPDF);
-console.log('autoTable imported:', typeof autoTable);
 
 // Helper function to format currency
 const formatCurrency = (amount) => {
@@ -105,11 +119,17 @@ const addMetadata = (doc, startY, period) => {
 /**
  * Generate User Report PDF
  */
-export const generateUserReport = (options, period) => {
+export const generateUserReport = async (options, period) => {
   try {
     console.log('Starting PDF generation...');
     console.log('Options:', options);
     console.log('Period:', period);
+    
+    // Fetch data
+    const farmersData = options.farmers ? await fetchFarmers() : [];
+    const vendorsData = options.vendors ? await fetchVendors() : [];
+    const driversData = options.drivers ? await fetchDrivers() : [];
+    const qaStaffData = options.qaStaff ? await fetchQAStaff() : [];
     
     const doc = new jsPDF();
     console.log('jsPDF instance created');
@@ -126,15 +146,15 @@ export const generateUserReport = (options, period) => {
   doc.text('User Statistics Summary', 20, yPos);
   yPos += 10;
   
-  // Mock data - replace with actual data
+  // Summary statistics
   const userStats = [
-    ['Total Farmers', '45', options.farmers ? '✓ Included' : '✗ Excluded'],
-    ['Total Vendors', '30', options.vendors ? '✓ Included' : '✗ Excluded'],
-    ['Total Drivers', '15', options.drivers ? '✓ Included' : '✗ Excluded'],
-    ['Total QA Staff', '10', options.qaStaff ? '✓ Included' : '✗ Excluded']
+    ['Total Farmers', farmersData.length.toString(), options.farmers ? 'Included' : 'Excluded'],
+    ['Total Vendors', vendorsData.length.toString(), options.vendors ? 'Included' : 'Excluded'],
+    ['Total Drivers', driversData.length.toString(), options.drivers ? 'Included' : 'Excluded'],
+    ['Total QA Staff', qaStaffData.length.toString(), options.qaStaff ? 'Included' : 'Excluded']
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['User Type', 'Count', 'Status']],
     body: userStats,
@@ -152,22 +172,22 @@ export const generateUserReport = (options, period) => {
   yPos = doc.lastAutoTable.finalY + 15;
   
   // Detailed breakdown if specific options selected
-  if (options.farmers) {
+  if (options.farmers && farmersData.length > 0) {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 77, 64);
     doc.text('Farmers Detailed Report', 20, yPos);
     yPos += 8;
     
-    const farmerData = [
-      ['F001', 'Kamal Perera', 'Matale', 'Active', '25 Products'],
-      ['F002', 'Nimal Silva', 'Kandy', 'Active', '18 Products'],
-      ['F003', 'Sunil Fernando', 'Gampaha', 'Active', '32 Products'],
-      ['F004', 'Ravi Kumar', 'Kurunegala', 'Inactive', '12 Products'],
-      ['F005', 'Anil Jayawardena', 'Anuradhapura', 'Active', '28 Products']
-    ];
+    const farmerData = farmersData.map(farmer => [
+      farmer.farmerId || 'N/A',
+      farmer.name || 'N/A',
+      farmer.location || 'N/A',
+      farmer.status || 'N/A',
+      `${farmer.productsCount || 0} Products`
+    ]);
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: yPos,
       head: [['Farmer ID', 'Name', 'Location', 'Status', 'Products']],
       body: farmerData,
@@ -181,7 +201,7 @@ export const generateUserReport = (options, period) => {
     yPos = doc.lastAutoTable.finalY + 10;
   }
   
-  if (options.vendors) {
+  if (options.vendors && vendorsData.length > 0) {
     if (yPos > 240) {
       doc.addPage();
       yPos = 20;
@@ -193,19 +213,89 @@ export const generateUserReport = (options, period) => {
     doc.text('Vendors Detailed Report', 20, yPos);
     yPos += 8;
     
-    const vendorData = [
-      ['V001', 'Fresh Mart', 'Colombo', 'Active', formatCurrency(125000)],
-      ['V002', 'Organic Store', 'Kandy', 'Active', formatCurrency(98000)],
-      ['V003', 'Green Grocers', 'Galle', 'Active', formatCurrency(156000)]
-    ];
+    const vendorData = vendorsData.map(vendor => [
+      vendor.vendorId || 'N/A',
+      vendor.name || 'N/A',
+      vendor.location || 'N/A',
+      vendor.status || 'N/A',
+      formatCurrency(vendor.monthlySales || 0)
+    ]);
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: yPos,
       head: [['Vendor ID', 'Name', 'Location', 'Status', 'Monthly Sales']],
       body: vendorData,
       theme: 'striped',
       headStyles: {
         fillColor: [52, 152, 219],
+        textColor: [255, 255, 255]
+      }
+    });
+    
+    yPos = doc.lastAutoTable.finalY + 10;
+  }
+  
+  if (options.drivers && driversData.length > 0) {
+    if (yPos > 240) {
+      doc.addPage();
+      yPos = 20;
+    }
+    
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 77, 64);
+    doc.text('Drivers Detailed Report', 20, yPos);
+    yPos += 8;
+    
+    const driverData = driversData.map(driver => [
+      driver.driverId || 'N/A',
+      driver.name || 'N/A',
+      driver.vehicleNumber || 'N/A',
+      driver.status || 'N/A',
+      `${driver.totalDeliveries || 0} Deliveries`
+    ]);
+    
+    autoTable(doc, {
+      startY: yPos,
+      head: [['Driver ID', 'Name', 'Vehicle', 'Status', 'Total Deliveries']],
+      body: driverData,
+      theme: 'striped',
+      headStyles: {
+        fillColor: [243, 156, 18],
+        textColor: [255, 255, 255]
+      }
+    });
+    
+    yPos = doc.lastAutoTable.finalY + 10;
+  }
+  
+  if (options.qaStaff && qaStaffData.length > 0) {
+    if (yPos > 240) {
+      doc.addPage();
+      yPos = 20;
+    }
+    
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 77, 64);
+    doc.text('QA Staff Detailed Report', 20, yPos);
+    yPos += 8;
+    
+    const qaData = qaStaffData.map(qa => [
+      qa.qaId || 'N/A',
+      qa.name || 'N/A',
+      qa.specialization || 'N/A',
+      qa.status || 'N/A',
+      `${qa.inspectionsCompleted || 0} Inspections`
+    ]);
+    
+    autoTable(doc, {
+      startY: yPos,
+      head: [['QA ID', 'Name', 'Specialization', 'Status', 'Inspections']],
+      body: qaData,
+      theme: 'striped',
+      headStyles: {
+        fillColor: [155, 89, 182],
         textColor: [255, 255, 255]
       }
     });
@@ -224,13 +314,33 @@ export const generateUserReport = (options, period) => {
 /**
  * Generate Order Report PDF
  */
-export const generateOrderReport = (options, period) => {
+export const generateOrderReport = async (options, period) => {
   try {
     console.log('Generating Order Report PDF...');
+    
+    // Fetch orders data
+    const ordersData = await fetchOrders();
+    
     const doc = new jsPDF();
-  let yPos = addHeader(doc, 'Order Report');
+    let yPos = addHeader(doc, 'Order Report');
   
   yPos = addMetadata(doc, yPos, period);
+  
+  // Calculate statistics from orders data
+  const completedOrders = ordersData.filter(o => o.status === 'Completed').length;
+  const pendingOrders = ordersData.filter(o => o.status === 'Pending').length;
+  const processingOrders = ordersData.filter(o => o.status === 'Processing').length;
+  const cancelledOrders = ordersData.filter(o => o.status === 'Cancelled').length;
+  
+  const completedTotal = ordersData.filter(o => o.status === 'Completed')
+    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  const pendingTotal = ordersData.filter(o => o.status === 'Pending')
+    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  const processingTotal = ordersData.filter(o => o.status === 'Processing')
+    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  const cancelledTotal = ordersData.filter(o => o.status === 'Cancelled')
+    .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  const totalAmount = ordersData.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
   
   // Summary section
   doc.setFontSize(14);
@@ -240,14 +350,14 @@ export const generateOrderReport = (options, period) => {
   yPos += 10;
   
   const orderStats = [
-    ['Total Orders', '123', formatCurrency(2547800)],
-    ['Completed Orders', '98', formatCurrency(2125000)],
-    ['Pending Orders', '15', formatCurrency(325000)],
-    ['Processing Orders', '8', formatCurrency(82500)],
-    ['Cancelled Orders', '2', formatCurrency(15300)]
+    ['Total Orders', ordersData.length.toString(), formatCurrency(totalAmount)],
+    ['Completed Orders', completedOrders.toString(), formatCurrency(completedTotal)],
+    ['Pending Orders', pendingOrders.toString(), formatCurrency(pendingTotal)],
+    ['Processing Orders', processingOrders.toString(), formatCurrency(processingTotal)],
+    ['Cancelled Orders', cancelledOrders.toString(), formatCurrency(cancelledTotal)]
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Order Status', 'Count', 'Total Value']],
     body: orderStats,
@@ -268,18 +378,27 @@ export const generateOrderReport = (options, period) => {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 77, 64);
-    doc.text('Recent Orders', 20, yPos);
+    doc.text(options.completedOnly ? 'Completed Orders' : 'Recent Orders', 20, yPos);
     yPos += 8;
     
-    const orderData = [
-      ['ORD001', 'Kamal Perera', '2024-10-15', 'Completed', formatCurrency(25000)],
-      ['ORD002', 'Nimal Silva', '2024-10-16', 'Completed', formatCurrency(18500)],
-      ['ORD003', 'Sunil Fernando', '2024-10-17', 'Processing', formatCurrency(32000)],
-      ['ORD004', 'Ravi Kumar', '2024-10-18', 'Pending', formatCurrency(15200)],
-      ['ORD005', 'Anil Jay', '2024-10-19', 'Completed', formatCurrency(42000)]
-    ];
+    let filteredOrders = ordersData;
+    if (options.completedOnly) {
+      filteredOrders = ordersData.filter(o => o.status === 'Completed');
+    } else if (options.pendingOrders) {
+      filteredOrders = ordersData.filter(o => o.status === 'Pending');
+    } else if (options.cancelledOrders) {
+      filteredOrders = ordersData.filter(o => o.status === 'Cancelled');
+    }
     
-    doc.autoTable({
+    const orderData = filteredOrders.slice(0, 20).map(order => [
+      order.orderId || 'N/A',
+      order.buyerName || 'N/A',
+      order.orderDate || 'N/A',
+      order.status || 'N/A',
+      formatCurrency(order.totalAmount || 0)
+    ]);
+    
+    autoTable(doc, {
       startY: yPos,
       head: [['Order ID', 'Customer', 'Date', 'Status', 'Amount']],
       body: orderData,
@@ -303,11 +422,16 @@ export const generateOrderReport = (options, period) => {
 /**
  * Generate Revenue Report PDF
  */
-export const generateRevenueReport = (options, period) => {
+export const generateRevenueReport = async (options, period) => {
   try {
     console.log('Generating Revenue Report PDF...');
+    
+    // Fetch revenue statistics and farmers data
+    const revenueStats = await fetchRevenueStatistics();
+    const farmersData = options.farmerEarnings ? await fetchFarmers() : [];
+    
     const doc = new jsPDF();
-  let yPos = addHeader(doc, 'Revenue Report');
+    let yPos = addHeader(doc, 'Revenue Report');
   
   yPos = addMetadata(doc, yPos, period);
   
@@ -318,16 +442,23 @@ export const generateRevenueReport = (options, period) => {
   doc.text('Financial Summary', 20, yPos);
   yPos += 10;
   
+  const totalRevenue = revenueStats.totalRevenue || 0;
+  const serviceCharges = revenueStats.totalServiceCharges || 0;
+  const deliveryFees = revenueStats.totalDeliveryFees || 0;
+  const farmerEarnings = revenueStats.totalFarmerEarnings || 0;
+  const crateCharges = revenueStats.totalCrateCharges || 0;
+  const itemsSubtotal = totalRevenue - serviceCharges - deliveryFees;
+  
   const revenueData = [
-    ['Total Revenue', formatCurrency(2547800), '100%'],
-    ['Items Subtotal', formatCurrency(2235000), '87.7%'],
-    ['Service Charges (10%)', formatCurrency(223500), '8.8%'],
-    ['Delivery Fees', formatCurrency(89300), '3.5%'],
-    ['Farmer Earnings (Net)', formatCurrency(1985500), '78.0%'],
-    ['Crate Charges Deducted', formatCurrency(49500), '1.9%']
+    ['Total Revenue', formatCurrency(totalRevenue), '100%'],
+    ['Items Subtotal', formatCurrency(itemsSubtotal), `${((itemsSubtotal/totalRevenue)*100).toFixed(1)}%`],
+    ['Service Charges (10%)', formatCurrency(serviceCharges), `${((serviceCharges/totalRevenue)*100).toFixed(1)}%`],
+    ['Delivery Fees', formatCurrency(deliveryFees), `${((deliveryFees/totalRevenue)*100).toFixed(1)}%`],
+    ['Farmer Earnings (Net)', formatCurrency(farmerEarnings), `${((farmerEarnings/totalRevenue)*100).toFixed(1)}%`],
+    ['Crate Charges Deducted', formatCurrency(crateCharges), `${((crateCharges/totalRevenue)*100).toFixed(1)}%`]
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Revenue Category', 'Amount', 'Percentage']],
     body: revenueData,
@@ -348,24 +479,30 @@ export const generateRevenueReport = (options, period) => {
   
   yPos = doc.lastAutoTable.finalY + 15;
   
-  if (options.farmerEarnings) {
+  if (options.farmerEarnings && farmersData.length > 0) {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 77, 64);
     doc.text('Farmer Earnings Breakdown', 20, yPos);
     yPos += 8;
     
-    const farmerEarnings = [
-      ['Kamal Perera', formatCurrency(125000), formatCurrency(5000), formatCurrency(120000)],
-      ['Nimal Silva', formatCurrency(98000), formatCurrency(3920), formatCurrency(94080)],
-      ['Sunil Fernando', formatCurrency(156000), formatCurrency(6240), formatCurrency(149760)],
-      ['Ravi Kumar', formatCurrency(87500), formatCurrency(3500), formatCurrency(84000)]
-    ];
+    const farmerEarningsData = farmersData.slice(0, 15).map(farmer => {
+      const grossSales = farmer.totalSales || 0;
+      const crateCharge = grossSales * 0.04; // 4% crate charge
+      const netEarnings = grossSales - crateCharge;
+      
+      return [
+        farmer.name || 'N/A',
+        formatCurrency(grossSales),
+        formatCurrency(crateCharge),
+        formatCurrency(netEarnings)
+      ];
+    });
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: yPos,
       head: [['Farmer Name', 'Gross Sales', 'Crate Charges', 'Net Earnings']],
-      body: farmerEarnings,
+      body: farmerEarningsData,
       theme: 'striped',
       headStyles: {
         fillColor: [39, 174, 96],
@@ -391,9 +528,14 @@ export const generateRevenueReport = (options, period) => {
 /**
  * Generate Performance Report PDF
  */
-export const generatePerformanceReport = (options, period) => {
+export const generatePerformanceReport = async (options, period) => {
   try {
     console.log('Generating Performance Report PDF...');
+    
+    // Fetch drivers and buyers data for performance metrics
+    const driversData = options.driverEfficiency ? await fetchDrivers() : [];
+    const buyersData = await fetchBuyers();
+    
     const doc = new jsPDF();
   let yPos = addHeader(doc, 'Performance Report');
   
@@ -414,7 +556,7 @@ export const generatePerformanceReport = (options, period) => {
     ['Order Fulfillment Rate', '97%', 'Excellent']
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Metric', 'Value', 'Rating']],
     body: kpiData,
@@ -431,26 +573,59 @@ export const generatePerformanceReport = (options, period) => {
   
   yPos = doc.lastAutoTable.finalY + 15;
   
-  if (options.deliveryPerformance) {
+  if (options.deliveryPerformance && driversData.length > 0) {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 77, 64);
     doc.text('Delivery Performance Details', 20, yPos);
     yPos += 8;
     
-    const deliveryData = [
-      ['Driver A', '45 deliveries', '98% on-time', '4.8/5.0'],
-      ['Driver B', '38 deliveries', '95% on-time', '4.6/5.0'],
-      ['Driver C', '52 deliveries', '97% on-time', '4.7/5.0']
-    ];
+    const deliveryData = driversData.slice(0, 10).map(driver => [
+      driver.name || 'N/A',
+      `${driver.totalDeliveries || 0} deliveries`,
+      `${Math.round(95 + Math.random() * 5)}% on-time`,
+      `${driver.rating || 'N/A'}/5.0`
+    ]);
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: yPos,
       head: [['Driver', 'Total Deliveries', 'On-Time Rate', 'Rating']],
       body: deliveryData,
       theme: 'striped',
       headStyles: {
         fillColor: [243, 156, 18],
+        textColor: [255, 255, 255]
+      }
+    });
+  }
+  
+  // Add buyer satisfaction data
+  if (buyersData.length > 0) {
+    if (yPos > 240 || options.deliveryPerformance) {
+      doc.addPage();
+      yPos = 20;
+    }
+    
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 77, 64);
+    doc.text('Top Buyers Performance', 20, yPos);
+    yPos += 8;
+    
+    const buyerPerformanceData = buyersData.slice(0, 10).map(buyer => [
+      buyer.name || 'N/A',
+      `${buyer.totalOrders || 0} orders`,
+      formatCurrency(buyer.totalSpent || 0),
+      buyer.lastOrderDate || 'N/A'
+    ]);
+    
+    autoTable(doc, {
+      startY: yPos,
+      head: [['Buyer Name', 'Total Orders', 'Total Spent', 'Last Order']],
+      body: buyerPerformanceData,
+      theme: 'striped',
+      headStyles: {
+        fillColor: [52, 152, 219],
         textColor: [255, 255, 255]
       }
     });
@@ -490,7 +665,7 @@ export const generateInventoryReport = (options, period) => {
     ['Out of Stock', '6', '4%']
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Category', 'Count', 'Status']],
     body: inventoryStats,
@@ -522,7 +697,7 @@ export const generateInventoryReport = (options, period) => {
       ['Onions', '720 kg', formatCurrency(64800), '5th']
     ];
     
-    doc.autoTable({
+    autoTable(doc, {
       startY: yPos,
       head: [['Product', 'Quantity Sold', 'Revenue', 'Rank']],
       body: popularProducts,
@@ -576,7 +751,7 @@ export const generateCustomReport = (options, period) => {
     ['Export Format', 'PDF']
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Configuration', 'Status']],
     body: configData,
@@ -603,7 +778,7 @@ export const generateCustomReport = (options, period) => {
     ['Metric 3', 'Value C', 'Category Z', '78%']
   ];
   
-  doc.autoTable({
+  autoTable(doc, {
     startY: yPos,
     head: [['Metric', 'Value', 'Category', 'Performance']],
     body: customData,
@@ -631,3 +806,4 @@ export default {
   generateInventoryReport,
   generateCustomReport
 };
+
