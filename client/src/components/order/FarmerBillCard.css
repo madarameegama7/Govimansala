@@ -1,0 +1,263 @@
+/* Farmer Bill Card */
+.farmer-bill-card {
+  background: #ffffff;
+  border: 2px solid #004d40;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 77, 64, 0.1);
+  transition: all 0.3s ease;
+}
+
+.farmer-bill-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 77, 64, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Farmer Header */
+.farmer-bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0f2f1;
+  margin-bottom: 20px;
+}
+
+.farmer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.farmer-bill-icon {
+  font-size: 2rem;
+  color: #004d40;
+  background: #e0f2f1;
+  padding: 12px;
+  border-radius: 50%;
+}
+
+.farmer-name {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.farmer-id {
+  margin: 2px 0 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.farmer-earnings-badge {
+  background: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
+}
+
+/* Items Section */
+.farmer-items-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.farmer-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.farmer-items-table thead {
+  background: #e0f2f1;
+}
+
+.farmer-items-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #004d40;
+  border-bottom: 2px solid #004d40;
+}
+
+.farmer-items-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.farmer-items-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.item-amount {
+  font-weight: 600;
+  color: #004d40;
+}
+
+.farmer-items-table tfoot {
+  background: #f8f9fa;
+}
+
+.subtotal-row td {
+  padding: 12px;
+  border-top: 2px solid #004d40;
+  border-bottom: none;
+}
+
+.subtotal-amount {
+  color: #004d40;
+  font-size: 1.1rem;
+}
+
+/* Charges Section */
+.farmer-charges-section {
+  background: #fff8e1;
+  border: 1px solid #ffd54f;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.charges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.charge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ffe082;
+}
+
+.charge-icon {
+  font-size: 1.5rem;
+  color: #f57c00;
+  min-width: 30px;
+}
+
+.charge-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.charge-label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.charge-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.charge-value.negative {
+  color: #d32f2f;
+}
+
+/* Final Earnings */
+.farmer-final-earnings {
+  background: #e0f2f1;
+  border-radius: 8px;
+  padding: 15px;
+  border: 2px solid #004d40;
+}
+
+.earnings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #b2dfdb;
+}
+
+.earnings-row:last-child {
+  border-bottom: none;
+}
+
+.earnings-label {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.earnings-amount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #004d40;
+}
+
+.earnings-row.deduction .earnings-amount {
+  color: #d32f2f;
+}
+
+.earnings-row.total {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 2px solid #004d40;
+}
+
+.earnings-row.total .earnings-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.earnings-row.total .earnings-amount {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #27ae60;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .farmer-bill-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .farmer-earnings-badge {
+    align-self: flex-end;
+  }
+
+  .charges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .farmer-items-table {
+    font-size: 0.85rem;
+  }
+
+  .farmer-items-table th,
+  .farmer-items-table td {
+    padding: 8px;
+  }
+}
