@@ -49,28 +49,12 @@ const QADashboard = () => {
           </div>
           
           <div className="qa-card-group">
-            <div className="qa-card">
-              <div className="qa-card-content">
-                <div className="qa-icon">📋</div>
-                <h3>Pending Inspections</h3>
-                <p>Products waiting for your review</p>
-                <p className="qa-count">{pendingCount}</p>
-              </div>
-              <div className="qa-card-actions">
-                <button 
-                  className="qa-btn qa-btn-primary"
-                  onClick={() => navigate("/qa/inspections")}
-                >
-                  View All Inspections
-                </button>
-              </div>
-            </div>
+            
             <div className="qa-card">
               <div className="qa-card-content">
                 <div className="qa-icon">📋</div>
                 <h3>Checklist</h3>
                 <p>Products waiting for your review</p>
-                <p className="qa-count">{pendingCount}</p>
               </div>
               <div className="qa-card-actions">
                 <button 
@@ -82,21 +66,6 @@ const QADashboard = () => {
               </div>
             </div>
 
-            <div className="qa-card">
-              <div className="qa-card-content">
-                <div className="qa-icon">👤</div>
-                <h3>My Profile</h3>
-                <p>Manage your inspector profile and settings</p>
-              </div>
-              <div className="qa-card-actions">
-                <button 
-                  className="qa-btn qa-btn-secondary"
-                  onClick={() => navigate("/qa/profile")}
-                >
-                  Edit Profile
-                </button>
-              </div>
-            </div>
 
             <div className="qa-card">
               <div className="qa-card-content">

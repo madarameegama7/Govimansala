@@ -59,6 +59,7 @@ import QAMetrics from "./pages/QA/QAMetrics";
 import QAInspectionDetails from "./pages/QA/QAInspectionDetails";
 import QAProfile from "./pages/QA/QAProfile";
 import RevenueOrders from "./pages/Admin/RevenueOrders";
+import QAInspectionChecklist from "./pages/QA/QAChecklist";
 
 function App() {
   return (
@@ -216,7 +217,7 @@ function App() {
       <Route path="/qa/inspection/:productId" element={<QAInspectionDetails />} />
       <Route path="/qa/profile" element={<QAProfile />} />
       <Route path="/qa/metrics" element={<QAMetrics />} />
-      <Route path="/qa/checklist" element={<QAInspectionList />} />
+      <Route path="/qa/checklist" element={<QAInspectionChecklist />} />
         </Route>
         
       </Routes>
