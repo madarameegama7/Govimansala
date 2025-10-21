@@ -7,3 +7,4 @@ import java.util.List;
 public interface BuyerOrderRepository extends JpaRepository<BuyerOrder, Long> {
     List<BuyerOrder> findByBuyerId(Long buyerId);
 }
+
